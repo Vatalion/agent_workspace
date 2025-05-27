@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "flutter-error-transport": {
+      "command": "node",
+      "args": ["./dist/index.js"]
+    }
+  }
+}
