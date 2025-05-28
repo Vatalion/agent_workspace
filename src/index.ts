@@ -9,6 +9,13 @@ import {
   ListToolsRequest,
 } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
+import WebSocket, { WebSocketServer } from 'ws';
+import { createServer } from 'http';
+
+// Real-time streaming server
+let wss: WebSocketServer | null = null;
+let httpServer: any = null;
+const connectedClients: Set<WebSocket> = new Set();
 
 // Error data schemas
 const FlutterErrorSchema = z.object({
@@ -91,7 +98,101 @@ class FlutterErrorTransportServer {
 
     console.error(`📥 Captured Flutter error: ${errorId} (${errorData.errorType})`);
     
+    // 🚀 REAL-TIME STREAMING: Broadcast error to all connected clients
+    this.broadcastErrorEvent(errorEvent);
+    
     return errorId;
+  }
+
+  // 🔥 NEW: Real-time error streaming to connected AI systems
+  private broadcastErrorEvent(errorEvent: ErrorEvent): void {
+    const streamData = {
+      type: 'flutter_error',
+      timestamp: new Date().toISOString(),
+      event: {
+        id: errorEvent.id,
+        error: errorEvent.error,
+        capturedAt: errorEvent.capturedAt,
+        autoAnalysis: this.generateQuickAnalysis(errorEvent.error),
+        urgency: this.calculateUrgency(errorEvent.error),
+        suggested_actions: this.generateImmediateActions(errorEvent.error)
+      }
+    };
+
+    // Broadcast to all connected WebSocket clients (AI systems)
+    connectedClients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        try {
+          client.send(JSON.stringify(streamData));
+          console.error(`📡 Real-time error streamed to AI client: ${errorEvent.id}`);
+        } catch (err) {
+          console.error(`❌ Failed to stream to client:`, err);
+          connectedClients.delete(client);
+        }
+      }
+    });
+  }
+
+  // Generate immediate analysis for real-time streaming
+  private generateQuickAnalysis(error: z.infer<typeof FlutterErrorSchema>): string {
+    const analyses: Record<string, string> = {
+      widget_build: "Widget rendering issue detected. Likely related to constraints, null values, or incorrect widget hierarchy.",
+      state_management: "State management error. Check for improper state mutations, listener issues, or provider/bloc configuration.",
+      navigation: "Navigation error detected. Verify route definitions, parameters, and navigation context.",
+      http_api: "API/Network error. Check endpoint availability, request format, and error handling.",
+      platform_channel: "Platform channel communication issue. Verify native code integration and method channel setup.",
+      memory_performance: "Performance issue detected. Monitor memory usage, widget rebuilds, and async operations.",
+      framework: "Flutter framework error. Check Flutter version compatibility and framework usage patterns.",
+      general: "General application error. Review stack trace for specific cause and context."
+    };
+    
+    return analyses[error.errorType] || "Unknown error type detected.";
+  }
+
+  // Calculate error urgency for prioritization
+  private calculateUrgency(error: z.infer<typeof FlutterErrorSchema>): string {
+    if (error.severity === 'critical') return 'immediate';
+    if (error.severity === 'high') return 'urgent';
+    if (error.severity === 'medium') return 'moderate';
+    return 'low';
+  }
+
+  // Generate immediate action suggestions
+  private generateImmediateActions(error: z.infer<typeof FlutterErrorSchema>): string[] {
+    const actions: Record<string, string[]> = {
+      widget_build: [
+        "Check widget constraints and parent/child relationships",
+        "Verify all required properties are provided",
+        "Look for null values in widget construction"
+      ],
+      state_management: [
+        "Verify state provider/bloc initialization", 
+        "Check for proper state mutation patterns",
+        "Review listener and subscription management"
+      ],
+      navigation: [
+        "Verify route is properly defined in app routing",
+        "Check navigation context and parameters",
+        "Review navigation stack state"
+      ],
+      http_api: [
+        "Check network connectivity and endpoint status",
+        "Verify request headers and authentication",
+        "Review error handling and timeout settings"
+      ],
+      platform_channel: [
+        "Verify platform-specific code is properly implemented",
+        "Check method channel name consistency",
+        "Review native code integration"
+      ],
+      memory_performance: [
+        "Monitor widget rebuild frequency",
+        "Check for memory leaks in listeners/subscriptions",
+        "Review async operation cleanup"
+      ]
+    };
+    
+    return actions[error.errorType] || ["Review error context and stack trace", "Check Flutter documentation for similar issues"];
   }
 
   analyzeError(errorId: string, analysisType: string): string {
@@ -421,6 +522,45 @@ class FlutterErrorTransportServer {
 
     return summary.join("\n");
   }
+
+  // Get real-time streaming statistics
+  getStreamingStats(): object {
+    return {
+      totalErrors: this.errorEvents.size,
+      connectedClients: connectedClients.size,
+      serverStatus: wss ? 'running' : 'stopped',
+      errorPatterns: Object.fromEntries(this.errorPatterns),
+      recentErrors: Array.from(this.errorEvents.values())
+        .sort((a, b) => b.capturedAt.getTime() - a.capturedAt.getTime())
+        .slice(0, 5)
+        .map(event => ({
+          id: event.id,
+          type: event.error.errorType,
+          severity: event.error.severity,
+          capturedAt: event.capturedAt.toISOString()
+        }))
+    };
+  }
+
+  // Broadcast streaming stats to connected clients
+  broadcastStreamingStats(): void {
+    const statsData = {
+      type: 'streaming_stats',
+      timestamp: new Date().toISOString(),
+      stats: this.getStreamingStats()
+    };
+
+    connectedClients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        try {
+          client.send(JSON.stringify(statsData));
+        } catch (err) {
+          console.error(`❌ Failed to send stats to client:`, err);
+          connectedClients.delete(client);
+        }
+      }
+    });
+  }
 }
 
 // Create server instance
@@ -564,6 +704,45 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           },
           required: ["issue"]
         }
+      },
+      {
+        name: "streaming_control",
+        description: "Control real-time error streaming to AI systems via WebSocket",
+        inputSchema: {
+          type: "object",
+          properties: {
+            action: {
+              type: "string",
+              enum: ["status", "start", "stop", "restart", "list_clients"],
+              description: "Action to perform on the streaming server"
+            },
+            port: {
+              type: "number",
+              description: "Port for WebSocket server (default: 8080, only used with start/restart)"
+            },
+            filters: {
+              type: "object",
+              description: "Error filters for streaming (optional)",
+              properties: {
+                errorTypes: {
+                  type: "array",
+                  items: {
+                    type: "string",
+                    enum: ["widget_build", "state_management", "navigation", "http_api", "platform_channel", "memory_performance", "framework", "general"]
+                  }
+                },
+                severityLevels: {
+                  type: "array",
+                  items: {
+                    type: "string",
+                    enum: ["low", "medium", "high", "critical"]
+                  }
+                }
+              }
+            }
+          },
+          required: ["action"]
+        }
       }
     ]
   };
@@ -668,6 +847,122 @@ server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest)
         };
       }
 
+      case "streaming_control": {
+        const action = args?.action as string;
+        const port = args?.port as number || 8080;
+        const filters = args?.filters as any;
+
+        if (!action) {
+          throw new Error("Action is required");
+        }
+
+        let response = "";
+
+        switch (action) {
+          case "status":
+            response = `🌐 **Real-time Streaming Status**\n\n`;
+            response += `• WebSocket Server: ${wss ? "🟢 Running" : "🔴 Stopped"}\n`;
+            response += `• Connected Clients: ${connectedClients.size}\n`;
+            response += `• Server Port: ${wss ? port : "N/A"}\n`;
+            response += `• Connection URL: ${wss ? `ws://localhost:${port}` : "Server not running"}\n\n`;
+            
+            if (connectedClients.size > 0) {
+              response += `**Connected AI Systems**: ${connectedClients.size} active connections\n`;
+              response += `Real-time error streaming is active. All captured errors are automatically broadcasted.`;
+            } else {
+              response += `**No AI Systems Connected**\nTo connect an AI system:\n`;
+              response += `• Use WebSocket client: ws://localhost:${port}\n`;
+              response += `• Errors will be streamed in real-time upon connection`;
+            }
+            break;
+
+          case "start":
+            if (wss) {
+              response = `⚠️ **WebSocket server already running**\n\nUse \`restart\` action to restart with new settings.`;
+            } else {
+              try {
+                await initializeWebSocketServer(port);
+                response = `✅ **Real-time Streaming Started**\n\n`;
+                response += `• WebSocket Server: 🟢 Running on port ${port}\n`;
+                response += `• Connection URL: ws://localhost:${port}\n`;
+                response += `• Ready to stream Flutter errors to AI systems\n\n`;
+                response += `**Connect AI systems to start receiving real-time error data**`;
+              } catch (error) {
+                response = `❌ **Failed to start streaming server**\n\nError: ${error}`;
+              }
+            }
+            break;
+
+          case "stop":
+            if (!wss) {
+              response = `⚠️ **WebSocket server not running**`;
+            } else {
+              wss.close();
+              if (httpServer) httpServer.close();
+              wss = null;
+              httpServer = null;
+              connectedClients.clear();
+              response = `🛑 **Real-time Streaming Stopped**\n\nWebSocket server has been shut down.`;
+            }
+            break;
+
+          case "restart":
+            // Stop existing server
+            if (wss) {
+              wss.close();
+              if (httpServer) httpServer.close();
+              wss = null;
+              httpServer = null;
+              connectedClients.clear();
+            }
+            
+            // Start new server
+            try {
+              await initializeWebSocketServer(port);
+              response = `🔄 **Real-time Streaming Restarted**\n\n`;
+              response += `• WebSocket Server: 🟢 Running on port ${port}\n`;
+              response += `• Connection URL: ws://localhost:${port}\n`;
+              response += `• Previous connections cleared, ready for new AI clients`;
+            } catch (error) {
+              response = `❌ **Failed to restart streaming server**\n\nError: ${error}`;
+            }
+            break;
+
+          case "list_clients":
+            response = `👥 **Connected AI Systems**\n\n`;
+            response += `• Total Connections: ${connectedClients.size}\n`;
+            
+            if (connectedClients.size > 0) {
+              response += `• Status: 🟢 Actively streaming errors\n`;
+              response += `• Real-time Features: Error capture, analysis, debugging assistance\n\n`;
+              response += `**Stream Data Format**: JSON messages containing:\n`;
+              response += `• Error details and categorization\n`;
+              response += `• Automatic analysis and urgency assessment\n`;
+              response += `• Immediate action suggestions\n`;
+              response += `• Device and context information`;
+            } else {
+              response += `• Status: 🔴 No active connections\n\n`;
+              response += `**To connect AI systems**:\n`;
+              response += `• WebSocket URL: ws://localhost:${port}\n`;
+              response += `• Protocol: JSON message streaming\n`;
+              response += `• Auto-streaming: All captured errors broadcast immediately`;
+            }
+            break;
+
+          default:
+            throw new Error(`Unknown streaming action: ${action}`);
+        }
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: response
+            }
+          ]
+        };
+      }
+
       default:
         throw new Error(`Unknown tool: ${name}`);
     }
@@ -685,11 +980,109 @@ server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest)
   }
 });
 
+// Initialize WebSocket server for real-time streaming
+function initializeWebSocketServer(port: number = 8080): Promise<void> {
+  return new Promise((resolve, reject) => {
+    try {
+      // Create HTTP server for WebSocket upgrade
+      httpServer = createServer();
+      
+      // Create WebSocket server
+      wss = new WebSocketServer({ server: httpServer });
+      
+      wss.on('connection', (ws: WebSocket, request) => {
+        console.error(`🔌 New AI client connected from ${request.socket.remoteAddress}`);
+        connectedClients.add(ws);
+        
+        // Send welcome message
+        ws.send(JSON.stringify({
+          type: 'connection_established',
+          timestamp: new Date().toISOString(),
+          message: 'Connected to Flutter Error Transport Stream',
+          server_version: '1.0.0'
+        }));
+        
+        ws.on('message', (data) => {
+          try {
+            const message = JSON.parse(data.toString());
+            console.error(`📨 Received message from AI client:`, message);
+            
+            // Handle client commands (e.g., subscription preferences)
+            if (message.type === 'subscribe') {
+              ws.send(JSON.stringify({
+                type: 'subscription_confirmed',
+                timestamp: new Date().toISOString(),
+                filters: message.filters || 'all'
+              }));
+            }
+          } catch (err) {
+            console.error(`❌ Failed to parse client message:`, err);
+          }
+        });
+        
+        ws.on('close', () => {
+          console.error(`🔌 AI client disconnected`);
+          connectedClients.delete(ws);
+        });
+        
+        ws.on('error', (error) => {
+          console.error(`❌ WebSocket client error:`, error);
+          connectedClients.delete(ws);
+        });
+      });
+      
+      httpServer.listen(port, () => {
+        console.error(`🌐 Real-time error streaming server running on port ${port}`);
+        console.error(`📡 AI systems can connect via: ws://localhost:${port}`);
+        resolve();
+      });
+      
+      httpServer.on('error', (error: Error) => {
+        console.error(`❌ HTTP server error:`, error);
+        reject(error);
+      });
+      
+    } catch (error) {
+      console.error(`❌ Failed to initialize WebSocket server:`, error);
+      reject(error);
+    }
+  });
+}
+
+// Graceful shutdown
+process.on('SIGINT', () => {
+  console.error('\n🛑 Shutting down Flutter Error Transport Server...');
+  
+  if (wss) {
+    wss.close(() => {
+      console.error('📡 WebSocket server closed');
+    });
+  }
+  
+  if (httpServer) {
+    httpServer.close(() => {
+      console.error('🌐 HTTP server closed');
+    });
+  }
+  
+  process.exit(0);
+});
+
 // Start the server
 async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error("🚀 Flutter Error Transport MCP Server running on stdio");
+  try {
+    // Initialize WebSocket server for real-time streaming
+    await initializeWebSocketServer(8080);
+    
+    // Start MCP server
+    const transport = new StdioServerTransport();
+    await server.connect(transport);
+    console.error("🚀 Flutter Error Transport MCP Server running on stdio");
+    console.error("🔥 Real-time error streaming: ENABLED");
+  } catch (error) {
+    console.error("❌ Failed to start server:", error);
+    process.exit(1);
+  }
 }
 
 main().catch((error) => {

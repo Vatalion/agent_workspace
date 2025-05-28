@@ -1,21 +1,46 @@
 # Flutter Error Transport MCP Server
 
-A comprehensive Model Context Protocol (MCP) server designed to transport Flutter runtime errors to AI systems with real-time error streaming, analysis, and debugging assistance capabilities.
+A comprehensive Model Context Protocol (MCP) server designed to transport Flutter runtime errors to AI systems with **real-time error streaming**, analysis, and debugging assistance capabilities.
 
 ## 🚀 Features
 
-- **Real-time Error Capture**: Capture and categorize Flutter runtime errors with full context
-- **AI-Powered Analysis**: Intelligent error analysis with root cause identification and fix suggestions
-- **Error Pattern Recognition**: Identify recurring error patterns and provide proactive debugging insights
-- **Flutter-Specific Context**: Deep understanding of Flutter widget lifecycle, state management, and navigation
-- **Integration Ready**: Easy integration with existing Flutter error monitoring systems
+- **🔥 Real-time Error Streaming**: WebSocket-based streaming to AI systems for immediate error analysis
+- **📡 AI-Powered Analysis**: Intelligent error analysis with root cause identification and fix suggestions  
+- **⚡ Instant Error Detection**: Automatic error capture with immediate urgency assessment
+- **🎯 Flutter-Specific Context**: Deep understanding of Flutter widget lifecycle, state management, and navigation
+- **🔄 Pattern Recognition**: Identify recurring error patterns and provide proactive debugging insights
+- **🌐 Multi-Client Support**: Connect multiple AI systems simultaneously for collaborative debugging
+- **🧪 Production Ready**: Comprehensive error categorization and streaming infrastructure
+
+## 🌐 Real-time Streaming
+
+The MCP server includes a built-in **WebSocket server** that provides real-time streaming of Flutter errors to connected AI systems:
+
+- **Connection URL**: `ws://localhost:8080`
+- **Real-time Error Broadcasting**: Errors are immediately streamed to all connected AI clients
+- **Automatic Analysis**: Each error includes instant analysis, urgency assessment, and suggested actions
+- **Multi-Client Support**: Multiple AI systems can connect simultaneously
+- **Production Ready**: Scalable streaming infrastructure with connection management
+
+### Quick Start Real-time Testing
+
+```bash
+# Start the MCP server with streaming
+npm start
+
+# Test real-time streaming
+node examples/websocket_test_client.js
+
+# Run comprehensive real-time tests
+./test_realtime.sh
+```
 
 ## 🛠️ Installation
 
 ### Prerequisites
 
 - Node.js 18 or higher
-- npm or yarn
+- npm or yarn  
 - TypeScript (installed automatically as dev dependency)
 
 ### Setup
@@ -36,10 +61,12 @@ A comprehensive Model Context Protocol (MCP) server designed to transport Flutte
    npm start
    ```
 
+The server will start with **real-time streaming enabled** on port 8080.
+
 ## 📋 Available MCP Tools
 
 ### 1. `capture_flutter_error`
-Captures and stores Flutter runtime errors with comprehensive context.
+Captures and stores Flutter runtime errors with comprehensive context. **Automatically streams to connected AI systems in real-time.**
 
 **Parameters:**
 - `errorMessage` (string): The error message
@@ -75,8 +102,69 @@ Returns session-wide error statistics and patterns.
 General-purpose Flutter debugging assistance.
 
 **Parameters:**
-- `query` (string): Your Flutter debugging question
-- `context` (object, optional): Additional context
+- `issue` (string): Your Flutter debugging question or issue description
+- `errorType` (string, optional): Type of Flutter issue  
+- `codeSnippet` (string, optional): Relevant code snippet
+
+### 5. `streaming_control` 🔥 **NEW**
+Control real-time error streaming to AI systems via WebSocket.
+
+**Parameters:**
+- `action` (string): Action to perform - `status`, `start`, `stop`, `restart`, `list_clients`
+- `port` (number, optional): WebSocket server port (default: 8080)
+- `filters` (object, optional): Error filters for streaming
+
+**Examples:**
+```json
+// Check streaming status
+{"action": "status"}
+
+// Start real-time streaming
+{"action": "start", "port": 8080}
+
+// List connected AI clients
+{"action": "list_clients"}
+```
+
+## 🌐 Real-time Error Streaming
+
+### WebSocket Connection
+Connect AI systems to: `ws://localhost:8080`
+
+### Real-time Features
+- **Instant Error Broadcasting**: Errors streamed immediately upon capture
+- **Auto-Analysis**: Each error includes automatic analysis and urgency assessment
+- **Suggested Actions**: Immediate debugging steps provided with each error
+- **Multi-Client Support**: Multiple AI systems can connect simultaneously
+- **Connection Management**: Automatic client connection/disconnection handling
+
+### Streaming Message Format
+```json
+{
+  "type": "flutter_error",
+  "timestamp": "2025-05-27T10:30:00.000Z",
+  "event": {
+    "id": "error_1716804600000_abc123",
+    "error": {
+      "errorType": "widget_build",
+      "severity": "high",
+      "message": "RenderFlex overflowed by 42 pixels"
+    },
+    "autoAnalysis": "Widget rendering issue detected...",
+    "urgency": "urgent",
+    "suggested_actions": ["Check constraints", "Verify properties"]
+  }
+}
+```
+
+### Testing Real-time Streaming
+```bash
+# Start test WebSocket client
+node examples/websocket_test_client.js
+
+# Run comprehensive real-time tests  
+./test_realtime.sh
+```
 
 ## 🔧 Error Categories
 
@@ -107,7 +195,7 @@ import 'package:flutter/foundation.dart';
 
 // Capture errors using FlutterError.onError
 FlutterError.onError = (FlutterErrorDetails details) {
-  // Send to MCP server
+  // Send to MCP server (automatically streamed to AI systems)
   captureError(
     errorMessage: details.toString(),
     stackTrace: details.stack.toString(),
@@ -160,18 +248,41 @@ npm run build
 
 ### Development Mode
 
+## 📚 Documentation
+
+- **[REALTIME_GUIDE.md](REALTIME_GUIDE.md)** - Complete real-time streaming guide with WebSocket examples
+- **[INTEGRATION_GUIDE.md](INTEGRATION_GUIDE.md)** - Flutter app integration instructions  
+- **[examples/flutter_integration.dart](examples/flutter_integration.dart)** - Flutter client integration example
+- **[examples/websocket_test_client.js](examples/websocket_test_client.js)** - WebSocket test client
+
+## 🧪 Testing
+
+### Build and Run
+```bash
+npm run build
+npm start
+```
+
+### Real-time Streaming Tests
+```bash
+# Test WebSocket connectivity
+node examples/websocket_test_client.js
+
+# Run comprehensive real-time tests
+./test_realtime.sh
+```
+
+### Development Mode
 ```bash
 npm run dev
 ```
 
 ### Watch Mode
-
 ```bash
 npm run build:watch
 ```
 
 ### Clean Build
-
 ```bash
 npm run clean
 npm run build
@@ -181,11 +292,17 @@ npm run build
 
 ```
 ├── src/
-│   └── index.ts          # Main MCP server implementation
-├── dist/                 # Compiled JavaScript output
+│   └── index.ts              # Main MCP server with real-time streaming
+├── examples/
+│   ├── flutter_integration.dart      # Flutter integration example
+│   └── websocket_test_client.js      # WebSocket test client
+├── dist/                     # Compiled JavaScript output
 ├── .vscode/
-│   ├── tasks.json        # VS Code tasks for build/run
-│   └── mcp.json          # MCP client configuration
+│   ├── tasks.json           # VS Code tasks for build/run
+│   └── mcp.json             # MCP client configuration
+├── REALTIME_GUIDE.md        # Real-time streaming documentation
+├── INTEGRATION_GUIDE.md     # Flutter integration guide
+├── test_realtime.sh         # Real-time testing script
 ├── package.json
 ├── tsconfig.json
 └── README.md
@@ -197,7 +314,8 @@ npm run build
 
 1. **Build Errors**: Ensure you have Node.js 18+ and all dependencies installed
 2. **Permission Denied**: Make sure the built executable has proper permissions
-3. **Type Errors**: Verify @types/node is installed correctly
+3. **WebSocket Connection Failed**: Verify MCP server is running and port 8080 is available
+4. **No Real-time Events**: Check streaming server status with `streaming_control` tool
 
 ### Debugging
 
@@ -205,6 +323,15 @@ Enable verbose logging by setting the environment variable:
 ```bash
 export DEBUG=flutter-error-transport:*
 npm start
+```
+
+### Real-time Streaming Debug
+```bash
+# Check server status
+{"name": "streaming_control", "arguments": {"action": "status"}}
+
+# Test connection
+node examples/websocket_test_client.js
 ```
 
 ## 🤝 Contributing

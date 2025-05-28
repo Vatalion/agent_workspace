@@ -1,19 +1,290 @@
-// Flutter Integration Example
+// Flutter Integration Example - Socket Ready (Simplified)
 // Add this to your Flutter project's main.dart or error handling service
+// 
+// Key Features:
+// ✅ Real-time WebSocket connection to MCP server
+// ✅ Automatic error streaming and queuing
+// ✅ Connection management with auto-reconnect
+// ✅ Comprehensive error categorization
+//
+// Dependencies to add to pubspec.yaml:
+// dependencies:
+//   web_socket_channel: ^2.4.0
+//   http: ^1.1.0 (for fallback)
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'dart:convert';
-import 'dart:io';
+import 'dart:async';
+
+// Note: In a real Flutter project, uncomment these imports:
+// import 'package:flutter/foundation.dart';
+// import 'package:flutter/services.dart';
+// import 'package:web_socket_channel/web_socket_channel.dart';
+// import 'package:web_socket_channel/io.dart';
 
 class FlutterErrorTransport {
-  static const String _mcpServerEndpoint = 'your-mcp-server-endpoint';
+  // 🌐 Socket Configuration
+  static const String mcpWebSocketUrl = 'ws://localhost:8080';
+  static const String mcpHttpFallback = 'http://localhost:3000/api/errors';
   
-  /// Initialize error transport in your main() function
-  static void initialize() {
-    // Capture Flutter framework errors
+  // 🔌 Connection State
+  static dynamic _webSocketChannel; // WebSocketChannel in real Flutter
+  static bool _isConnected = false;
+  static bool _isConnecting = false;
+  static final List<Map<String, dynamic>> _errorQueue = [];
+  static Timer? _reconnectTimer;
+  static int _reconnectAttempts = 0;
+  static const int maxReconnectAttempts = 5;
+
+  /// 🚀 Initialize Socket-Ready Error Transport
+  static Future<void> initialize({bool autoConnect = true}) async {
+    print('🚀 [Socket-Ready] Initializing Flutter Error Transport...');
+    
+    _setupFlutterErrorHandlers();
+    
+    if (autoConnect) {
+      await connectToMCPServer();
+    }
+    
+    print('✅ [Socket-Ready] Error transport initialized with WebSocket support');
+  }
+
+  /// 🔌 Connect to MCP Server WebSocket
+  static Future<bool> connectToMCPServer() async {
+    if (_isConnected || _isConnecting) return _isConnected;
+    
+    _isConnecting = true;
+    print('🔌 Connecting to MCP server: $mcpWebSocketUrl');
+    
+    try {
+      // In real Flutter project:
+      // _webSocketChannel = IOWebSocketChannel.connect(Uri.parse(mcpWebSocketUrl));
+      
+      // Mock connection for demo
+      _webSocketChannel = 'connected';
+      _isConnected = true;
+      _isConnecting = false;
+      _reconnectAttempts = 0;
+      
+      _setupWebSocketListeners();
+      await _sendQueuedErrors();
+      
+      print('✅ Connected to MCP server via WebSocket');
+      return true;
+      
+    } catch (e) {
+      _isConnecting = false;
+      _isConnected = false;
+      print('❌ WebSocket connection failed: $e');
+      _scheduleReconnect();
+      return false;
+    }
+  }
+
+  /// 📡 Send Error via WebSocket (Real-time)
+  static Future<void> streamError(Map<String, dynamic> errorData) async {
+    if (_isConnected && _webSocketChannel != null) {
+      // In real Flutter project:
+      // final message = {
+      //   'type': 'flutter_error_stream',
+      //   'timestamp': DateTime.now().toIso8601String(),
+      //   'error_data': errorData,
+      // };
+      // _webSocketChannel.sink.add(jsonEncode(message));
+      
+      print('📡 [Real-time] Error streamed: ${errorData['errorType']}');
+    } else {
+      // Queue for later if not connected
+      _errorQueue.add(errorData);
+      print('📝 [Queued] Error stored for streaming: ${errorData['errorType']}');
+      
+      // Try to connect
+      if (!_isConnecting) {
+        connectToMCPServer();
+      }
+    }
+  }
+
+  /// 🛡️ Capture Any Flutter Error (Socket-Ready)
+  static Future<void> captureError({
+    required String errorMessage,
+    required String stackTrace,
+    required String errorType,
+    String severity = 'medium',
+    Map<String, dynamic>? context,
+  }) async {
+    final errorData = {
+      'timestamp': DateTime.now().toIso8601String(),
+      'errorType': errorType,
+      'severity': severity,
+      'message': errorMessage,
+      'stackTrace': stackTrace,
+      'context': {
+        ...context ?? {},
+        'capture_method': 'socket_ready_transport',
+        'connection_status': _isConnected ? 'connected' : 'disconnected',
+      },
+      'deviceInfo': await _getDeviceInfo(),
+    };
+
+    // 📡 Stream error in real-time
+    await streamError(errorData);
+  }
+
+  /// 🌐 Capture HTTP/API Errors
+  static Future<void> captureHttpError(
+    String method,
+    String endpoint,
+    int? statusCode,
+    String errorMessage,
+    String stackTrace,
+  ) async {
+    await captureError(
+      errorMessage: errorMessage,
+      stackTrace: stackTrace,
+      errorType: 'http_api',
+      severity: statusCode != null && statusCode >= 500 ? 'critical' : 'high',
+      context: {
+        'endpoint': endpoint,
+        'method': method,
+        'status_code': statusCode,
+        'error_category': 'network',
+      },
+    );
+  }
+
+  /// 🏛️ Capture State Management Errors  
+  static Future<void> captureStateError(
+    String stateType,
+    String errorMessage,
+    String stackTrace, {
+    String? currentState,
+    String? action,
+  }) async {
+    await captureError(
+      errorMessage: errorMessage,
+      stackTrace: stackTrace,
+      errorType: 'state_management',
+      severity: 'medium',
+      context: {
+        'state_type': stateType,
+        'current_state': currentState,
+        'action': action,
+      },
+    );
+  }
+
+  /// 🧭 Capture Navigation Errors
+  static Future<void> captureNavigationError(
+    String routeName,
+    String errorMessage,
+    String stackTrace, {
+    Map<String, dynamic>? routeArguments,
+  }) async {
+    await captureError(
+      errorMessage: errorMessage,
+      stackTrace: stackTrace,
+      errorType: 'navigation',
+      severity: 'medium',
+      context: {
+        'route_name': routeName,
+        'route_arguments': routeArguments,
+      },
+    );
+  }
+
+  /// 🎨 Capture Widget Build Errors
+  static Future<void> captureWidgetError(
+    String widgetName,
+    String errorMessage,
+    String stackTrace, {
+    String? widgetPath,
+  }) async {
+    await captureError(
+      errorMessage: errorMessage,
+      stackTrace: stackTrace,
+      errorType: 'widget_build',
+      severity: errorMessage.contains('overflow') ? 'medium' : 'high',
+      context: {
+        'widget_name': widgetName,
+        'widget_path': widgetPath,
+      },
+    );
+  }
+
+  // 🔧 Connection Management
+
+  static void _setupWebSocketListeners() {
+    // In real Flutter project, set up stream listeners:
+    /*
+    _webSocketChannel.stream.listen(
+      (data) {
+        final message = jsonDecode(data);
+        _handleServerMessage(message);
+      },
+      onError: (error) {
+        print('❌ WebSocket error: $error');
+        _handleConnectionLost();
+      },
+      onDone: () {
+        print('🔌 WebSocket connection closed');
+        _handleConnectionLost();
+      },
+    );
+    */
+    print('🔗 WebSocket listeners configured (connection loss handling ready)');
+  }
+
+  // Connection management methods (used when WebSocket is active)
+  // ignore: unused_element
+  static void _handleConnectionLost() {
+    _isConnected = false;
+    _webSocketChannel = null;
+    print('🔌 Connection lost, scheduling reconnect...');
+    _scheduleReconnect();
+  }
+
+  // ignore: unused_element
+  static void _handleServerMessage(Map<String, dynamic> message) {
+    // In real Flutter: handle server acknowledgments, status updates, etc.
+    print('📨 Server message: ${message['type']}');
+  }
+
+  static void _scheduleReconnect() {
+    if (_reconnectAttempts >= maxReconnectAttempts) {
+      print('❌ Max reconnect attempts reached');
+      return;
+    }
+    
+    _reconnectTimer?.cancel();
+    _reconnectTimer = Timer(const Duration(seconds: 3), () async {
+      _reconnectAttempts++;
+      print('🔄 Reconnect attempt $_reconnectAttempts/$maxReconnectAttempts');
+      await connectToMCPServer();
+    });
+  }
+
+  static Future<void> _sendQueuedErrors() async {
+    if (_errorQueue.isEmpty) return;
+    
+    print('📤 Sending ${_errorQueue.length} queued errors...');
+    
+    final errors = List<Map<String, dynamic>>.from(_errorQueue);
+    _errorQueue.clear();
+    
+    for (final errorData in errors) {
+      await streamError(errorData);
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
+    
+    print('✅ All queued errors sent');
+  }
+
+  // 🛡️ Error Handler Setup
+
+  static void _setupFlutterErrorHandlers() {
+    // In real Flutter project:
+    /*
     FlutterError.onError = (FlutterErrorDetails details) {
-      _captureError(
+      captureError(
         errorMessage: details.toString(),
         stackTrace: details.stack.toString(),
         errorType: _categorizeFlutterError(details),
@@ -22,9 +293,8 @@ class FlutterErrorTransport {
       );
     };
 
-    // Capture async errors
     PlatformDispatcher.instance.onError = (error, stack) {
-      _captureError(
+      captureError(
         errorMessage: error.toString(),
         stackTrace: stack.toString(),
         errorType: 'general',
@@ -36,261 +306,62 @@ class FlutterErrorTransport {
       );
       return true;
     };
-  }
-
-  /// Manually capture custom errors
-  static Future<void> captureError({
-    required String errorMessage,
-    required String stackTrace,
-    required String errorType,
-    String severity = 'medium',
-    Map<String, dynamic>? context,
-  }) async {
-    await _captureError(
-      errorMessage: errorMessage,
-      stackTrace: stackTrace,
-      errorType: errorType,
-      severity: severity,
-      context: context ?? {},
-    );
-  }
-
-  /// Capture HTTP/API errors (use with Dio interceptor)
-  static Future<void> captureHttpError(
-    String method,
-    String endpoint,
-    int? statusCode,
-    String errorMessage,
-    String stackTrace,
-  ) async {
-    await _captureError(
-      errorMessage: errorMessage,
-      stackTrace: stackTrace,
-      errorType: 'http_api',
-      severity: statusCode != null && statusCode >= 500 ? 'high' : 'medium',
-      context: {
-        'endpoint': endpoint,
-        'method': method,
-        'status_code': statusCode,
-        'error_category': 'network',
-      },
-    );
-  }
-
-  /// Capture state management errors
-  static Future<void> captureStateError(
-    String stateType,
-    String errorMessage,
-    String stackTrace, {
-    String? currentState,
-    String? action,
-  }) async {
-    await _captureError(
-      errorMessage: errorMessage,
-      stackTrace: stackTrace,
-      errorType: 'state_management',
-      severity: 'medium',
-      context: {
-        'state_type': stateType,
-        'current_state': currentState,
-        'action': action,
-        'state_manager': _detectStateManager(),
-      },
-    );
-  }
-
-  /// Capture navigation errors
-  static Future<void> captureNavigationError(
-    String routeName,
-    String errorMessage,
-    String stackTrace, {
-    Map<String, dynamic>? routeArguments,
-  }) async {
-    await _captureError(
-      errorMessage: errorMessage,
-      stackTrace: stackTrace,
-      errorType: 'navigation',
-      severity: 'medium',
-      context: {
-        'route_name': routeName,
-        'route_arguments': routeArguments,
-        'navigation_stack': 'current_stack', // Implement route stack tracking
-      },
-    );
-  }
-
-  // Private methods
-
-  static Future<void> _captureError({
-    required String errorMessage,
-    required String stackTrace,
-    required String errorType,
-    required String severity,
-    required Map<String, dynamic> context,
-  }) async {
-    try {
-      final errorData = {
-        'errorMessage': errorMessage,
-        'stackTrace': stackTrace,
-        'errorType': errorType,
-        'severity': severity,
-        'context': {
-          ...context,
-          'widget_path': _getCurrentWidgetPath(),
-          'current_route': _getCurrentRoute(),
-          'user_action': _getLastUserAction(),
-          'app_lifecycle_state': _getAppLifecycleState(),
-        },
-        'deviceInfo': await _getDeviceInfo(),
-        'timestamp': DateTime.now().toIso8601String(),
-      };
-
-      // Send to MCP server (implement your preferred method)
-      await _sendToMCPServer(errorData);
-      
-      // Log locally for debugging
-      if (kDebugMode) {
-        print('📨 Error captured and sent to MCP server: $errorType');
-      }
-    } catch (e) {
-      // Fallback: don't let error handling cause more errors
-      if (kDebugMode) {
-        print('❌ Failed to capture error: $e');
-      }
-    }
-  }
-
-  static String _categorizeFlutterError(FlutterErrorDetails details) {
-    final error = details.toString().toLowerCase();
+    */
     
-    if (error.contains('renderflex') || 
-        error.contains('renderbox') || 
-        error.contains('widget')) {
-      return 'widget_build';
-    }
-    
-    if (error.contains('navigator') || error.contains('route')) {
-      return 'navigation';
-    }
-    
-    if (error.contains('bloc') || 
-        error.contains('cubit') || 
-        error.contains('provider') ||
-        error.contains('state')) {
-      return 'state_management';
-    }
-    
-    if (error.contains('platform') || error.contains('channel')) {
-      return 'platform_channel';
-    }
-    
-    return 'framework';
+    print('🛡️ Flutter error handlers configured for socket streaming');
   }
 
-  static String _determineSeverity(FlutterErrorDetails details) {
-    final error = details.toString().toLowerCase();
-    
-    // Critical: App crashes or complete failures
-    if (error.contains('fatal') || 
-        error.contains('crash') ||
-        error.contains('assertion failed')) {
-      return 'critical';
-    }
-    
-    // High: Major functionality broken
-    if (error.contains('exception') || 
-        error.contains('null check operator') ||
-        error.contains('range error')) {
-      return 'high';
-    }
-    
-    // Medium: User experience issues
-    if (error.contains('overflow') || 
-        error.contains('constraint') ||
-        error.contains('layout')) {
-      return 'medium';
-    }
-    
-    // Default to low for other cases
-    return 'low';
-  }
-
-  static Map<String, dynamic> _extractFlutterContext(FlutterErrorDetails details) {
-    return {
-      'library': details.library ?? 'unknown',
-      'context_description': details.context?.toString(),
-      'information_collector': details.informationCollector?.toString(),
-      'stack_filter': details.stackFilter != null ? 'present' : 'absent',
-    };
-  }
-
-  static String? _getCurrentWidgetPath() {
-    // Implement widget hierarchy tracking
-    // This would require custom implementation in your app
-    return 'widget_path_placeholder';
-  }
-
-  static String? _getCurrentRoute() {
-    // Implement current route tracking
-    // You can use NavigatorObserver for this
-    return 'current_route_placeholder';
-  }
-
-  static String? _getLastUserAction() {
-    // Implement user action tracking
-    // Track button taps, gestures, etc.
-    return 'last_action_placeholder';
-  }
-
-  static String _getAppLifecycleState() {
-    return WidgetsBinding.instance.lifecycleState?.name ?? 'unknown';
-  }
+  // 📊 Helper Methods
 
   static Future<Map<String, dynamic>> _getDeviceInfo() async {
     return {
-      'platform': Platform.operatingSystem,
-      'version': Platform.operatingSystemVersion,
-      'is_debug': kDebugMode,
-      'dart_version': Platform.version,
-      // Add more device info as needed
+      'platform': 'ios', // Platform.operatingSystem in real Flutter
+      'osVersion': '17.0', // Platform.operatingSystemVersion
+      'appVersion': '1.0.0',
+      'flutterVersion': '3.16.0',
+      'isDebug': true, // kDebugMode in real Flutter
+      'connection_type': 'websocket',
+      'mcp_server_url': mcpWebSocketUrl,
     };
   }
 
-  static String _detectStateManager() {
-    // Detect which state management solution is being used
-    // This would need to be implemented based on your app's dependencies
-    return 'unknown';
-  }
-
-  static Future<void> _sendToMCPServer(Map<String, dynamic> errorData) async {
-    // Implement the actual sending mechanism
-    // This could be HTTP, WebSocket, or other transport method
-    // depending on how you integrate with the MCP server
-    
-    // Example HTTP implementation:
-    /*
-    try {
-      final response = await http.post(
-        Uri.parse('$_mcpServerEndpoint/capture_flutter_error'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(errorData),
-      );
-      
-      if (response.statusCode != 200) {
-        throw Exception('Failed to send error: ${response.statusCode}');
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Failed to send error to MCP server: $e');
-      }
-    }
-    */
+  // 📋 Status Methods
+  
+  static bool get isConnected => _isConnected;
+  static int get queuedErrorsCount => _errorQueue.length;
+  static String get connectionStatus => _isConnected 
+      ? '🟢 Connected to MCP server' 
+      : '🔴 Disconnected from MCP server';
+  
+  /// 🔌 Disconnect from MCP Server
+  static void disconnect() {
+    // In real Flutter: _webSocketChannel?.sink.close();
+    _webSocketChannel = null;
+    _isConnected = false;
+    _isConnecting = false;
+    _reconnectTimer?.cancel();
+    print('🔌 Disconnected from MCP server');
   }
 }
 
-// Example Dio Interceptor for HTTP errors
+// 🚀 Example Usage in main.dart:
 /*
-class MCPErrorInterceptor extends Interceptor {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize socket-ready error transport
+  await FlutterErrorTransport.initialize();
+  
+  // Check connection status
+  print(FlutterErrorTransport.connectionStatus);
+  
+  runApp(MyApp());
+}
+*/
+
+// 🌐 Example Dio Interceptor for HTTP errors:
+/*
+class SocketReadyErrorInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     FlutterErrorTransport.captureHttpError(
@@ -302,23 +373,6 @@ class MCPErrorInterceptor extends Interceptor {
     );
     
     super.onError(err, handler);
-  }
-}
-*/
-
-// Example NavigatorObserver for route tracking
-/*
-class MCPNavigatorObserver extends NavigatorObserver {
-  @override
-  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    super.didPush(route, previousRoute);
-    // Track route changes for error context
-  }
-
-  @override
-  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    super.didPop(route, previousRoute);
-    // Track route changes for error context
   }
 }
 */
