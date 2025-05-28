@@ -524,8 +524,12 @@ class FlutterErrorTransport {
   }
 
   // Helper methods for Flutter error categorization (used in production Flutter setup)
-
-  // Used by FlutterError.onError handler in real Flutter apps
+  // Note: These methods are used by FlutterError.onError handler in real Flutter apps
+  // They are included here as reference implementations for production use
+  
+  /// Categorizes Flutter errors by type (used in production Flutter apps)
+  /// Called by FlutterError.onError handler when setupErrorHandlers() is enabled
+  // ignore: unused_element
   static String _categorizeFlutterError(FlutterErrorDetails details) {
     final error = details.toString().toLowerCase();
     
@@ -553,7 +557,9 @@ class FlutterErrorTransport {
     return 'framework';
   }
 
-  // Used by FlutterError.onError handler in real Flutter apps
+  /// Determines error severity level (used in production Flutter apps)
+  /// Called by FlutterError.onError handler when setupErrorHandlers() is enabled
+  // ignore: unused_element
   static String _determineSeverity(FlutterErrorDetails details) {
     final error = details.toString().toLowerCase();
     
@@ -578,7 +584,9 @@ class FlutterErrorTransport {
     return 'low';
   }
 
-  // Used by FlutterError.onError handler in real Flutter apps  
+  /// Extracts Flutter-specific context from error details (used in production Flutter apps)
+  /// Called by FlutterError.onError handler when setupErrorHandlers() is enabled  
+  // ignore: unused_element
   static Map<String, dynamic> _extractFlutterContext(FlutterErrorDetails details) {
     return {
       'library': details.library ?? 'unknown',
