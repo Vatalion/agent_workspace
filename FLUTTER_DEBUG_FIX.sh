@@ -1,0 +1,38 @@
+#!/bin/zsh
+
+echo "🔧 FLUTTER DEBUG ASSISTANT - PROPER SETUP"
+echo "========================================="
+
+echo ""
+echo "❌ CURRENT ISSUE:"
+echo "   You're running Flutter from terminal: flutter run"
+echo "   Extension monitors VS Code Debug Console, not terminal output"
+echo ""
+
+echo "✅ SOLUTION - Start Flutter via VS Code Debugger:"
+echo ""
+echo "1. Stop current Flutter session:"
+echo "   - Press 'q' in the terminal where Flutter is running"
+echo ""
+echo "2. In VS Code:"
+echo "   - Open: /Users/vitalijsimko/workspace/projects/flutter/agent_workspace/test_flutter_app"
+echo "   - Press F5 (Start Debugging)"
+echo "   - OR: Ctrl+Shift+D → Click play button"
+echo "   - Select: 'Flutter Debug Assistant Test'"
+echo ""
+echo "3. Verify Debug Console is active:"
+echo "   - View → Debug Console"
+echo "   - Should show Flutter startup messages"
+echo ""
+echo "4. Test error detection:"
+echo "   - In Flutter app: Tap '🔥 Trigger Console Errors'"
+echo "   - Should see: Notifications with '🤖 Fix This Error' buttons"
+echo ""
+
+echo "🔍 WHY THIS MATTERS:"
+echo "   ✓ VS Code Debug Console = Extension can monitor"
+echo "   ✗ Terminal output = Extension cannot see it"
+echo ""
+
+echo "📱 Once you start via F5, the extension will work perfectly!"
+echo "   All AI assistance features will activate automatically."

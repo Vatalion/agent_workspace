@@ -1,0 +1,1117 @@
+#!/usr/bin/env node
+
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import {
+  CallToolRequestSchema,
+  ListToolsRequestSchema,
+  CallToolRequest,
+  ListToolsRequest,
+} from "@modelcontextprotocol/sdk/types.js";
+import { z } from "zod";
+import { createServer } from 'http';
+import { parse } from 'url';
+
+// Flutter Data Collection Configuration
+interface ListenerConfig {
+  captureErrors: boolean;
+  captureLogs: boolean;
+  capturePerformance: boolean;
+  severityFilter: string[]; // ["low", "medium", "high", "critical"]
+  maxBufferSize: number;
+}
+
+// Default configuration
+let currentConfig: ListenerConfig = {
+  captureErrors: true,
+  captureLogs: false,
+  capturePerformance: false,
+  severityFilter: ["medium", "high", "critical"],
+  maxBufferSize: 100
+};
+
+// Data schemas
+const FlutterErrorSchema = z.object({
+  timestamp: z.string(),
+  type: z.literal("error"),
+  errorType: z.enum([
+    "widget_build",
+    "state_management", 
+    "navigation",
+    "http_api",
+    "platform_channel",
+    "memory_performance",
+    "framework",
+    "general"
+  ]),
+  severity: z.enum(["low", "medium", "high", "critical"]),
+  message: z.string(),
+  stackTrace: z.string().optional(),
+  context: z.object({
+    widgetPath: z.string().optional(),
+    routeName: z.string().optional(),
+    stateName: z.string().optional(),
+    apiEndpoint: z.string().optional(),
+    userAction: z.string().optional(),
+  }).optional(),
+  deviceInfo: z.object({
+    platform: z.enum(["android", "ios", "web", "desktop"]),
+    osVersion: z.string().optional(),
+    appVersion: z.string().optional(),
+    flutterVersion: z.string().optional(),
+  }).optional(),
+});
+
+const FlutterLogSchema = z.object({
+  timestamp: z.string(),
+  type: z.literal("log"),
+  level: z.enum(["debug", "info", "warning", "error"]),
+  message: z.string(),
+  source: z.string().optional(),
+  context: z.object({
+    routeName: z.string().optional(),
+    userAction: z.string().optional(),
+    metadata: z.record(z.any()).optional(),
+  }).optional(),
+});
+
+const FlutterPerformanceSchema = z.object({
+  timestamp: z.string(),
+  type: z.literal("performance"),
+  metric: z.enum(["frame_time", "memory_usage", "cpu_usage", "network_latency"]),
+  value: z.number(),
+  threshold: z.number().optional(),
+  context: z.object({
+    routeName: z.string().optional(),
+    operationType: z.string().optional(),
+  }).optional(),
+});
+
+// Unified data type
+type FlutterData = z.infer<typeof FlutterErrorSchema> | z.infer<typeof FlutterLogSchema> | z.infer<typeof FlutterPerformanceSchema>;
+
+// In-memory data storage for this session
+interface CapturedData {
+  id: string;
+  data: FlutterData;
+  capturedAt: Date;
+  selected: boolean;
+}
+
+class FlutterErrorTransportServer {
+  private errorEvents: Map<string, ErrorEvent> = new Map();
+  private errorPatterns: Map<string, number> = new Map();
+
+  constructor() {
+    console.error("🚀 Flutter Error Transport MCP Server initializing...");
+  }
+
+  captureError(errorData: z.infer<typeof FlutterErrorSchema>): string {
+    const errorId = `error_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    
+    const errorEvent: ErrorEvent = {
+      id: errorId,
+      error: errorData,
+      capturedAt: new Date(),
+      analyzed: false,
+    };
+
+    this.errorEvents.set(errorId, errorEvent);
+    
+    // Track error patterns
+    const patternKey = `${errorData.errorType}:${errorData.severity}`;
+    this.errorPatterns.set(patternKey, (this.errorPatterns.get(patternKey) || 0) + 1);
+
+    console.error(`📥 Captured Flutter error: ${errorId} (${errorData.errorType})`);
+    
+    // 🚀 REAL-TIME STREAMING: Broadcast error to all connected clients
+    this.broadcastErrorEvent(errorEvent);
+    
+    return errorId;
+  }
+
+  // 🔥 NEW: Real-time error streaming to connected AI systems
+  private broadcastErrorEvent(errorEvent: ErrorEvent): void {
+    const streamData = {
+      type: 'flutter_error',
+      timestamp: new Date().toISOString(),
+      event: {
+        id: errorEvent.id,
+        error: errorEvent.error,
+        capturedAt: errorEvent.capturedAt,
+        autoAnalysis: this.generateQuickAnalysis(errorEvent.error),
+        urgency: this.calculateUrgency(errorEvent.error),
+        suggested_actions: this.generateImmediateActions(errorEvent.error)
+      }
+    };
+
+    // Broadcast to all connected WebSocket clients (AI systems)
+    connectedClients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        try {
+          client.send(JSON.stringify(streamData));
+          console.error(`📡 Real-time error streamed to AI client: ${errorEvent.id}`);
+        } catch (err) {
+          console.error(`❌ Failed to stream to client:`, err);
+          connectedClients.delete(client);
+        }
+      }
+    });
+  }
+
+  // Generate immediate analysis for real-time streaming
+  private generateQuickAnalysis(error: z.infer<typeof FlutterErrorSchema>): string {
+    const analyses: Record<string, string> = {
+      widget_build: "Widget rendering issue detected. Likely related to constraints, null values, or incorrect widget hierarchy.",
+      state_management: "State management error. Check for improper state mutations, listener issues, or provider/bloc configuration.",
+      navigation: "Navigation error detected. Verify route definitions, parameters, and navigation context.",
+      http_api: "API/Network error. Check endpoint availability, request format, and error handling.",
+      platform_channel: "Platform channel communication issue. Verify native code integration and method channel setup.",
+      memory_performance: "Performance issue detected. Monitor memory usage, widget rebuilds, and async operations.",
+      framework: "Flutter framework error. Check Flutter version compatibility and framework usage patterns.",
+      general: "General application error. Review stack trace for specific cause and context."
+    };
+    
+    return analyses[error.errorType] || "Unknown error type detected.";
+  }
+
+  // Calculate error urgency for prioritization
+  private calculateUrgency(error: z.infer<typeof FlutterErrorSchema>): string {
+    if (error.severity === 'critical') return 'immediate';
+    if (error.severity === 'high') return 'urgent';
+    if (error.severity === 'medium') return 'moderate';
+    return 'low';
+  }
+
+  // Generate immediate action suggestions
+  private generateImmediateActions(error: z.infer<typeof FlutterErrorSchema>): string[] {
+    const actions: Record<string, string[]> = {
+      widget_build: [
+        "Check widget constraints and parent/child relationships",
+        "Verify all required properties are provided",
+        "Look for null values in widget construction"
+      ],
+      state_management: [
+        "Verify state provider/bloc initialization", 
+        "Check for proper state mutation patterns",
+        "Review listener and subscription management"
+      ],
+      navigation: [
+        "Verify route is properly defined in app routing",
+        "Check navigation context and parameters",
+        "Review navigation stack state"
+      ],
+      http_api: [
+        "Check network connectivity and endpoint status",
+        "Verify request headers and authentication",
+        "Review error handling and timeout settings"
+      ],
+      platform_channel: [
+        "Verify platform-specific code is properly implemented",
+        "Check method channel name consistency",
+        "Review native code integration"
+      ],
+      memory_performance: [
+        "Monitor widget rebuild frequency",
+        "Check for memory leaks in listeners/subscriptions",
+        "Review async operation cleanup"
+      ]
+    };
+    
+    return actions[error.errorType] || ["Review error context and stack trace", "Check Flutter documentation for similar issues"];
+  }
+
+  analyzeError(errorId: string, analysisType: string): string {
+    const errorEvent = this.errorEvents.get(errorId);
+    if (!errorEvent) {
+      return `Error ${errorId} not found in capture history.`;
+    }
+
+    const { error } = errorEvent;
+    errorEvent.analyzed = true;
+
+    switch (analysisType) {
+      case "root_cause":
+        return this.generateRootCauseAnalysis(error);
+      case "debugging_steps":
+        return this.generateDebuggingSteps(error);
+      case "similar_errors":
+        return this.findSimilarErrors(error);
+      case "fix_suggestions":
+        return this.generateFixSuggestions(error);
+      case "prevention_tips":
+        return this.generatePreventionTips(error);
+      default:
+        return "Unknown analysis type requested.";
+    }
+  }
+
+  private generateRootCauseAnalysis(error: z.infer<typeof FlutterErrorSchema>): string {
+    const analysis = [`🔍 **Root Cause Analysis for ${error.errorType} Error**\n`];
+    
+    switch (error.errorType) {
+      case "widget_build":
+        analysis.push(
+          "**Likely Cause**: Widget build method throwing exception",
+          "- Check for null values in widget properties",
+          "- Verify state is properly initialized before build",
+          "- Look for async operations in build method",
+          "- Ensure context is valid when building"
+        );
+        break;
+      
+      case "state_management":
+        analysis.push(
+          "**Likely Cause**: State management flow issue",
+          "- Bloc/Cubit state not properly handled",
+          "- Provider context missing or disposed",
+          "- State mutation outside proper methods",
+          "- Race condition in state updates"
+        );
+        break;
+
+      case "navigation":
+        analysis.push(
+          "**Likely Cause**: Navigation stack corruption",
+          "- Invalid route name or arguments",
+          "- Navigator context disposed",
+          "- Duplicate route push without pop",
+          "- Missing route in route table"
+        );
+        break;
+
+      case "http_api":
+        analysis.push(
+          "**Likely Cause**: Network or API integration issue",
+          "- Network connectivity problems",
+          "- Invalid API endpoint or parameters",
+          "- Authentication/authorization failure",
+          "- Response parsing error",
+          "- Timeout or connection refused"
+        );
+        break;
+
+      default:
+        analysis.push(
+          "**Generic Analysis**:",
+          "- Check error message and stack trace carefully",
+          "- Look for patterns in error occurrence",
+          "- Verify environment and dependencies",
+          "- Test in isolation if possible"
+        );
+    }
+
+    if (error.context?.widgetPath) {
+      analysis.push(`\n**Widget Context**: ${error.context.widgetPath}`);
+    }
+
+    if (error.stackTrace) {
+      analysis.push(`\n**Stack Trace Available**: Yes - focus on the top frames for immediate cause`);
+    }
+
+    return analysis.join("\n");
+  }
+
+  private generateDebuggingSteps(error: z.infer<typeof FlutterErrorSchema>): string {
+    const steps = [`🛠️ **Debugging Steps for ${error.errorType} Error**\n`];
+    
+    steps.push("**Immediate Actions:**");
+    steps.push("1. 📋 Copy the full error message and stack trace");
+    steps.push("2. 🔄 Try to reproduce the error consistently");
+    steps.push("3. 📱 Test on different devices/platforms if possible");
+    
+    switch (error.errorType) {
+      case "widget_build":
+        steps.push(
+          "\n**Widget Build Debugging:**",
+          "4. Add debug prints in build method",
+          "5. Check widget tree structure with Flutter Inspector",
+          "6. Verify all required parameters are non-null",
+          "7. Use debugDumpApp() to inspect widget tree",
+          "8. Add error boundary widgets around problematic areas"
+        );
+        break;
+        
+      case "state_management":
+        steps.push(
+          "\n**State Management Debugging:**", 
+          "4. Add logging to state transitions",
+          "5. Check provider/bloc scope and lifecycle",
+          "6. Verify state updates are on main thread",
+          "7. Use Redux DevTools or Bloc Inspector",
+          "8. Test state changes in isolation"
+        );
+        break;
+
+      case "http_api":
+        steps.push(
+          "\n**API Error Debugging:**",
+          "4. Test API endpoint with Postman/curl",
+          "5. Check network connectivity and permissions",
+          "6. Verify request headers and authentication",
+          "7. Add detailed logging for requests/responses",
+          "8. Test with different network conditions"
+        );
+        break;
+    }
+
+    steps.push(
+      "\n**Advanced Debugging:**",
+      "9. 🐛 Use Flutter debugger with breakpoints",
+      "10. 📊 Check memory usage and performance",
+      "11. 🧪 Write unit tests to isolate the issue",
+      "12. 🔍 Enable verbose logging in debug mode"
+    );
+
+    return steps.join("\n");
+  }
+
+  private findSimilarErrors(error: z.infer<typeof FlutterErrorSchema>): string {
+    const similarErrors = Array.from(this.errorEvents.values())
+      .filter(event => 
+        event.error.errorType === error.errorType && 
+        event.id !== `temp_${Date.now()}`
+      )
+      .slice(0, 5);
+
+    if (similarErrors.length === 0) {
+      return "🔍 **Similar Errors**: No similar errors found in current session.";
+    }
+
+    const analysis = ["🔍 **Similar Errors Found:**\n"];
+    
+    similarErrors.forEach((event, index) => {
+      analysis.push(`${index + 1}. **${event.error.errorType}** (${event.error.severity})`);
+      analysis.push(`   Message: ${event.error.message.substring(0, 100)}...`);
+      analysis.push(`   Time: ${event.capturedAt.toLocaleTimeString()}`);
+      if (event.error.context) {
+        analysis.push(`   Context: ${JSON.stringify(event.error.context)}`);
+      }
+      analysis.push("");
+    });
+
+    const patternKey = `${error.errorType}:${error.severity}`;
+    const occurrences = this.errorPatterns.get(patternKey) || 0;
+    analysis.push(`**Pattern Analysis**: This ${error.errorType} error has occurred ${occurrences} times.`);
+
+    return analysis.join("\n");
+  }
+
+  private generateFixSuggestions(error: z.infer<typeof FlutterErrorSchema>): string {
+    const suggestions = [`💡 **Fix Suggestions for ${error.errorType} Error**\n`];
+
+    switch (error.errorType) {
+      case "widget_build":
+        suggestions.push(
+          "**Common Fixes:**",
+          "1. Add null checks: `widget?.property ?? defaultValue`",
+          "2. Use FutureBuilder/StreamBuilder for async data",
+          "3. Wrap widgets with error boundaries",
+          "4. Initialize state before first build",
+          "",
+          "**Code Example:**",
+          "```dart",
+          "Widget build(BuildContext context) {",
+          "  return data != null ? MyWidget(data: data!) : LoadingWidget();",
+          "}",
+          "```"
+        );
+        break;
+
+      case "state_management":
+        suggestions.push(
+          "**State Management Fixes:**",
+          "1. Use BlocListener for side effects",
+          "2. Implement proper error states in your bloc",
+          "3. Use context.read() instead of context.watch() for events",
+          "4. Add try-catch blocks around state emissions",
+          "",
+          "**Code Example:**",
+          "```dart",
+          "try {",
+          "  emit(LoadingState());",
+          "  final data = await repository.fetchData();",
+          "  emit(LoadedState(data));",
+          "} catch (e) {",
+          "  emit(ErrorState(e.toString()));",
+          "}",
+          "```"
+        );
+        break;
+
+      case "http_api":
+        suggestions.push(
+          "**API Integration Fixes:**",
+          "1. Add proper error handling with try-catch",
+          "2. Implement retry logic with exponential backoff",
+          "3. Validate responses before parsing",
+          "4. Use Dio interceptors for consistent error handling",
+          "",
+          "**Code Example:**",
+          "```dart",
+          "try {",
+          "  final response = await dio.get('/api/data');",
+          "  return DataModel.fromJson(response.data);",
+          "} on DioException catch (e) {",
+          "  throw ApiException(e.message);",
+          "}",
+          "```"
+        );
+        break;
+
+      default:
+        suggestions.push(
+          "**General Fixes:**",
+          "1. Add comprehensive error logging",
+          "2. Implement graceful degradation",
+          "3. Use assert statements for debug mode",
+          "4. Add user-friendly error messages"
+        );
+    }
+
+    suggestions.push(
+      "\n**Prevention Strategies:**",
+      "• Use static analysis tools (dart analyze)",
+      "• Write unit and widget tests",
+      "• Implement error monitoring in production",
+      "• Regular code reviews focusing on error handling"
+    );
+
+    return suggestions.join("\n");
+  }
+
+  private generatePreventionTips(error: z.infer<typeof FlutterErrorSchema>): string {
+    return `🛡️ **Prevention Tips for ${error.errorType} Errors**
+
+**Development Practices:**
+• Use strict null safety and sound type system
+• Implement comprehensive unit and widget tests
+• Use Flutter's built-in error reporting tools
+• Regular static analysis with dart analyze
+
+**Code Quality:**
+• Add error boundaries around critical UI components
+• Implement proper logging throughout the app
+• Use design patterns that handle errors gracefully
+• Document error handling strategies for the team
+
+**Monitoring & Detection:**
+• Set up error monitoring (Sentry, Crashlytics)
+• Add performance monitoring
+• Use Flutter's built-in error reporting
+• Implement user feedback collection
+
+**Architecture:**
+• Use dependency injection for testability
+• Separate concerns with clean architecture
+• Implement retry mechanisms for network calls
+• Design for offline-first capabilities
+
+**Flutter-Specific:**
+• Keep build methods pure and fast
+• Use proper lifecycle management
+• Handle platform differences gracefully
+• Test on multiple devices and OS versions`;
+  }
+
+  getErrorSummary(): string {
+    const totalErrors = this.errorEvents.size;
+    const errorsByType = new Map<string, number>();
+    const errorsBySeverity = new Map<string, number>();
+
+    this.errorEvents.forEach(event => {
+      const type = event.error.errorType;
+      const severity = event.error.severity;
+      
+      errorsByType.set(type, (errorsByType.get(type) || 0) + 1);
+      errorsBySeverity.set(severity, (errorsBySeverity.get(severity) || 0) + 1);
+    });
+
+    const summary = [
+      "📊 **Error Transport Session Summary**\n",
+      `**Total Errors Captured**: ${totalErrors}`,
+      "",
+      "**Errors by Type:**"
+    ];
+
+    for (const [type, count] of errorsByType) {
+      summary.push(`• ${type}: ${count}`);
+    }
+
+    summary.push("", "**Errors by Severity:**");
+    for (const [severity, count] of errorsBySeverity) {
+      summary.push(`• ${severity}: ${count}`);
+    }
+
+    const analyzedCount = Array.from(this.errorEvents.values()).filter(e => e.analyzed).length;
+    summary.push(`\n**Analysis Status**: ${analyzedCount}/${totalErrors} errors analyzed`);
+
+    return summary.join("\n");
+  }
+
+  // Get real-time streaming statistics
+  getStreamingStats(): object {
+    return {
+      totalErrors: this.errorEvents.size,
+      connectedClients: connectedClients.size,
+      serverStatus: wss ? 'running' : 'stopped',
+      errorPatterns: Object.fromEntries(this.errorPatterns),
+      recentErrors: Array.from(this.errorEvents.values())
+        .sort((a, b) => b.capturedAt.getTime() - a.capturedAt.getTime())
+        .slice(0, 5)
+        .map(event => ({
+          id: event.id,
+          type: event.error.errorType,
+          severity: event.error.severity,
+          capturedAt: event.capturedAt.toISOString()
+        }))
+    };
+  }
+
+  // Broadcast streaming stats to connected clients
+  broadcastStreamingStats(): void {
+    const statsData = {
+      type: 'streaming_stats',
+      timestamp: new Date().toISOString(),
+      stats: this.getStreamingStats()
+    };
+
+    connectedClients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        try {
+          client.send(JSON.stringify(statsData));
+        } catch (err) {
+          console.error(`❌ Failed to send stats to client:`, err);
+          connectedClients.delete(client);
+        }
+      }
+    });
+  }
+}
+
+// Create server instance
+const server = new Server(
+  {
+    name: "flutter-error-transport",
+    version: "1.0.0",
+  },
+  {
+    capabilities: {
+      tools: {},
+    },
+  }
+);
+
+// Initialize error transport server
+const errorTransport = new FlutterErrorTransportServer();
+
+// Register tools
+server.setRequestHandler(ListToolsRequestSchema, async () => {
+  return {
+    tools: [
+      {
+        name: "capture_flutter_error",
+        description: "Capture and categorize a Flutter runtime error for analysis and debugging assistance",
+        inputSchema: {
+          type: "object",
+          properties: {
+            timestamp: {
+              type: "string",
+              description: "ISO timestamp when the error occurred"
+            },
+            errorType: {
+              type: "string",
+              enum: ["widget_build", "state_management", "navigation", "http_api", "platform_channel", "memory_performance", "framework", "general"],
+              description: "Category of the Flutter error"
+            },
+            severity: {
+              type: "string", 
+              enum: ["low", "medium", "high", "critical"],
+              description: "Severity level of the error"
+            },
+            message: {
+              type: "string",
+              description: "The error message text"
+            },
+            stackTrace: {
+              type: "string",
+              description: "Stack trace information (optional)"
+            },
+            context: {
+              type: "object",
+              description: "Additional context about where/when the error occurred",
+              properties: {
+                widgetPath: { type: "string" },
+                routeName: { type: "string" },
+                stateName: { type: "string" },
+                apiEndpoint: { type: "string" },
+                userAction: { type: "string" }
+              }
+            },
+            deviceInfo: {
+              type: "object",
+              description: "Device and platform information",
+              properties: {
+                platform: { 
+                  type: "string",
+                  enum: ["android", "ios", "web", "desktop"]
+                },
+                osVersion: { type: "string" },
+                appVersion: { type: "string" },
+                flutterVersion: { type: "string" }
+              }
+            },
+            reproduction: {
+              type: "object",
+              description: "Information about reproducing the error",
+              properties: {
+                steps: { 
+                  type: "array",
+                  items: { type: "string" }
+                },
+                frequency: {
+                  type: "string",
+                  enum: ["always", "frequent", "occasional", "rare"]
+                },
+                conditions: { type: "string" }
+              }
+            }
+          },
+          required: ["timestamp", "errorType", "severity", "message"]
+        }
+      },
+      {
+        name: "analyze_flutter_error",
+        description: "Analyze a captured Flutter error and provide debugging insights",
+        inputSchema: {
+          type: "object",
+          properties: {
+            errorId: {
+              type: "string",
+              description: "ID of the captured error to analyze"
+            },
+            analysisType: {
+              type: "string",
+              enum: ["root_cause", "debugging_steps", "similar_errors", "fix_suggestions", "prevention_tips"],
+              description: "Type of analysis to perform"
+            }
+          },
+          required: ["errorId", "analysisType"]
+        }
+      },
+      {
+        name: "get_error_summary", 
+        description: "Get a summary of all captured errors in the current session",
+        inputSchema: {
+          type: "object",
+          properties: {},
+          additionalProperties: false
+        }
+      },
+      {
+        name: "flutter_debug_assistant",
+        description: "Get immediate debugging assistance for Flutter development issues",
+        inputSchema: {
+          type: "object",
+          properties: {
+            issue: {
+              type: "string",
+              description: "Description of the Flutter development issue or question"
+            },
+            errorType: {
+              type: "string",
+              enum: ["widget_build", "state_management", "navigation", "http_api", "platform_channel", "memory_performance", "framework", "general"],
+              description: "Type of Flutter issue (optional)"
+            },
+            codeSnippet: {
+              type: "string", 
+              description: "Relevant code snippet (optional)"
+            }
+          },
+          required: ["issue"]
+        }
+      },
+      {
+        name: "streaming_control",
+        description: "Control real-time error streaming to AI systems via WebSocket",
+        inputSchema: {
+          type: "object",
+          properties: {
+            action: {
+              type: "string",
+              enum: ["status", "start", "stop", "restart", "list_clients"],
+              description: "Action to perform on the streaming server"
+            },
+            port: {
+              type: "number",
+              description: "Port for WebSocket server (default: 8080, only used with start/restart)"
+            },
+            filters: {
+              type: "object",
+              description: "Error filters for streaming (optional)",
+              properties: {
+                errorTypes: {
+                  type: "array",
+                  items: {
+                    type: "string",
+                    enum: ["widget_build", "state_management", "navigation", "http_api", "platform_channel", "memory_performance", "framework", "general"]
+                  }
+                },
+                severityLevels: {
+                  type: "array",
+                  items: {
+                    type: "string",
+                    enum: ["low", "medium", "high", "critical"]
+                  }
+                }
+              }
+            }
+          },
+          required: ["action"]
+        }
+      }
+    ]
+  };
+});
+
+server.setRequestHandler(CallToolRequestSchema, async (request: CallToolRequest) => {
+  const { name, arguments: args } = request.params;
+
+  try {
+    switch (name) {
+      case "capture_flutter_error": {
+        const errorData = FlutterErrorSchema.parse(args);
+        const errorId = errorTransport.captureError(errorData);
+        
+        return {
+          content: [
+            {
+              type: "text",
+              text: `✅ **Flutter Error Captured Successfully**\n\n**Error ID**: ${errorId}\n**Type**: ${errorData.errorType}\n**Severity**: ${errorData.severity}\n**Message**: ${errorData.message}\n\nUse the error ID with \`analyze_flutter_error\` to get detailed analysis and debugging suggestions.`
+            }
+          ]
+        };
+      }
+
+      case "analyze_flutter_error": {
+        const errorId = args?.errorId as string;
+        const analysisType = args?.analysisType as string;
+        
+        if (!errorId || !analysisType) {
+          throw new Error("Both errorId and analysisType are required");
+        }
+
+        const analysis = errorTransport.analyzeError(errorId, analysisType);
+        
+        return {
+          content: [
+            {
+              type: "text", 
+              text: analysis
+            }
+          ]
+        };
+      }
+
+      case "get_error_summary": {
+        const summary = errorTransport.getErrorSummary();
+        
+        return {
+          content: [
+            {
+              type: "text",
+              text: summary
+            }
+          ]
+        };
+      }
+
+      case "flutter_debug_assistant": {
+        const issue = args?.issue as string;
+        const errorType = args?.errorType as string;
+        const codeSnippet = args?.codeSnippet as string;
+
+        if (!issue) {
+          throw new Error("Issue description is required");
+        }
+
+        let assistance = "🤖 **Flutter Debug Assistant**\n\n";
+        assistance += `**Your Issue**: ${issue}\n\n`;
+
+        if (errorType) {
+          assistance += `**Error Category**: ${errorType}\n\n`;
+        }
+
+        assistance += "**Immediate Suggestions**:\n";
+        assistance += "1. 🔍 Check the error message and stack trace carefully\n";
+        assistance += "2. 🧪 Try to reproduce the issue in a minimal test case\n";
+        assistance += "3. 📚 Review Flutter documentation for the specific API\n";
+        assistance += "4. 🐛 Use Flutter Inspector to examine widget tree\n\n";
+
+        if (codeSnippet) {
+          assistance += "**Code Review**:\n";
+          assistance += "I can see your code snippet. Here are some quick observations:\n";
+          assistance += "• Check for null safety violations\n";
+          assistance += "• Ensure proper async handling\n";
+          assistance += "• Verify widget lifecycle management\n";
+          assistance += "• Look for performance bottlenecks\n\n";
+        }
+
+        assistance += "**Next Steps**:\n";
+        assistance += "• Use `capture_flutter_error` if you have a specific error\n";
+        assistance += "• Provide more details about the specific issue\n";
+        assistance += "• Share relevant code snippets for detailed analysis\n";
+        assistance += "• Consider using Flutter debugging tools (dart analyze, flutter doctor)";
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: assistance
+            }
+          ]
+        };
+      }
+
+      case "streaming_control": {
+        const action = args?.action as string;
+        const port = args?.port as number || 8080;
+        const filters = args?.filters as any;
+
+        if (!action) {
+          throw new Error("Action is required");
+        }
+
+        let response = "";
+
+        switch (action) {
+          case "status":
+            response = `🌐 **Real-time Streaming Status**\n\n`;
+            response += `• WebSocket Server: ${wss ? "🟢 Running" : "🔴 Stopped"}\n`;
+            response += `• Connected Clients: ${connectedClients.size}\n`;
+            response += `• Server Port: ${wss ? port : "N/A"}\n`;
+            response += `• Connection URL: ${wss ? `ws://localhost:${port}` : "Server not running"}\n\n`;
+            
+            if (connectedClients.size > 0) {
+              response += `**Connected AI Systems**: ${connectedClients.size} active connections\n`;
+              response += `Real-time error streaming is active. All captured errors are automatically broadcasted.`;
+            } else {
+              response += `**No AI Systems Connected**\nTo connect an AI system:\n`;
+              response += `• Use WebSocket client: ws://localhost:${port}\n`;
+              response += `• Errors will be streamed in real-time upon connection`;
+            }
+            break;
+
+          case "start":
+            if (wss) {
+              response = `⚠️ **WebSocket server already running**\n\nUse \`restart\` action to restart with new settings.`;
+            } else {
+              try {
+                await initializeWebSocketServer(port);
+                response = `✅ **Real-time Streaming Started**\n\n`;
+                response += `• WebSocket Server: 🟢 Running on port ${port}\n`;
+                response += `• Connection URL: ws://localhost:${port}\n`;
+                response += `• Ready to stream Flutter errors to AI systems\n\n`;
+                response += `**Connect AI systems to start receiving real-time error data**`;
+              } catch (error) {
+                response = `❌ **Failed to start streaming server**\n\nError: ${error}`;
+              }
+            }
+            break;
+
+          case "stop":
+            if (!wss) {
+              response = `⚠️ **WebSocket server not running**`;
+            } else {
+              wss.close();
+              if (httpServer) httpServer.close();
+              wss = null;
+              httpServer = null;
+              connectedClients.clear();
+              response = `🛑 **Real-time Streaming Stopped**\n\nWebSocket server has been shut down.`;
+            }
+            break;
+
+          case "restart":
+            // Stop existing server
+            if (wss) {
+              wss.close();
+              if (httpServer) httpServer.close();
+              wss = null;
+              httpServer = null;
+              connectedClients.clear();
+            }
+            
+            // Start new server
+            try {
+              await initializeWebSocketServer(port);
+              response = `🔄 **Real-time Streaming Restarted**\n\n`;
+              response += `• WebSocket Server: 🟢 Running on port ${port}\n`;
+              response += `• Connection URL: ws://localhost:${port}\n`;
+              response += `• Previous connections cleared, ready for new AI clients`;
+            } catch (error) {
+              response = `❌ **Failed to restart streaming server**\n\nError: ${error}`;
+            }
+            break;
+
+          case "list_clients":
+            response = `👥 **Connected AI Systems**\n\n`;
+            response += `• Total Connections: ${connectedClients.size}\n`;
+            
+            if (connectedClients.size > 0) {
+              response += `• Status: 🟢 Actively streaming errors\n`;
+              response += `• Real-time Features: Error capture, analysis, debugging assistance\n\n`;
+              response += `**Stream Data Format**: JSON messages containing:\n`;
+              response += `• Error details and categorization\n`;
+              response += `• Automatic analysis and urgency assessment\n`;
+              response += `• Immediate action suggestions\n`;
+              response += `• Device and context information`;
+            } else {
+              response += `• Status: 🔴 No active connections\n\n`;
+              response += `**To connect AI systems**:\n`;
+              response += `• WebSocket URL: ws://localhost:${port}\n`;
+              response += `• Protocol: JSON message streaming\n`;
+              response += `• Auto-streaming: All captured errors broadcast immediately`;
+            }
+            break;
+
+          default:
+            throw new Error(`Unknown streaming action: ${action}`);
+        }
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: response
+            }
+          ]
+        };
+      }
+
+      default:
+        throw new Error(`Unknown tool: ${name}`);
+    }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return {
+      content: [
+        {
+          type: "text",
+          text: `❌ **Error**: ${errorMessage}`
+        }
+      ],
+      isError: true
+    };
+  }
+});
+
+// Initialize WebSocket server for real-time streaming
+function initializeWebSocketServer(port: number = 8080): Promise<void> {
+  return new Promise((resolve, reject) => {
+    try {
+      // Create HTTP server for WebSocket upgrade
+      httpServer = createServer();
+      
+      // Create WebSocket server
+      wss = new WebSocketServer({ server: httpServer });
+      
+      wss.on('connection', (ws: WebSocket, request) => {
+        console.error(`🔌 New AI client connected from ${request.socket.remoteAddress}`);
+        connectedClients.add(ws);
+        
+        // Send welcome message
+        ws.send(JSON.stringify({
+          type: 'connection_established',
+          timestamp: new Date().toISOString(),
+          message: 'Connected to Flutter Error Transport Stream',
+          server_version: '1.0.0'
+        }));
+        
+        ws.on('message', (data) => {
+          try {
+            const message = JSON.parse(data.toString());
+            console.error(`📨 Received message from AI client:`, message);
+            
+            // Handle client commands (e.g., subscription preferences)
+            if (message.type === 'subscribe') {
+              ws.send(JSON.stringify({
+                type: 'subscription_confirmed',
+                timestamp: new Date().toISOString(),
+                filters: message.filters || 'all'
+              }));
+            }
+          } catch (err) {
+            console.error(`❌ Failed to parse client message:`, err);
+          }
+        });
+        
+        ws.on('close', () => {
+          console.error(`🔌 AI client disconnected`);
+          connectedClients.delete(ws);
+        });
+        
+        ws.on('error', (error) => {
+          console.error(`❌ WebSocket client error:`, error);
+          connectedClients.delete(ws);
+        });
+      });
+      
+      httpServer.listen(port, () => {
+        console.error(`🌐 Real-time error streaming server running on port ${port}`);
+        console.error(`📡 AI systems can connect via: ws://localhost:${port}`);
+        resolve();
+      });
+      
+      httpServer.on('error', (error: Error) => {
+        console.error(`❌ HTTP server error:`, error);
+        reject(error);
+      });
+      
+    } catch (error) {
+      console.error(`❌ Failed to initialize WebSocket server:`, error);
+      reject(error);
+    }
+  });
+}
+
+// Graceful shutdown
+process.on('SIGINT', () => {
+  console.error('\n🛑 Shutting down Flutter Error Transport Server...');
+  
+  if (wss) {
+    wss.close(() => {
+      console.error('📡 WebSocket server closed');
+    });
+  }
+  
+  if (httpServer) {
+    httpServer.close(() => {
+      console.error('🌐 HTTP server closed');
+    });
+  }
+  
+  process.exit(0);
+});
+
+// Start the server
+async function main() {
+  try {
+    // Initialize WebSocket server for real-time streaming
+    await initializeWebSocketServer(8080);
+    
+    // Start MCP server
+    const transport = new StdioServerTransport();
+    await server.connect(transport);
+    console.error("🚀 Flutter Error Transport MCP Server running on stdio");
+    console.error("🔥 Real-time error streaming: ENABLED");
+  } catch (error) {
+    console.error("❌ Failed to start server:", error);
+    process.exit(1);
+  }
+}
+
+main().catch((error) => {
+  console.error("❌ Fatal error in main():", error);
+  process.exit(1);
+});
