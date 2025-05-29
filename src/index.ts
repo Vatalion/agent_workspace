@@ -3,12 +3,12 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
+    CallToolRequestSchema,
+    ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
-import { z } from "zod";
 import { createServer } from 'node:http';
 import { parse } from 'node:url';
+import { z } from "zod";
 
 // Flutter Data Collection Configuration
 interface ListenerConfig {
@@ -499,7 +499,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           content: [
             {
               type: "text",
-              text: debugAssistant.getCapturedData(args?.type, args?.limit),
+              text: debugAssistant.getCapturedData(
+                args?.type as string | undefined, 
+                args?.limit as number | undefined
+              ),
             },
           ],
         };

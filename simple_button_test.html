@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Test</title>
+    <style>
+        .control-button {
+            padding: 8px 16px;
+            margin: 4px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .primary { background: #007acc; color: white; }
+        .danger { background: #d73a49; color: white; }
+        .secondary { background: #6c757d; color: white; }
+    </style>
+</head>
+<body>
+    <h1>Button Functionality Test</h1>
+    
+    <button class="control-button primary" onclick="handleServerAction('start')">Start Server</button>
+    <button class="control-button danger" onclick="handleServerAction('stop')">Stop Server</button>
+    <button class="control-button secondary" onclick="handleServerAction('restart')">Restart Server</button>
+    
+    <div id="output" style="margin-top: 20px; padding: 10px; background: #f0f0f0; font-family: monospace;"></div>
+    
+    <script>
+        function handleServerAction(action) {
+            console.log('🔥 Button clicked:', action);
+            
+            const output = document.getElementById('output');
+            output.innerHTML += `<div>🔥 Button clicked: ${action} at ${new Date().toLocaleTimeString()}</div>`;
+            
+            // Simulate the vscode.postMessage call
+            try {
+                console.log('📤 Would send message:', action + 'Server');
+                output.innerHTML += `<div>📤 Would send message: ${action}Server</div>`;
+                
+                // Test actual HTTP call to server
+                fetch('http://localhost:3000/health')
+                    .then(response => response.json())
+                    .then(data => {
+                        output.innerHTML += `<div>✅ Server responded: ${JSON.stringify(data)}</div>`;
+                    })
+                    .catch(error => {
+                        output.innerHTML += `<div>❌ Server error: ${error.message}</div>`;
+                    });
+                    
+            } catch (error) {
+                console.error('❌ Error:', error);
+                output.innerHTML += `<div>❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Test on page load
+        window.onload = function() {
+            document.getElementById('output').innerHTML = '<div>✅ Page loaded, buttons should work</div>';
+        };
+    </script>
+</body>
+</html> 

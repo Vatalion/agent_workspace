@@ -2,44 +2,134 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Build MCP Server",
-			"type": "shell",
-			"command": "npm",
-			"args": [
-				"run",
-				"build"
-			],
+			"label": "npm: package",
+			"type": "npm",
+			"script": "package",
+			"path": "flutter_debug_extension/",
 			"group": "build",
-			"problemMatcher": [
-				"$tsc"
-			],
-			"isBackground": false
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared"
+			},
+			"problemMatcher": []
 		},
 		{
-			"label": "Run MCP Server",
+			"label": "npm: build",
+			"type": "npm",
+			"script": "build",
+			"path": "flutter_debug_extension/",
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "flutter: clean",
 			"type": "shell",
-			"command": "npm",
+			"command": "flutter",
+			"args": ["clean"],
+			"options": {
+				"cwd": "${workspaceFolder}/test_flutter_app"
+			},
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "flutter: pub get",
+			"type": "shell",
+			"command": "flutter",
+			"args": ["pub", "get"],
+			"options": {
+				"cwd": "${workspaceFolder}/test_flutter_app"
+			},
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "launch-flutter-app",
+			"type": "shell",
+			"command": "flutter",
 			"args": [
-				"start"
+				"run",
+				"--debug",
+				"--dart-define=FLUTTER_DEBUG_ASSISTANT_ENABLED=true"
 			],
+			"options": {
+				"cwd": "${workspaceFolder}/test_flutter_app"
+			},
 			"group": "test",
-			"dependsOn": "Build MCP Server",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new"
+			},
 			"isBackground": true,
 			"problemMatcher": []
 		},
 		{
-			"label": "Watch Build",
+			"label": "install-extension",
 			"type": "shell",
-			"command": "npm",
-			"args": [
-				"run",
-				"build:watch"
-			],
+			"command": "./quick_install.sh",
+			"options": {
+				"cwd": "${workspaceFolder}/flutter_debug_extension"
+			},
 			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new"
+			}
+		},
+		{
+			"label": "test-extension",
+			"type": "shell",
+			"command": "./test_extension.sh",
+			"options": {
+				"cwd": "${workspaceFolder}/flutter_debug_extension"
+			},
+			"group": "test",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new"
+			}
+		},
+		{
+			"label": "start-mcp-server",
+			"type": "shell",
+			"command": "node",
+			"args": ["mcp-server.js", "--port", "3000"],
+			"options": {
+				"cwd": "${workspaceFolder}/flutter_debug_extension"
+			},
+			"group": "test",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "new"
+			},
 			"isBackground": true,
-			"problemMatcher": [
-				"$tsc-watch"
-			]
+			"problemMatcher": []
 		}
 	]
 }

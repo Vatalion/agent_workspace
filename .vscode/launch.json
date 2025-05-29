@@ -1,0 +1,166 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "🚀 Flutter Debug Assistant Test App",
+            "cwd": "test_flutter_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "program": "lib/main.dart",
+            "console": "debugConsole",
+            "args": [
+                "--dart-define=FLUTTER_DEBUG_ASSISTANT_ENABLED=true",
+                "--debug",
+                "--verbose"
+            ],
+            "env": {
+                "FLUTTER_DEBUG_ASSISTANT_TEST": "true"
+            }
+        },
+        {
+            "name": "🔧 Flutter Debug Assistant Extension",
+            "type": "extensionHost",
+            "request": "launch",
+            "cwd": "flutter_debug_extension",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}/flutter_debug_extension",
+                "${workspaceFolder}/test_flutter_app"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/flutter_debug_extension/dist/**/*.js"
+            ],
+            "preLaunchTask": "npm: package",
+            "presentation": {
+                "group": "extension",
+                "order": 1
+            }
+        },
+        {
+            "name": "🎯 Extension + Flutter App (Combined)",
+            "type": "extensionHost",
+            "request": "launch",
+            "cwd": "flutter_debug_extension",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}/flutter_debug_extension",
+                "${workspaceFolder}/test_flutter_app"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/flutter_debug_extension/dist/**/*.js"
+            ],
+            "preLaunchTask": "npm: package",
+            "postDebugTask": "launch-flutter-app",
+            "presentation": {
+                "group": "combined",
+                "order": 1
+            }
+        },
+        {
+            "name": "📱 Flutter App (Profile Mode)",
+            "cwd": "test_flutter_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define=FLUTTER_DEBUG_ASSISTANT_ENABLED=true"
+            ]
+        },
+        {
+            "name": "📦 Flutter App (Release Mode)",
+            "cwd": "test_flutter_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "program": "lib/main.dart"
+        },
+        {
+            "name": "🧪 Test Console Errors",
+            "cwd": "test_flutter_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "program": "lib/test_console_error.dart",
+            "console": "debugConsole",
+            "args": [
+                "--dart-define=FLUTTER_DEBUG_ASSISTANT_ENABLED=true",
+                "--debug"
+            ]
+        },
+        {
+            "name": "🔴 Test Breakpoint Errors",
+            "cwd": "test_flutter_app",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "debug",
+            "program": "lib/test_breakpoint_errors.dart",
+            "console": "debugConsole",
+            "args": [
+                "--dart-define=FLUTTER_DEBUG_ASSISTANT_ENABLED=true",
+                "--debug"
+            ]
+        },
+        {
+            "name": "🌐 MCP Server Test",
+            "cwd": "${workspaceFolder}/flutter_debug_extension",
+            "runtimeExecutable": "node",
+            "runtimeArgs": [
+                "mcp-server.js",
+                "--port",
+                "3000"
+            ],
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/flutter_debug_extension/mcp-server.js",
+            "args": ["--port", "3000"],
+            "console": "integratedTerminal",
+            "env": {
+                "NODE_ENV": "development",
+                "DEBUG": "mcp:*"
+            },
+            "presentation": {
+                "group": "server",
+                "order": 1
+            }
+        }
+    ],
+    "compounds": [
+        {
+            "name": "🚀 Full Debug Suite",
+            "configurations": [
+                "🔧 Flutter Debug Assistant Extension",
+                "🚀 Flutter Debug Assistant Test App"
+            ],
+            "presentation": {
+                "group": "compound",
+                "order": 1
+            }
+        },
+        {
+            "name": "🌐 Extension + MCP Server",
+            "configurations": [
+                "🔧 Flutter Debug Assistant Extension",
+                "🌐 MCP Server Test"
+            ],
+            "presentation": {
+                "group": "compound",
+                "order": 2
+            }
+        },
+        {
+            "name": "🎯 Complete Test Environment",
+            "configurations": [
+                "🔧 Flutter Debug Assistant Extension",
+                "🌐 MCP Server Test",
+                "🚀 Flutter Debug Assistant Test App"
+            ],
+            "presentation": {
+                "group": "compound",
+                "order": 3
+            }
+        }
+    ]
+}
