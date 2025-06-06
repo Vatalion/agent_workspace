@@ -143,8 +143,10 @@ The Flutter app will now send data according to this configuration.`;
     // Maintain buffer size limit
     if (this.capturedData.size > currentConfig.maxBufferSize) {
       const oldestId = Array.from(this.capturedData.keys())[0];
-      this.capturedData.delete(oldestId);
-      this.selectedForAI.delete(oldestId);
+      if (oldestId) {
+        this.capturedData.delete(oldestId);
+        this.selectedForAI.delete(oldestId);
+      }
     }
 
     console.error(`📥 Captured Flutter ${data.type}: ${dataId}`);
@@ -167,7 +169,8 @@ The Flutter app will now send data according to this configuration.`;
       const logLevelMap: Record<string, number> = { debug: 0, info: 1, warning: 2, error: 3 };
       const minLevel = currentConfig.severityFilter.includes("low") ? 0 : 
                       currentConfig.severityFilter.includes("medium") ? 1 : 2;
-      return logLevelMap[data.level] >= minLevel;
+      const dataLevel = data.level ? (logLevelMap[data.level] ?? 0) : 0;
+      return dataLevel >= minLevel;
     }
     
     return true; // Performance data always captured if enabled
