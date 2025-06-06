@@ -11,6 +11,7 @@ CHECK .tasks/ FOLDER BEFORE ANY WORK - Read current.json, progress.md
 - `.github/rules/refactoring.md` - Safety-first refactoring patterns
 - `.github/rules/documentation.md` - Documentation hierarchy rules
 - `.github/rules/code-standards.md` - Formatting and architecture principles
+- `.github/rules/project-organization.md` - Project structure and root folder cleanliness
 - `.github/rules/performance.md` - Performance benchmarks and quality gates
 - `.github/rules/testing.md` - Testing requirements and patterns
 - `.github/rules/git-workflow.md` - Git workflow and error recovery

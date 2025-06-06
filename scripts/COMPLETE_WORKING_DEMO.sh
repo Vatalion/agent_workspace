@@ -72,7 +72,7 @@ echo "=================="
 
 echo -e "\n${YELLOW}Demo 1: Test MCP Server Directly${NC}"
 echo "Sending a test Flutter error to the MCP server..."
-node testing/test_mcp_server.mjs
+node test_mcp_server.mjs
 
 echo -e "\n${YELLOW}Demo 2: Show Available VS Code Commands${NC}"
 echo "Available Flutter Debug Assistant commands:"
