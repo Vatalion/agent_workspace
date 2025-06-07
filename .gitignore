@@ -71,3 +71,7 @@ build/Release
 
 # Runtime configuration for npm
 .npmrc
+
+# IntelliJ IDEA files
+*.iml
+.idea/
