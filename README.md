@@ -1,14 +1,28 @@
 # Flutter Debug Assistant - Complete AI-Powered Debugging Solution
 
-A **production-ready** Flutter debugging ecosystem combining a VS Code extension, MCP server, and comprehensive test environment. Features real-time error detection, AI integration with GitHub Copilot Chat, and intelligent debugging assistance.
+A **production-ready** Flutter debugging ecosystem combining IDE extensions, MCP server, and comprehensive test environment. Features real-time error detection, **universal AI assistant integration** (GitHub Copilot, Cursor, Windsurf, Claude Dev, etc.), and intelligent debugging assistance.
 
 ## 🎉 **PROJECT STATUS: PRODUCTION READY** ✅
 
-✅ **VS Code Extension**: Compiled and packaged (`flutter-ai-debug-assistant-1.0.0.vsix`)  
+✅ **Universal AI Support**: Works with ANY AI coding assistant  
+✅ **IDE Extensions**: VS Code extension compiled and packaged  
 ✅ **MCP Server**: Complete with 7 debugging tools  
 ✅ **Flutter Test App**: 30+ error scenarios across 9 categories  
-✅ **AI Integration**: GitHub Copilot Chat + real-time streaming  
+✅ **AI Integration**: Real-time streaming + universal compatibility  
 ✅ **Documentation**: Comprehensive guides and examples  
+
+## 🤖 **Universal AI Assistant Support**
+
+**Works seamlessly with ANY AI coding tool:**
+- ✅ **GitHub Copilot** (VS Code, JetBrains, Vim)
+- ✅ **Cursor** (AI-first code editor) 
+- ✅ **Windsurf** (Codeium's AI editor)
+- ✅ **Claude Dev** (VS Code extension)
+- ✅ **Continue** (Open-source AI assistant)
+- ✅ **Aider** (Command line AI programmer)
+- ✅ **Any other AI coding assistant**
+
+**See `docs/AI_COMPATIBILITY_GUIDE.md` for setup instructions with your preferred AI tool.**
 
 ## 🚀 Core Components
 

@@ -1,0 +1,126 @@
+{
+    // Flutter Debug Assistant Development Settings
+    "dart.flutterSdkPath": null,
+    "dart.debugExternalPackageLibraries": true,
+    "dart.debugSdkLibraries": false,
+    "dart.previewFlutterUiGuides": true,
+    "dart.previewFlutterUiGuidesCustomTracking": true,
+    "dart.showInspectorNotificationsForWidgetErrors": true,
+    "dart.warnWhenEditingFilesOutsideWorkspace": false,
+    
+    // Extension Development
+    "typescript.preferences.includePackageJsonAutoImports": "on",
+    "typescript.suggest.autoImports": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "eslint.workingDirectories": ["flutter_debug_extension"],
+    "eslint.validate": ["typescript", "javascript"],
+    
+    // Flutter Debug Assistant Extension Settings
+    "flutterDebugAssistant.enabled": true,
+    "flutterDebugAssistant.aiProvider": "copilot",
+    "flutterDebugAssistant.autoDetectErrors": true,
+    "flutterDebugAssistant.showCodeLens": true,
+    "flutterDebugAssistant.showInlineButtons": true,
+    "flutterDebugAssistant.mcpServerPort": 3000,
+    "flutterDebugAssistant.debugMode": true,
+    
+    // File Associations
+    "files.associations": {
+        "*.dart": "dart",
+        "*.json": "jsonc",
+        "launch.json": "jsonc",
+        "tasks.json": "jsonc",
+        "settings.json": "jsonc"
+    },
+    
+    // Search and Files
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/build": true,
+        "**/.dart_tool": true,
+        "**/dist": true,
+        "**/*.vsix": true,
+        "**/flutter_debug_extension/out": true
+    },
+    "files.exclude": {
+        "**/.dart_tool": true,
+        "**/build": true,
+        "**/node_modules": true,
+        "**/dist": true
+    },
+    "files.watcherExclude": {
+        "**/.dart_tool/**": true,
+        "**/build/**": true,
+        "**/node_modules/**": true,
+        "**/dist/**": true
+    },
+    
+    // Editor Settings
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "editor.rulers": [80, 120],
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 120,
+    
+    // Terminal
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    "terminal.integrated.cwd": "${workspaceFolder}",
+    
+    // Debug Console
+    "debug.console.fontSize": 12,
+    "debug.console.wordWrap": true,
+    "debug.openDebug": "openOnDebugBreak",
+    "debug.showBreakpointsInOverviewRuler": true,
+    
+    // Git
+    "git.ignoreLimitWarning": true,
+    "git.autofetch": true,
+    
+    // Recommended Extensions
+    "extensions.recommendations": [
+        "dart-code.dart-code",
+        "dart-code.flutter",
+        "github.copilot",
+        "github.copilot-chat",
+        "ms-vscode.vscode-typescript-next",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode"
+    ],
+    
+    // Workspace Trust
+    "security.workspace.trust.untrustedFiles": "open",
+    
+    // Language Specific Settings
+    "[dart]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.rulers": [80],
+        "editor.selectionHighlight": false,
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
+        "editor.suggestSelection": "first",
+        "editor.tabCompletion": "onlySnippets",
+        "editor.wordBasedSuggestions": "off"
+    },
+    "[typescript]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit"
+        }
+    },
+    "[javascript]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+} 

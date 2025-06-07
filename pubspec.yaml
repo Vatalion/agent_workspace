@@ -1,0 +1,21 @@
+name: flutter_error_transport
+description: A Flutter error transport implementation for production use.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.19.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  web_socket_channel: ^2.4.0
+  http: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
