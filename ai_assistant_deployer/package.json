@@ -1,0 +1,131 @@
+{
+  "name": "ai-assistant-deployer",
+  "displayName": "AI Assistant Deployer",
+  "description": "Deploy AI assistant configuration and files into any project workspace",
+  "version": "1.0.0",
+  "publisher": "ai-assistant-tools",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Snippets",
+    "Debuggers"
+  ],
+  "keywords": [
+    "ai",
+    "assistant",
+    "flutter",
+    "debug",
+    "deployment",
+    "automation"
+  ],
+  "activationEvents": [
+    "onCommand:aiAssistantDeployer.deployToWorkspace",
+    "onCommand:aiAssistantDeployer.detectProjectType",
+    "onCommand:aiAssistantDeployer.setupConfiguration"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "aiAssistantDeployer.deployToWorkspace",
+        "title": "Deploy AI Assistant to Workspace",
+        "category": "AI Assistant"
+      },
+      {
+        "command": "aiAssistantDeployer.detectProjectType",
+        "title": "Detect Project Type",
+        "category": "AI Assistant"
+      },
+      {
+        "command": "aiAssistantDeployer.setupConfiguration",
+        "title": "Setup AI Assistant Configuration",
+        "category": "AI Assistant"
+      },
+      {
+        "command": "aiAssistantDeployer.removeAIAssistant",
+        "title": "Remove AI Assistant from Workspace",
+        "category": "AI Assistant"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "aiAssistantDeployer.deployToWorkspace",
+          "group": "aiassistant@1",
+          "when": "explorerResourceIsFolder"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "aiAssistantDeployer.deployToWorkspace",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "aiAssistantDeployer.detectProjectType",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "aiAssistantDeployer.setupConfiguration",
+          "when": "workspaceFolderCount > 0"
+        },
+        {
+          "command": "aiAssistantDeployer.removeAIAssistant",
+          "when": "workspaceFolderCount > 0"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AI Assistant Deployer",
+      "properties": {
+        "aiAssistantDeployer.autoDetectProjectType": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically detect project type when deploying"
+        },
+        "aiAssistantDeployer.includeTaskManagement": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include task management system in deployment"
+        },
+        "aiAssistantDeployer.includeMCPServer": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include MCP server files in deployment"
+        },
+        "aiAssistantDeployer.backupExistingFiles": {
+          "type": "boolean",
+          "default": true,
+          "description": "Create backup of existing files before deployment"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/test-electron": "^2.2.0",
+    "eslint": "^8.28.0",
+    "typescript": "^4.9.4",
+    "vsce": "^2.15.0"
+  },
+  "dependencies": {
+    "fs-extra": "^11.1.1",
+    "glob": "^8.1.0",
+    "yaml": "^2.3.4"
+  }
+}
