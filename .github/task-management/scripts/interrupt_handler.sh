@@ -2,7 +2,7 @@
 # Enterprise Task Management - Priority Interrupt Handler
 # Location: .tasks/system/interrupt_handler.sh
 
-PROJECT_ROOT="/Users/vitalijsimko/workspace/projects/flutter/m5"
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../" && pwd)"
 TASKS_DIR="$PROJECT_ROOT/.tasks"
 LOG_FILE="$TASKS_DIR/system/interrupt.log"
 

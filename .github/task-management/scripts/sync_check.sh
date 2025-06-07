@@ -2,7 +2,7 @@
 # Enterprise Task Management - Cross-Machine Sync
 # Location: .tasks/system/sync_check.sh
 
-PROJECT_ROOT="/Users/vitalijsimko/workspace/projects/flutter/m5"
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../" && pwd)"
 TASKS_DIR="$PROJECT_ROOT/.tasks"
 LOG_FILE="$TASKS_DIR/system/sync_check.log"
 
