@@ -47,9 +47,10 @@ scripts/archive_*
 ehthumbs.db
 Thumbs.db
 
-# Logs
+# Logs (but keep .github logs)
 logs
 *.log
+!.github/**/*.log
 
 # Runtime data
 pids
@@ -70,60 +71,3 @@ build/Release
 
 # Runtime configuration for npm
 .npmrc
-
-# Flutter specific files
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.packages
-.pub-cache/
-.pub/
-build/
-**/build/
-
-# iOS specific files
-*.xcodeproj/
-*.xcworkspace/
-*.pbxuser
-*.mode1v3
-*.mode2v3
-*.perspectivev3
-*.xcuserstate
-DerivedData/
-*.ipa
-*.dSYM.zip
-*.dSYM
-
-# Android specific files
-.gradle/
-local.properties
-*.jks
-*.keystore
-*.apk
-*.aab
-gradle-wrapper.jar
-gradlew
-gradlew.bat
-
-# Windows specific files
-*.exe
-*.dll
-*.lib
-*.obj
-*.pdb
-
-# Linux specific files
-*.so
-*.a
-
-# macOS specific files (additional)
-*.app/
-xcuserdata/
-
-# IDE specific files
-.idea/
-*.iml
-*.ipr
-*.iws
-.vscode/launch.json
-.vscode/tasks.json
