@@ -2,7 +2,7 @@
 # Enterprise Task Management - Auto Save & Git Integration
 # Location: .github/task-management/scripts/auto_save.sh
 
-PROJECT_ROOT="/Users/vitalijsimko/workspace/projects/flutter/m5"
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../" && pwd)"
 TASKS_DIR="$PROJECT_ROOT/.tasks"
 GITHUB_DIR="$PROJECT_ROOT/.github"
 TASK_MGMT_DIR="$GITHUB_DIR/task-management"
