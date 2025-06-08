@@ -175,6 +175,9 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
             case 'switchMode':
                 await this.switchMode(workspaceFolder.uri.fsPath, message.mode);
                 break;
+            case 'reset':
+                await this.resetDeployedFiles();
+                break;
             case 'refresh':
                 this.updateUI();
                 break;
@@ -416,7 +419,10 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
         </button>
     </div>
     <div class="button-row">
-        <button class="button" onclick="remove()" style="background: var(--vscode-inputValidation-errorBackground); width: 100%;">
+        <button class="button" onclick="reset()" style="background: var(--vscode-inputValidation-warningBackground); width: calc(50% - 4px);">
+            🔄 Reset Files
+        </button>
+        <button class="button" onclick="remove()" style="background: var(--vscode-inputValidation-errorBackground); width: calc(50% - 4px);">
             🗑️ Remove AI Assistant
         </button>
     </div>
@@ -431,6 +437,10 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
 
         function remove() {
             vscode.postMessage({ type: 'remove' });
+        }
+
+        function reset() {
+            vscode.postMessage({ type: 'reset' });
         }
 
         function switchMode(mode) {
