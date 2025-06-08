@@ -1,6 +1,6 @@
 {
-  "current_mode": "simplified",
-  "first_time_setup": false,
+  "current_mode": "none",
+  "first_time_setup": true,
   "available_modes": {
     "simplified": {
       "name": "Simplified Mode",

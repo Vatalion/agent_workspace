@@ -5,7 +5,7 @@ import { ProjectDetector } from './services/projectDetector';
 import { FileDeployer } from './services/fileDeployer';
 import { ConfigurationManager } from './services/configurationManager';
 import { BackupManager } from './services/backupManager';
-import { AIAssistantWebviewProvider } from './ui/aiAssistantWebviewProvider';
+import { StatusBarProvider } from './ui/statusBarProvider';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('AI Assistant Deployer extension is now active!');
@@ -14,21 +14,16 @@ export function activate(context: vscode.ExtensionContext) {
     const fileDeployer = new FileDeployer(context);
     const configManager = new ConfigurationManager();
     const backupManager = new BackupManager();
-
-    // Register WebView Provider for the sidebar panel
-    const webviewProvider = new AIAssistantWebviewProvider(
-        vscode.Uri.file(context.extensionPath),
-        context
-    );
     
-    context.subscriptions.push(
-        vscode.window.registerWebviewViewProvider(
-            AIAssistantWebviewProvider.viewType,
-            webviewProvider
-        )
-    );
+    // Initialize status bar provider for reactive UI
+    const statusBarProvider = new StatusBarProvider(context);
 
-    // Deploy AI Assistant to Workspace
+    // Register command for quick actions (called by status bar)
+    const quickActionsCommand = vscode.commands.registerCommand('aiAssistantDeployer.showQuickActions', async () => {
+        await statusBarProvider.showQuickActions();
+    });
+
+    // Deploy AI Assistant to Workspace (legacy command support)
     const deployCommand = vscode.commands.registerCommand('aiAssistantDeployer.deployToWorkspace', async (uri?: vscode.Uri) => {
         try {
             const workspaceFolder = getWorkspaceFolder(uri);
@@ -140,7 +135,14 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    context.subscriptions.push(deployCommand, detectCommand, setupConfigCommand, removeCommand);
+    context.subscriptions.push(
+        quickActionsCommand,
+        deployCommand, 
+        detectCommand, 
+        setupConfigCommand, 
+        removeCommand,
+        statusBarProvider
+    );
 }
 
 function getWorkspaceFolder(uri?: vscode.Uri): vscode.WorkspaceFolder | undefined {

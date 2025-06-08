@@ -1,143 +1,56 @@
-# Project Rules - ENTERPRISE MODE
+# Project Rules - SIMPLIFIED MODE
 
-## Flutter Development - Core Principles
-- **SOLID**: Single responsibility, dependency injection, clean interfaces
-- **Pure Functions**: Same input = same output, no side effects
-- **Clean Architecture**: Domain-agnostic business logic, clear layer boundaries
-
-## Backup Strategy - DUAL SYSTEM
-### Automatic Backup
-- **SYSTEM**: Editor creates `.history/{path}/{filename}_{timestamp}.ext` on changes
-- **TRIGGER**: Every file modification automatically
-- **LOCATION**: `.history/` folder structure mirrors source
-
-### Manual Backup
-- **SYSTEM**: Place original files in `.legacy/{path}/{filename}.dart` during refactoring
-- **TRIGGER**: Before major refactoring operations
-- **LOCATION**: `.legacy/` folder preserves original implementations
-
-### Backup Requirements
-- **VERIFY**: Ensure both `.history/` and `.legacy/` folders exist
-- **PRESERVE**: Do not delete files from either backup location
-- **RELY ON**: Appropriate backup system based on situation
-
-## Testing Requirements
-### Coverage by Complexity
-- **EASY (E)**: Basic validation only
-- **MEDIUM (M)**: Unit + Widget tests required
-- **HIGH (H)**: Unit + Widget + Integration tests required
-
-### Test Types
-- **UNIT**: Data layer business logic
-- **WIDGET**: Presentation layer components  
-- **INTEGRATION**: Auth flows and navigation
-- **COVERAGE**: 70% critical paths minimum
-
-## Refactoring Guidelines
-### Safety-First Approach
-- **BACKUP**: Editor auto-creates `.history/{path}/{filename}_{timestamp}.ext` backups
-- **PRESERVE**: Move original files to `.legacy/{path}/{filename}.dart`
-- **SUFFIX**: Create new files with `_refactored` or `_clean` suffix
-- **GRADUAL**: Switch via imports gradually
-- **INCREMENTAL**: Migration with full testing between steps
-- **NEVER**: Delete originals until 100% confident in replacement
-
-### Naming Conventions
-- **`_refactored.dart`**: Improved version with same interface
-- **`_clean.dart`**: Complete rewrite with simplified architecture
-- **`.create()`**: Factory method standard for proper dependency injection
-
-## Enterprise Task Management Rules
-1. **Epic Orchestration**: Break large tasks into manageable epics (10-500+ hours)
-2. **Priority Interrupts**: Handle urgent interrupts with graceful suspension
-3. **Cross-Machine Sync**: Maintain state across multiple development machines
-4. **Milestone Tracking**: Automatic checkpointing and progress reporting
-5. **Auto-Save**: 15-minute interval state preservation
-
-## File Organization
-- Use hierarchical structure for complex projects
-- Implement comprehensive folder organization
-- Maintain detailed metadata and tracking
-- Leverage advanced automation scripts
-
-## Development Workflow
-1. **Epic Planning**: Define large-scale objectives and milestones
-2. **Task Breakdown**: Decompose epics into manageable subtasks
-3. **Priority Management**: Handle interrupts with graceful suspension
-4. **Cross-Machine Sync**: Automatic git branching and state sync
-5. **Progress Tracking**: Real-time monitoring and reporting
-6. **Completion Archival**: Comprehensive completion documentation
-
-## Enterprise Features
-- **Real-Time Monitoring**: Daemon processes for continuous oversight
-- **Scalability First**: Design for growth and complexity
-- **Comprehensive Automation**: Leverage full automation capabilities
-- **Enterprise Standards**: Follow enterprise-grade practices
-- **Advanced Monitoring**: Implement continuous oversight
+## Core Principles
+- **Simplicity First**: Choose the simplest solution that works
+- **Essential Features Only**: Avoid feature creep and over-engineering
+- **Clear Documentation**: Keep docs simple and actionable
+- **Basic Automation**: Use only essential automation scripts
 
 ## Task Management Rules
-1. **Epic Orchestration**: Break large tasks into manageable epics (10-500+ hours)
-2. **Priority Interrupts**: Handle urgent interrupts with graceful suspension
-3. **Cross-Machine Sync**: Maintain state across multiple development machines
-4. **Milestone Tracking**: Automatic checkpointing and progress reporting
-5. **Auto-Save**: 15-minute interval state preservation
+1. **One Active Task**: Focus on single task completion
+2. **Simple Status Tracking**: Ready → In Progress → Complete
+3. **Basic Backup**: Daily backups of important work
+4. **Essential Security**: Core security validations only
 
 ## File Organization
-- Use hierarchical structure for complex projects
-- Implement comprehensive folder organization
-- Maintain detailed metadata and tracking
-- Leverage advanced automation scripts
+- Keep project structure flat and simple
+- Use clear, descriptive naming
+- Avoid deep nested structures
+- Limit automation to essential scripts
 
 ## Development Workflow
-1. **Epic Planning**: Define large-scale objectives and milestones
-2. **Task Breakdown**: Decompose epics into manageable subtasks
-3. **Priority Management**: Handle interrupts with graceful suspension
-4. **Cross-Machine Sync**: Automatic git branching and state sync
-5. **Progress Tracking**: Real-time monitoring and reporting
-6. **Completion Archival**: Comprehensive completion documentation
+1. Check current task status
+2. Update task progress
+3. Complete and archive
+4. Run basic security check
+5. Update documentation
 
-## Enterprise Features
-- **Real-Time Monitoring**: Daemon processes for continuous oversight
-- **Automatic Backups**: Comprehensive state preservation every 15 minutes
-- **Git Integration**: Automatic branching and cross-machine synchronization
-- **Interrupt Handling**: Priority queue with graceful task suspension
-- **Epic Management**: Handle projects spanning 10-500+ hours
-- **Machine State Preservation**: Seamless switching between development machines
+## Automation Limits
+- **Scripts**: Max 3 automation scripts
+- **Monitoring**: Basic file validation only
+- **Backups**: Simple daily backups
+- **Sync**: Manual git operations
 
 ## Code Standards
-- Implement enterprise-grade architecture patterns
-- Use comprehensive error handling and logging
-- Design for maintainability and scalability
-- Follow advanced security practices
-- Implement comprehensive testing strategies
+- Prefer readable code over clever code
+- Use standard patterns and libraries
+- Keep functions small and focused
+- Write clear comments for complex logic
 
 ## Security Rules
-- Advanced security monitoring and validation
-- Real-time threat detection
-- Comprehensive file and system validation
-- Automated security reporting
-- Cross-machine security synchronization
+- Basic file permission checks
+- Simple validation scripts
+- Standard security practices
+- No advanced monitoring
 
-## Performance Requirements
-- Handle large codebases (500+ files)
-- Support multiple concurrent development streams
-- Maintain responsiveness under load
-- Optimize for cross-machine operations
+## Switching to Enterprise
+When project grows beyond 20 hours or requires:
+- Multi-machine development
+- Complex task orchestration
+- Advanced automation
+- Real-time monitoring
 
-## Monitoring and Alerting
-- Real-time progress monitoring
-- Automatic alert generation for issues
-- Performance metrics collection
-- Comprehensive logging and reporting
-
-## Switching to Simplified
-When project requirements decrease or for maintenance:
-- Simple bug fixes
-- Basic feature additions
-- Single-machine development
-- Reduced complexity needs
-
-Use: `./mode-manager.sh simplified`
+Use: `./mode-manager.sh enterprise`
 
 ---
-*Enterprise Mode Rules - Scale with complexity, maintain reliability*
+*Simplified Mode Rules - Keep it simple, keep it working*

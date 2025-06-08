@@ -19,6 +19,61 @@ export class FileDeployer {
         this.extensionPath = context.extensionPath;
     }
 
+    async deployFromOutFolder(workspacePath: string, outPath: string, mode: string): Promise<void> {
+        try {
+            // Ensure the workspace .github directory exists
+            const workspaceGithubPath = path.join(workspacePath, '.github');
+            await fs.ensureDir(workspaceGithubPath);
+
+            // Copy all files from out/.github to workspace/.github
+            if (await fs.pathExists(outPath)) {
+                await fs.copy(outPath, workspaceGithubPath, { 
+                    overwrite: true,
+                    filter: (src: string, dest: string) => {
+                        // Don't copy .history folder
+                        return !src.includes('.history');
+                    }
+                });
+            }
+
+            // Make scripts executable
+            const scripts = [
+                path.join(workspaceGithubPath, 'mode-manager.sh'),
+                path.join(workspaceGithubPath, 'update_project_map.sh')
+            ];
+
+            for (const script of scripts) {
+                if (await fs.pathExists(script)) {
+                    await fs.chmod(script, 0o755);
+                }
+            }
+
+            // Make mode-specific scripts executable
+            const modeScriptsPath = path.join(workspaceGithubPath, 'modes', mode, 'scripts');
+            if (await fs.pathExists(modeScriptsPath)) {
+                const modeScripts = await fs.readdir(modeScriptsPath);
+                for (const script of modeScripts) {
+                    if (script.endsWith('.sh')) {
+                        const scriptPath = path.join(modeScriptsPath, script);
+                        await fs.chmod(scriptPath, 0o755);
+                    }
+                }
+            }
+
+            // Set the selected mode in system-config.json
+            const systemConfigPath = path.join(workspaceGithubPath, 'system-config.json');
+            if (await fs.pathExists(systemConfigPath)) {
+                const config = await fs.readJson(systemConfigPath);
+                config.current_mode = mode;
+                config.first_time_setup = false;
+                await fs.writeJson(systemConfigPath, config, { spaces: 2 });
+            }
+
+        } catch (error) {
+            throw new Error(`Failed to deploy from out folder: ${error}`);
+        }
+    }
+
     async deployToWorkspace(workspacePath: string, projectType: ProjectType, options: DeploymentOptions): Promise<void> {
         const sourceBasePath = path.join(this.extensionPath, '..', '..');
 

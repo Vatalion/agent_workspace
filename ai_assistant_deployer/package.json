@@ -21,58 +21,50 @@
     "automation"
   ],
   "activationEvents": [
-    "onCommand:aiAssistantDeployer.deployToWorkspace",
-    "onCommand:aiAssistantDeployer.detectProjectType",
-    "onCommand:aiAssistantDeployer.setupConfiguration"
+    "*"
   ],
-  "main": "./out/extension.js",
+  "main": "./out/extension_control_center.js",
   "contributes": {
     "commands": [
       {
-        "command": "aiAssistantDeployer.deployToWorkspace",
-        "title": "Deploy AI Assistant to Workspace",
+        "command": "aiAssistantDeployer.showQuickActions",
+        "title": "AI Assistant: Quick Actions",
         "category": "AI Assistant"
       },
       {
-        "command": "aiAssistantDeployer.detectProjectType",
-        "title": "Detect Project Type",
+        "command": "aiAssistantDeployer.quickDeploy",
+        "title": "AI Assistant: Deploy",
         "category": "AI Assistant"
       },
       {
-        "command": "aiAssistantDeployer.setupConfiguration",
-        "title": "Setup AI Assistant Configuration",
-        "category": "AI Assistant"
-      },
-      {
-        "command": "aiAssistantDeployer.removeAIAssistant",
-        "title": "Remove AI Assistant from Workspace",
+        "command": "aiAssistantDeployer.test",
+        "title": "AI Assistant: Test",
         "category": "AI Assistant"
       }
     ],
     "menus": {
-      "explorer/context": [
-        {
-          "command": "aiAssistantDeployer.deployToWorkspace",
-          "group": "aiassistant@1",
-          "when": "explorerResourceIsFolder"
-        }
-      ],
       "commandPalette": [
         {
-          "command": "aiAssistantDeployer.deployToWorkspace",
-          "when": "workspaceFolderCount > 0"
-        },
+          "command": "aiAssistantDeployer.showQuickActions"
+        }
+      ]
+    },
+    "views": {
+      "ai-assistant-deployer": [
         {
-          "command": "aiAssistantDeployer.detectProjectType",
-          "when": "workspaceFolderCount > 0"
-        },
+          "id": "aiAssistantDeployer.controlCenter",
+          "name": "Control Center",
+          "type": "webview",
+          "contextualTitle": "AI Assistant Deployer"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
         {
-          "command": "aiAssistantDeployer.setupConfiguration",
-          "when": "workspaceFolderCount > 0"
-        },
-        {
-          "command": "aiAssistantDeployer.removeAIAssistant",
-          "when": "workspaceFolderCount > 0"
+          "id": "ai-assistant-deployer",
+          "title": "AI Assistant Deployer",
+          "icon": "$(rocket)"
         }
       ]
     },
