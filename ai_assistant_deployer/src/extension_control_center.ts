@@ -54,10 +54,31 @@ export function activate(context: vscode.ExtensionContext) {
         }
     );
 
+    const resetCommand = vscode.commands.registerCommand(
+        'aiAssistantDeployer.reset',
+        async () => {
+            const confirmation = await vscode.window.showWarningMessage(
+                '⚠️ Reset AI Assistant files? This will remove all deployed files and create a backup.',
+                { modal: true },
+                'Reset',
+                'Cancel'
+            );
+
+            if (confirmation === 'Reset') {
+                try {
+                    await webviewProvider.resetDeployedFiles();
+                } catch (error) {
+                    vscode.window.showErrorMessage(`❌ Reset failed: ${error}`);
+                }
+            }
+        }
+    );
+
     context.subscriptions.push(
         showQuickActionsCommand,
         quickDeployCommand,
-        testCommand
+        testCommand,
+        resetCommand
     );
 
     console.log('✅ AI Assistant Deployer activated with Control Center!');

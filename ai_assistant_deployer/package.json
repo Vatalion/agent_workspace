@@ -40,6 +40,11 @@
         "command": "aiAssistantDeployer.test",
         "title": "AI Assistant: Test",
         "category": "AI Assistant"
+      },
+      {
+        "command": "aiAssistantDeployer.reset",
+        "title": "AI Assistant: Reset",
+        "category": "AI Assistant"
       }
     ],
     "menus": {

@@ -464,4 +464,47 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
         // Refresh the UI
         this.updateUI();
     }
+
+    // Public method to reset deployed files
+    public async resetDeployedFiles(): Promise<void> {
+        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+        if (!workspaceFolder) {
+            throw new Error('No workspace folder found');
+        }
+
+        const workspacePath = workspaceFolder.uri.fsPath;
+        const githubPath = path.join(workspacePath, '.github');
+
+        // Check if .github folder exists
+        if (!await fs.pathExists(githubPath)) {
+            throw new Error('No AI Assistant files found to reset');
+        }
+
+        // Create backup before reset
+        const backupPath = path.join(githubPath, 'backups', `reset_backup_${new Date().toISOString().replace(/[:.]/g, '-')}`);
+        await fs.ensureDir(backupPath);
+        
+        // Copy current .github contents to backup (excluding backups folder)
+        const items = await fs.readdir(githubPath);
+        for (const item of items) {
+            if (item !== 'backups') {
+                const sourcePath = path.join(githubPath, item);
+                const backupItemPath = path.join(backupPath, item);
+                await fs.copy(sourcePath, backupItemPath);
+            }
+        }
+
+        // Remove all AI Assistant files except backups
+        for (const item of items) {
+            if (item !== 'backups') {
+                const itemPath = path.join(githubPath, item);
+                await fs.remove(itemPath);
+            }
+        }
+
+        // Refresh the UI
+        this.updateUI();
+        
+        vscode.window.showInformationMessage(`🔄 AI Assistant files reset successfully! Backup created in .github/backups/`);
+    }
 }
