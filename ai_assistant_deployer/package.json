@@ -1,0 +1,144 @@
+{
+  "name": "ai-assistant-deployer",
+  "displayName": "AI Assistant Deployer",
+  "description": "Deploy AI assistant configuration and files into any project workspace",
+  "version": "1.0.0",
+  "publisher": "ai-assistant-tools",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ai-assistant-tools/ai-assistant-deployer.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Snippets",
+    "Debuggers"
+  ],
+  "keywords": [
+    "ai",
+    "assistant",
+    "flutter",
+    "debug",
+    "deployment",
+    "automation"
+  ],
+  "activationEvents": [
+    "onCommand:aiAssistantDeployer.showQuickActions",
+    "onCommand:aiAssistantDeployer.quickDeploy",
+    "onCommand:aiAssistantDeployer.test",
+    "onCommand:aiAssistantDeployer.reset"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "aiAssistantDeployer.showQuickActions",
+        "title": "AI Assistant: Quick Actions",
+        "category": "AI Assistant"
+      },
+      {
+        "command": "aiAssistantDeployer.quickDeploy",
+        "title": "AI Assistant: Deploy",
+        "category": "AI Assistant"
+      },
+      {
+        "command": "aiAssistantDeployer.test",
+        "title": "AI Assistant: Test",
+        "category": "AI Assistant"
+      },
+      {
+        "command": "aiAssistantDeployer.reset",
+        "title": "AI Assistant: Reset",
+        "category": "AI Assistant"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "aiAssistantDeployer.showQuickActions"
+        }
+      ]
+    },
+    "views": {
+      "ai-assistant-deployer": [
+        {
+          "id": "aiAssistantDeployer.controlCenter",
+          "name": "Control Center",
+          "type": "webview",
+          "contextualTitle": "AI Assistant Deployer"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "ai-assistant-deployer",
+          "title": "AI Assistant Deployer",
+          "icon": "$(rocket)"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AI Assistant Deployer",
+      "properties": {
+        "aiAssistantDeployer.autoDetectProjectType": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically detect project type when deploying"
+        },
+        "aiAssistantDeployer.includeTaskManagement": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include task management system in deployment"
+        },
+        "aiAssistantDeployer.includeMCPServer": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include MCP server files in deployment"
+        },
+        "aiAssistantDeployer.backupExistingFiles": {
+          "type": "boolean",
+          "default": true,
+          "description": "Create backup of existing files before deployment"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build:production",
+    "build": "npm run compile && npm run build:deployment",
+    "build:production": "npm run compile:production && npm run build:deployment",
+    "build:deployment": "node scripts/build-deployment-files.js",
+    "compile": "tsc -p ./",
+    "compile:production": "webpack --mode production",
+    "compile:watch": "webpack --mode development --watch",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run build && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "@vscode/test-electron": "^2.2.0",
+    "eslint": "^8.28.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^4.9.4",
+    "vsce": "^2.15.0",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "fs-extra": "^11.1.1",
+    "glob": "^8.1.0",
+    "yaml": "^2.3.4"
+  }
+}

@@ -1,0 +1,229 @@
+{
+  "name": "copilot-interactive-helper",
+  "displayName": "Copilot Interactive Helper",
+  "description": "Automatically handle terminal approval dialogs to prevent workflow interruptions when using AI assistants",
+  "version": "1.0.0",
+  "publisher": "copilot-helper",
+  "icon": "resources/icon.png",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other",
+    "Productivity"
+  ],
+  "keywords": [
+    "copilot",
+    "terminal",
+    "automation",
+    "dialogs",
+    "workflow"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "copilotHelper.enable",
+        "title": "Enable Helper",
+        "category": "Copilot Helper",
+        "icon": "$(play)"
+      },
+      {
+        "command": "copilotHelper.disable",
+        "title": "Disable Helper",
+        "category": "Copilot Helper",
+        "icon": "$(stop)"
+      },
+      {
+        "command": "copilotHelper.start",
+        "title": "Start Monitoring",
+        "category": "Copilot Helper",
+        "icon": "$(debug-start)"
+      },
+      {
+        "command": "copilotHelper.stop",
+        "title": "Stop Monitoring",
+        "category": "Copilot Helper",
+        "icon": "$(debug-stop)"
+      },
+      {
+        "command": "copilotHelper.status",
+        "title": "Show Status",
+        "category": "Copilot Helper",
+        "icon": "$(info)"
+      },
+      {
+        "command": "copilotHelper.openSettings",
+        "title": "Open Settings",
+        "category": "Copilot Helper",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "copilotHelper.showLogs",
+        "title": "Show Logs",
+        "category": "Copilot Helper",
+        "icon": "$(output)"
+      },
+      {
+        "command": "copilotHelper.testDialogs",
+        "title": "Test Dialog Detection",
+        "category": "Copilot Helper",
+        "icon": "$(beaker)"
+      },
+      {
+        "command": "copilotHelper.refreshStatus",
+        "title": "Refresh Status",
+        "category": "Copilot Helper",
+        "icon": "$(refresh)"
+      }
+    ],
+    "configuration": {
+      "title": "Copilot Helper",
+      "properties": {
+        "copilotHelper.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable/disable the Copilot Helper"
+        },
+        "copilotHelper.autoApprove": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically click positive action buttons (Continue, OK, Yes, etc.)"
+        },
+        "copilotHelper.autoDeny": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically click negative action buttons (Cancel, No, etc.)"
+        },
+        "copilotHelper.checkInterval": {
+          "type": "number",
+          "default": 0.5,
+          "minimum": 0.1,
+          "maximum": 5.0,
+          "description": "Interval in seconds between dialog checks"
+        },
+        "copilotHelper.logLevel": {
+          "type": "string",
+          "enum": ["DEBUG", "INFO", "WARNING", "ERROR"],
+          "default": "INFO",
+          "description": "Logging level for the helper"
+        },
+        "copilotHelper.customPositiveButtons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Additional positive button names to auto-click"
+        },
+        "copilotHelper.customNegativeButtons": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Additional negative button names to auto-click"
+        },
+        "copilotHelper.processBlacklist": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["Script Editor", "Xcode"],
+          "description": "Processes to never auto-click buttons in"
+        },
+        "copilotHelper.processWhitelist": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Only monitor these processes (empty = monitor all)"
+        },
+        "copilotHelper.showStatusBarItem": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show helper status in the status bar"
+        },
+        "copilotHelper.autoStartOnLaunch": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically start monitoring when VS Code launches"
+        }
+      }
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "copilotHelperView",
+          "name": "Copilot Helper",
+          "when": "copilotHelper.showInExplorer",
+          "contextualTitle": "Copilot Helper"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "copilotHelper",
+          "title": "Copilot Helper",
+          "icon": "$(robot)"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "copilotHelperView",
+        "contents": "Welcome to Copilot Helper!\n\nThis extension helps automate terminal approval dialogs to prevent workflow interruptions.\n\n[Enable Helper](command:copilotHelper.enable)\n[Open Settings](command:copilotHelper.openSettings)\n\nTo get started:\n1. Enable the helper\n2. Grant accessibility permissions\n3. Start monitoring\n\n[View Documentation](command:vscode.open?%5B%22README.md%22%5D)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "copilotHelper.enable",
+          "when": "!copilotHelper.enabled"
+        },
+        {
+          "command": "copilotHelper.disable",
+          "when": "copilotHelper.enabled"
+        },
+        {
+          "command": "copilotHelper.start",
+          "when": "copilotHelper.enabled && !copilotHelper.running"
+        },
+        {
+          "command": "copilotHelper.stop",
+          "when": "copilotHelper.running"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "copilotHelper.refreshStatus",
+          "when": "view == copilotHelperView",
+          "group": "navigation"
+        },
+        {
+          "command": "copilotHelper.openSettings",
+          "when": "view == copilotHelperView",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.60.0",
+    "@types/node": "^16.11.7",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2"
+  }
+} 
