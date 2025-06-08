@@ -1,0 +1,693 @@
+{
+  "timestamp": "2025-06-08T10:48:19.469Z",
+  "rulePool": {
+    "metadata": {
+      "version": "1.0.0",
+      "created": "2025-06-08T10:48:19.458Z",
+      "lastModified": "2025-06-08T10:48:19.469Z",
+      "totalRules": 41,
+      "description": "AI Assistant Deployer Rule Pool"
+    },
+    "rules": {
+      "6de0c86a-4108-4411-9771-ac2ffe3292f2": {
+        "id": "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+        "title": "CRITICAL REQUIREMENTS (Updated)",
+        "content": "⚠️  **MANDATORY**: Always work with FRESH project structure information  \n📍 **READ FIRST**: `.github/PROJECT_MAP.md` before making ANY changes  \n🔄 **UPDATE ALWAYS**: `./update_project_map.sh` after ANY file/folder modifications\n\n**Updated for testing purposes**",
+        "category": "CUSTOM",
+        "urgency": "CRITICAL",
+        "sources": [
+          "enterprise/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.469Z"
+      },
+      "532f542a-f64c-425e-9f11-385c345d60b9": {
+        "id": "532f542a-f64c-425e-9f11-385c345d60b9",
+        "title": "MANDATORY WORKFLOW - NEVER SKIP STEPS",
+        "content": "1. **READ**: `README.md`\n2. **READ**: `.github/project-rules.md`  \n3. **READ**: `.github/PROJECT_MAP.md` (current structure snapshot)\n4. **CHECK**: `.tasks/` folder (all files)\n5. **UPDATE**: Project map for fresh structure: `./update_project_map.sh`\n6. **VERIFY**: Project structure compliance against map and rules\n7. **ASSESS**: Complexity: E(5-15min|≤3files) | M(15-60min|≤10files) | H(60min+|unlimited)\n8. **CREATE**: Task file in `.tasks/`\n9. **FOLLOW**: File placement rules (use `PROJECT_MAP.md` as reference)\n10. **VALIDATE**: Test after each atomic change\n11. **VERIFY**: Final validation before task completion  \n12. **UPDATE**: Project map after ANY file/folder changes: `./update_project_map.sh`\n13. **CLEAN**: Remove unnecessary artifacts\n14. **CHECK**: Ensure nothing is left unhandled (NEVER delete referenced files)",
+        "category": "CUSTOM",
+        "urgency": "CRITICAL",
+        "sources": [
+          "enterprise/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.460Z"
+      },
+      "58b8688c-4611-4318-bb76-fb8fd667a474": {
+        "id": "58b8688c-4611-4318-bb76-fb8fd667a474",
+        "title": "SOLID Principles Implementation (REQUIRED)",
+        "content": "1. **Single Responsibility**: One class = one responsibility\n2. **Open/Closed**: Open for extension, closed for modification\n3. **Liskov Substitution**: Derived classes must be substitutable\n4. **Interface Segregation**: No client forced to depend on unused interfaces\n5. **Dependency Inversion**: Depend on abstractions, not concretions",
+        "category": "SOLID_PRINCIPLES",
+        "urgency": "CRITICAL",
+        "sources": [
+          "enterprise/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.460Z"
+      },
+      "c44c6c4a-54c2-44dd-b1ba-12b12805c5af": {
+        "id": "c44c6c4a-54c2-44dd-b1ba-12b12805c5af",
+        "title": "Clean Architecture (ENFORCED)",
+        "content": "```\nlib/\n├── core/               # Core business logic, entities, interfaces\n├── data/              # Data layer (repositories, data sources, models)\n├── presentation/      # UI layer (pages, widgets, state management)\n└── domain/           # Domain layer (use cases, entities, repositories)\n```",
+        "category": "CLEAN_ARCHITECTURE",
+        "urgency": "CRITICAL",
+        "sources": [
+          "enterprise/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.461Z"
+      },
+      "f6165c09-e233-4134-aae0-89d6db048d8c": {
+        "id": "f6165c09-e233-4134-aae0-89d6db048d8c",
+        "title": "Mandatory File Practices",
+        "content": "- **NO SINGLE-FILE MONSTERS**: Max 200 lines per file\n- **EXTRACT**: Move reusable code to `lib/shared/`\n- **SEPARATE**: Business logic from UI components\n- **ORGANIZE**: Related files in appropriate subdirectories",
+        "category": "FILE_PRACTICES",
+        "urgency": "CRITICAL",
+        "sources": [
+          "enterprise/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.461Z"
+      },
+      "69ef8b0c-8764-4a5a-b9df-30985ea103f3": {
+        "id": "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+        "title": "Testing Requirements (NON-NEGOTIABLE)",
+        "content": "- **Unit Tests**: All business logic classes\n- **Widget Tests**: All custom widgets\n- **Integration Tests**: Critical user flows\n- **Coverage**: Minimum 80% for core functionality",
+        "category": "TESTING_REQUIREMENTS",
+        "urgency": "CRITICAL",
+        "sources": [
+          "enterprise/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.461Z"
+      },
+      "1a829bd8-3fda-45ca-ac88-d68488f0b183": {
+        "id": "1a829bd8-3fda-45ca-ac88-d68488f0b183",
+        "title": "Backup Strategy (AUTOMATIC)",
+        "content": "- **Every Change**: Git commit with descriptive message\n- **Major Features**: Create feature branches\n- **Before Refactoring**: Create backup branch\n- **Daily**: Push to remote repository",
+        "category": "BACKUP_STRATEGY",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.461Z"
+      },
+      "f922806e-8aa8-474f-b4e3-b0d7b2190eb9": {
+        "id": "f922806e-8aa8-474f-b4e3-b0d7b2190eb9",
+        "title": "State Management Rules",
+        "content": "- **Small Apps**: Provider or setState\n- **Medium Apps**: Riverpod or Bloc\n- **Large Apps**: Bloc with Clean Architecture\n- **NEVER**: Global variables for state",
+        "category": "CLEAN_ARCHITECTURE",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.461Z"
+      },
+      "b27c3e58-4638-4159-99ac-bb94ce60de99": {
+        "id": "b27c3e58-4638-4159-99ac-bb94ce60de99",
+        "title": "Performance Guidelines",
+        "content": "- **Lazy Loading**: Implement for lists and heavy widgets\n- **Image Optimization**: Use appropriate formats and caching\n- **Memory Management**: Dispose controllers and streams\n- **Build Optimization**: Use const constructors when possible",
+        "category": "PERFORMANCE_GUIDELINES",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.462Z"
+      },
+      "0d67641b-8c17-47e5-bfe8-8e9554b4e61b": {
+        "id": "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+        "title": "Enterprise Code Preferences",
+        "content": "- Design for scalability and maintainability\n- Implement comprehensive error handling\n- Use advanced patterns and architectures\n- Focus on enterprise-grade solutions\n- Prioritize robustness and reliability\n- Follow Flutter best practices and Clean Architecture\n- Maintain high test coverage and documentation",
+        "category": "CLEAN_ARCHITECTURE",
+        "urgency": "LOW",
+        "sources": [
+          "enterprise/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.462Z"
+      },
+      "4d695e22-2121-4a2d-afeb-826caa4bfd4f": {
+        "id": "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+        "title": "Mode Switching",
+        "content": "To simplify for basic tasks: `./mode-manager.sh simplified`\n\n---\n*Enterprise Mode Active - Full Flutter + Task Management feature set available*",
+        "category": "TASK_MANAGEMENT",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.462Z"
+      },
+      "2548de3b-5dbb-41a0-a1dd-0593e0acb819": {
+        "id": "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+        "title": "Flutter Development - Core Principles",
+        "content": "- **SOLID**: Single responsibility, dependency injection, clean interfaces\n- **Pure Functions**: Same input = same output, no side effects\n- **Clean Architecture**: Domain-agnostic business logic, clear layer boundaries",
+        "category": "SOLID_PRINCIPLES",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.462Z"
+      },
+      "b558beb4-0fb3-48bd-9574-7bb1761f7df7": {
+        "id": "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+        "title": "Backup Requirements",
+        "content": "- **VERIFY**: Ensure both `.history/` and `.legacy/` folders exist\n- **PRESERVE**: Do not delete files from either backup location\n- **RELY ON**: Appropriate backup system based on situation",
+        "category": "CUSTOM",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.462Z"
+      },
+      "63355490-b2d1-4ee1-97a3-87b80f7407ee": {
+        "id": "63355490-b2d1-4ee1-97a3-87b80f7407ee",
+        "title": "Coverage by Complexity",
+        "content": "- **EASY (E)**: Basic validation only\n- **MEDIUM (M)**: Unit + Widget tests required\n- **HIGH (H)**: Unit + Widget + Integration tests required",
+        "category": "CUSTOM",
+        "urgency": "CRITICAL",
+        "sources": [
+          "enterprise/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.459Z",
+        "lastModified": "2025-06-08T10:48:19.462Z"
+      },
+      "79097f46-493a-418e-8060-e65744054ebb": {
+        "id": "79097f46-493a-418e-8060-e65744054ebb",
+        "title": "Enterprise Task Management Rules",
+        "content": "1. **Epic Orchestration**: Break large tasks into manageable epics (10-500+ hours)\n2. **Priority Interrupts**: Handle urgent interrupts with graceful suspension\n3. **Cross-Machine Sync**: Maintain state across multiple development machines\n4. **Milestone Tracking**: Automatic checkpointing and progress reporting\n5. **Auto-Save**: 15-minute interval state preservation",
+        "category": "TASK_MANAGEMENT",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.460Z",
+        "lastModified": "2025-06-08T10:48:19.462Z"
+      },
+      "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833": {
+        "id": "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+        "title": "File Organization",
+        "content": "- Use hierarchical structure for complex projects\n- Implement comprehensive folder organization\n- Maintain detailed metadata and tracking\n- Leverage advanced automation scripts",
+        "category": "FILE_PRACTICES",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.460Z",
+        "lastModified": "2025-06-08T10:48:19.463Z"
+      },
+      "e4909de7-eeeb-41db-8e25-4d2813477671": {
+        "id": "e4909de7-eeeb-41db-8e25-4d2813477671",
+        "title": "Development Workflow",
+        "content": "1. **Epic Planning**: Define large-scale objectives and milestones\n2. **Task Breakdown**: Decompose epics into manageable subtasks\n3. **Priority Management**: Handle interrupts with graceful suspension\n4. **Cross-Machine Sync**: Automatic git branching and state sync\n5. **Progress Tracking**: Real-time monitoring and reporting\n6. **Completion Archival**: Comprehensive completion documentation",
+        "category": "TASK_MANAGEMENT",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.460Z",
+        "lastModified": "2025-06-08T10:48:19.463Z"
+      },
+      "dc604965-c855-4858-91d9-e9af8f67d7d1": {
+        "id": "dc604965-c855-4858-91d9-e9af8f67d7d1",
+        "title": "Task Management Rules",
+        "content": "1. **Epic Orchestration**: Break large tasks into manageable epics (10-500+ hours)\n2. **Priority Interrupts**: Handle urgent interrupts with graceful suspension\n3. **Cross-Machine Sync**: Maintain state across multiple development machines\n4. **Milestone Tracking**: Automatic checkpointing and progress reporting\n5. **Auto-Save**: 15-minute interval state preservation",
+        "category": "TASK_MANAGEMENT",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.460Z",
+        "lastModified": "2025-06-08T10:48:19.463Z"
+      },
+      "89bb3bee-952b-4705-b19c-10c7f898bb02": {
+        "id": "89bb3bee-952b-4705-b19c-10c7f898bb02",
+        "title": "File Organization",
+        "content": "- Use hierarchical structure for complex projects\n- Implement comprehensive folder organization\n- Maintain detailed metadata and tracking\n- Leverage advanced automation scripts",
+        "category": "FILE_PRACTICES",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.460Z",
+        "lastModified": "2025-06-08T10:48:19.463Z"
+      },
+      "0153ddea-031f-4b2f-adf6-88267ef220e9": {
+        "id": "0153ddea-031f-4b2f-adf6-88267ef220e9",
+        "title": "Development Workflow",
+        "content": "1. **Epic Planning**: Define large-scale objectives and milestones\n2. **Task Breakdown**: Decompose epics into manageable subtasks\n3. **Priority Management**: Handle interrupts with graceful suspension\n4. **Cross-Machine Sync**: Automatic git branching and state sync\n5. **Progress Tracking**: Real-time monitoring and reporting\n6. **Completion Archival**: Comprehensive completion documentation",
+        "category": "TASK_MANAGEMENT",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.460Z",
+        "lastModified": "2025-06-08T10:48:19.463Z"
+      },
+      "25c0467c-4e16-46eb-862a-b66fef10f851": {
+        "id": "25c0467c-4e16-46eb-862a-b66fef10f851",
+        "title": "Code Standards",
+        "content": "- Implement enterprise-grade architecture patterns\n- Use comprehensive error handling and logging\n- Design for maintainability and scalability\n- Follow advanced security practices\n- Implement comprehensive testing strategies",
+        "category": "CUSTOM",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.460Z",
+        "lastModified": "2025-06-08T10:48:19.463Z"
+      },
+      "e2645372-647c-4438-afa0-7c605952f097": {
+        "id": "e2645372-647c-4438-afa0-7c605952f097",
+        "title": "Security Rules",
+        "content": "- Advanced security monitoring and validation\n- Real-time threat detection\n- Comprehensive file and system validation\n- Automated security reporting\n- Cross-machine security synchronization",
+        "category": "SECURITY_RULES",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.460Z",
+        "lastModified": "2025-06-08T10:48:19.463Z"
+      },
+      "30680b98-76ac-460c-bb5e-048d651c38e4": {
+        "id": "30680b98-76ac-460c-bb5e-048d651c38e4",
+        "title": "Performance Requirements",
+        "content": "- Handle large codebases (500+ files)\n- Support multiple concurrent development streams\n- Maintain responsiveness under load\n- Optimize for cross-machine operations",
+        "category": "CUSTOM",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.460Z",
+        "lastModified": "2025-06-08T10:48:19.464Z"
+      },
+      "69c3a9d0-0f86-474f-9ab4-3d1192512763": {
+        "id": "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+        "title": "Switching to Simplified",
+        "content": "When project requirements decrease or for maintenance:\n- Simple bug fixes\n- Basic feature additions\n- Single-machine development\n- Reduced complexity needs\n\nUse: `./mode-manager.sh simplified`\n\n---\n*Enterprise Mode Rules - Scale with complexity, maintain reliability*",
+        "category": "ENTERPRISE_FEATURES",
+        "urgency": "MEDIUM",
+        "sources": [
+          "enterprise/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.460Z",
+        "lastModified": "2025-06-08T10:48:19.464Z"
+      },
+      "ee12033b-c566-4f31-a966-e2d1c52a36c8": {
+        "id": "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+        "title": "Essential Flutter Practices",
+        "content": "- **Clean Code**: Follow Flutter/Dart conventions\n- **State Management**: Use Provider or setState for simple apps\n- **Widget Organization**: Separate UI components logically\n- **File Structure**: Keep related files together\n- **Testing**: Write basic tests for critical functionality",
+        "category": "FILE_PRACTICES",
+        "urgency": "CRITICAL",
+        "sources": [
+          "simplified/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.464Z",
+        "lastModified": "2025-06-08T10:48:19.465Z"
+      },
+      "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d": {
+        "id": "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+        "title": "Development Rules",
+        "content": "- **File Size**: Keep files under 300 lines\n- **Naming**: Use descriptive names for files and classes\n- **Comments**: Add comments for complex logic\n- **Git**: Commit frequently with clear messages\n- **Testing**: Test critical user flows",
+        "category": "CUSTOM",
+        "urgency": "CRITICAL",
+        "sources": [
+          "simplified/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.464Z",
+        "lastModified": "2025-06-08T10:48:19.465Z"
+      },
+      "0f1abb49-4be1-4ab1-a05a-27565b6da673": {
+        "id": "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+        "title": "Code Preferences",
+        "content": "- Keep solutions simple and straightforward\n- Focus on essential functionality\n- Avoid over-engineering\n- Prioritize clarity over complexity\n- Follow Flutter best practices\n- Maintain clean code structure",
+        "category": "CUSTOM",
+        "urgency": "HIGH",
+        "sources": [
+          "simplified/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.464Z",
+        "lastModified": "2025-06-08T10:48:19.465Z"
+      },
+      "360870c0-0d7e-4407-91cf-9782f872ff84": {
+        "id": "360870c0-0d7e-4407-91cf-9782f872ff84",
+        "title": "Mode Switching",
+        "content": "To access enterprise features: `../.github/mode-manager.sh enterprise`\n\n---\n*Simplified Mode Active - Enterprise features preserved but hidden*",
+        "category": "ENTERPRISE_FEATURES",
+        "urgency": "MEDIUM",
+        "sources": [
+          "simplified/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.464Z",
+        "lastModified": "2025-06-08T10:48:19.465Z"
+      },
+      "3c52a3bf-c1d1-4061-94ab-0af78395b273": {
+        "id": "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+        "title": "Core Principles",
+        "content": "- **Simplicity First**: Choose the simplest solution that works\n- **Essential Features Only**: Avoid feature creep and over-engineering\n- **Clear Documentation**: Keep docs simple and actionable\n- **Basic Automation**: Use only essential automation scripts",
+        "category": "CUSTOM",
+        "urgency": "HIGH",
+        "sources": [
+          "simplified/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.464Z",
+        "lastModified": "2025-06-08T10:48:19.465Z"
+      },
+      "2ac4460b-6998-45cf-874e-266d1955a6f0": {
+        "id": "2ac4460b-6998-45cf-874e-266d1955a6f0",
+        "title": "Task Management Rules",
+        "content": "1. **One Active Task**: Focus on single task completion\n2. **Simple Status Tracking**: Ready → In Progress → Complete\n3. **Basic Backup**: Daily backups of important work\n4. **Essential Security**: Core security validations only",
+        "category": "TASK_MANAGEMENT",
+        "urgency": "HIGH",
+        "sources": [
+          "simplified/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.464Z",
+        "lastModified": "2025-06-08T10:48:19.466Z"
+      },
+      "66f817c8-a6ae-402e-8c96-265665e65820": {
+        "id": "66f817c8-a6ae-402e-8c96-265665e65820",
+        "title": "File Organization",
+        "content": "- Keep project structure flat and simple\n- Use clear, descriptive naming\n- Avoid deep nested structures\n- Limit automation to essential scripts",
+        "category": "FILE_PRACTICES",
+        "urgency": "HIGH",
+        "sources": [
+          "simplified/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.464Z",
+        "lastModified": "2025-06-08T10:48:19.466Z"
+      },
+      "b51e6313-c5e4-4979-bcc2-bcf305f4efc0": {
+        "id": "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+        "title": "Development Workflow",
+        "content": "1. Check current task status\n2. Update task progress\n3. Complete and archive\n4. Run basic security check\n5. Update documentation",
+        "category": "DEVELOPMENT_WORKFLOW",
+        "urgency": "MEDIUM",
+        "sources": [
+          "simplified/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.464Z",
+        "lastModified": "2025-06-08T10:48:19.466Z"
+      },
+      "4ce18541-196b-4a3c-a772-95be8b242359": {
+        "id": "4ce18541-196b-4a3c-a772-95be8b242359",
+        "title": "Code Standards",
+        "content": "- Prefer readable code over clever code\n- Use standard patterns and libraries\n- Keep functions small and focused\n- Write clear comments for complex logic",
+        "category": "CUSTOM",
+        "urgency": "LOW",
+        "sources": [
+          "simplified/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.465Z",
+        "lastModified": "2025-06-08T10:48:19.466Z"
+      },
+      "810b934e-8319-42a7-880d-accdfc89e52c": {
+        "id": "810b934e-8319-42a7-880d-accdfc89e52c",
+        "title": "Security Rules",
+        "content": "- Basic file permission checks\n- Simple validation scripts\n- Standard security practices\n- No advanced monitoring",
+        "category": "FILE_PRACTICES",
+        "urgency": "MEDIUM",
+        "sources": [
+          "simplified/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.465Z",
+        "lastModified": "2025-06-08T10:48:19.466Z"
+      },
+      "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36": {
+        "id": "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+        "title": "Switching to Enterprise",
+        "content": "When project grows beyond 20 hours or requires:\n- Multi-machine development\n- Complex task orchestration\n- Advanced automation\n- Real-time monitoring\n\nUse: `./mode-manager.sh enterprise`\n\n---\n*Simplified Mode Rules - Keep it simple, keep it working*",
+        "category": "MODE_SWITCHING",
+        "urgency": "MEDIUM",
+        "sources": [
+          "simplified/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.465Z",
+        "lastModified": "2025-06-08T10:48:19.467Z"
+      },
+      "f5648caa-b7fb-4590-9a05-66088da96638": {
+        "id": "f5648caa-b7fb-4590-9a05-66088da96638",
+        "title": "Mode Switching",
+        "content": "- To simplified: `./mode-manager.sh simplified`\n- To enterprise: `./mode-manager.sh enterprise`\n- Configure hybrid: `./mode-manager.sh hybrid --configure`\n\n---\n*Hybrid Mode Active - Balanced flexibility with selective enterprise features*",
+        "category": "ENTERPRISE_FEATURES",
+        "urgency": "MEDIUM",
+        "sources": [
+          "hybrid/copilot-instructions.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.467Z",
+        "lastModified": "2025-06-08T10:48:19.467Z"
+      },
+      "22980cec-cb96-4b99-9937-af4468cb6c03": {
+        "id": "22980cec-cb96-4b99-9937-af4468cb6c03",
+        "title": "Core Principles",
+        "content": "- **Balanced Approach**: Combine simplicity with selective complexity\n- **Configurable Features**: Enable enterprise features as needed\n- **Flexible Scaling**: Adapt to changing project requirements\n- **Selective Automation**: Use automation where it adds value",
+        "category": "ENTERPRISE_FEATURES",
+        "urgency": "MEDIUM",
+        "sources": [
+          "hybrid/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.467Z",
+        "lastModified": "2025-06-08T10:48:19.467Z"
+      },
+      "178ec177-bbe5-45a0-acc3-ff57816ab8f1": {
+        "id": "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+        "title": "Task Management Rules",
+        "content": "1. **Adaptive Structure**: Switch between simple and epic management\n2. **Optional Interrupts**: Enable priority handling when needed\n3. **Configurable Sync**: Cross-machine sync available but optional\n4. **Flexible Monitoring**: Enable monitoring for complex phases\n5. **Selective Auto-Save**: Configure save intervals based on task complexity",
+        "category": "TASK_MANAGEMENT",
+        "urgency": "LOW",
+        "sources": [
+          "hybrid/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.467Z",
+        "lastModified": "2025-06-08T10:48:19.468Z"
+      },
+      "a4bed1f9-176c-4b1a-bd6e-9282879f7e33": {
+        "id": "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+        "title": "Development Workflow",
+        "content": "1. **Assess Complexity**: Determine required feature level\n2. **Configure Mode**: Enable/disable features as needed\n3. **Flexible Execution**: Adapt workflow to current task\n4. **Optional Monitoring**: Enable when beneficial\n5. **Configurable Completion**: Simple or detailed as appropriate",
+        "category": "DEVELOPMENT_WORKFLOW",
+        "urgency": "CRITICAL",
+        "sources": [
+          "hybrid/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.467Z",
+        "lastModified": "2025-06-08T10:48:19.468Z"
+      },
+      "7502eb1c-a6e4-40dd-9113-f2c54e6e5514": {
+        "id": "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+        "title": "Mode Selection Guidelines",
+        "content": "- **Use Simplified**: Single tasks, basic requirements, <20 hours\n- **Use Enterprise**: Large projects, multi-machine, >50 hours\n- **Use Hybrid**: Variable complexity, selective features, 20-50 hours",
+        "category": "ENTERPRISE_FEATURES",
+        "urgency": "MEDIUM",
+        "sources": [
+          "hybrid/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.467Z",
+        "lastModified": "2025-06-08T10:48:19.468Z"
+      },
+      "bdad2106-8780-473f-93a2-aaf62996f68b": {
+        "id": "bdad2106-8780-473f-93a2-aaf62996f68b",
+        "title": "Switching Guidelines",
+        "content": "- **To Simplified**: When reducing complexity permanently\n- **To Enterprise**: When scaling up to full enterprise needs\n- **Reconfigure Hybrid**: When changing feature requirements\n\n---\n*Hybrid Mode Rules - Flexible adaptation to changing complexity*",
+        "category": "ENTERPRISE_FEATURES",
+        "urgency": "MEDIUM",
+        "sources": [
+          "hybrid/project-rules.md"
+        ],
+        "projectTypes": [
+          "all"
+        ],
+        "contentType": "markdown",
+        "created": "2025-06-08T10:48:19.467Z",
+        "lastModified": "2025-06-08T10:48:19.468Z"
+      }
+    },
+    "categories": [
+      "TASK_MANAGEMENT",
+      "ENTERPRISE_FEATURES",
+      "SOLID_PRINCIPLES",
+      "CLEAN_ARCHITECTURE",
+      "FILE_PRACTICES",
+      "TESTING_REQUIREMENTS",
+      "BACKUP_STRATEGY",
+      "STATE_MANAGEMENT",
+      "PERFORMANCE_GUIDELINES",
+      "REFACTORING_GUIDELINES",
+      "SECURITY_RULES",
+      "DEVELOPMENT_WORKFLOW",
+      "MODE_SWITCHING",
+      "CUSTOM"
+    ],
+    "urgencyLevels": [
+      "CRITICAL",
+      "HIGH",
+      "MEDIUM",
+      "LOW",
+      "INFO"
+    ]
+  }
+}

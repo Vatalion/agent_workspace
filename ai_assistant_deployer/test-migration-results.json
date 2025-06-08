@@ -1,0 +1,2811 @@
+{
+  "timestamp": "2025-06-08T11:12:20.767Z",
+  "summary": {
+    "totalModes": 3,
+    "successfulMigrations": 3,
+    "totalRulesMapped": 398,
+    "averageConfidence": 0.8208321797711333
+  },
+  "individualResults": [
+    {
+      "success": true,
+      "modeType": "enterprise",
+      "originalFiles": [
+        "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+        "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md"
+      ],
+      "convertedConfig": {
+        "id": "enterprise_migrated_1749381140716",
+        "name": "Enterprise Mode (Migrated)",
+        "description": "Migrated enterprise mode configuration using rule-based system",
+        "type": "enterprise",
+        "ruleSelection": {
+          "includeCategories": [
+            "CUSTOM",
+            "TASK_MANAGEMENT",
+            "ENTERPRISE_FEATURES"
+          ],
+          "excludeCategories": [],
+          "minimumUrgency": "MEDIUM",
+          "maxRules": 50,
+          "explicitIncludes": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "30680b98-76ac-460c-bb5e-048d651c38e4",
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "58b8688c-4611-4318-bb76-fb8fd667a474",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af",
+            "f922806e-8aa8-474f-b4e3-b0d7b2190eb9",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "63355490-b2d1-4ee1-97a3-87b80f7407ee",
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "b27c3e58-4638-4159-99ac-bb94ce60de99",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "4ce18541-196b-4a3c-a772-95be8b242359",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "810b934e-8319-42a7-880d-accdfc89e52c"
+          ],
+          "explicitExcludes": []
+        },
+        "ruleOrganization": {
+          "groupBy": "category",
+          "sortBy": "urgency",
+          "customOrder": []
+        },
+        "templates": {
+          "instructionsTemplate": "enterprise-instructions",
+          "rulesTemplate": "enterprise-rules"
+        },
+        "structure": {
+          "includeAutomation": true,
+          "includeScripts": true,
+          "taskManagementLevel": "enterprise"
+        },
+        "deployment": {
+          "targetFiles": [
+            "copilot-instructions.md",
+            "project-rules.md"
+          ],
+          "includeAutomationFiles": true,
+          "includeScriptFiles": true
+        },
+        "metadata": {
+          "created": "2025-06-08T11:12:20.713Z",
+          "version": "1.0.0",
+          "migrationDate": "2025-06-08T11:12:20.716Z",
+          "originalFiles": [
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md"
+          ],
+          "migrationConfidence": 0.8313953488372093
+        }
+      },
+      "errors": [],
+      "warnings": [],
+      "contentMapping": [
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "GitHub Copilot Instructions - ENTERPRISE MODE",
+          "content": "# GitHub Copilot Instructions - ENTERPRISE MODE\n",
+          "mappedRules": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b"
+          ],
+          "confidence": 0.45
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "CRITICAL REQUIREMENTS",
+          "content": "## CRITICAL REQUIREMENTS\n⚠️  **MANDATORY**: Always work with FRESH project structure information  \n📍 **READ FIRST**: `.github/PROJECT_MAP.md` before making ANY changes  \n🔄 **UPDATE ALWAYS**: `./update_project_map.sh` after ANY file/folder modifications  \n",
+          "mappedRules": [
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "30680b98-76ac-460c-bb5e-048d651c38e4"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "MANDATORY WORKFLOW - NEVER SKIP STEPS",
+          "content": "## MANDATORY WORKFLOW - NEVER SKIP STEPS\n1. **READ**: `README.md`\n2. **READ**: `.github/project-rules.md`  \n3. **READ**: `.github/PROJECT_MAP.md` (current structure snapshot)\n4. **CHECK**: `.tasks/` folder (all files)\n5. **UPDATE**: Project map for fresh structure: `./update_project_map.sh`\n6. **VERIFY**: Project structure compliance against map and rules\n7. **ASSESS**: Complexity: E(5-15min|≤3files) | M(15-60min|≤10files) | H(60min+|unlimited)\n8. **CREATE**: Task file in `.tasks/`\n9. **FOLLOW**: File placement rules (use `PROJECT_MAP.md` as reference)\n10. **VALIDATE**: Test after each atomic change\n11. **VERIFY**: Final validation before task completion  \n12. **UPDATE**: Project map after ANY file/folder changes: `./update_project_map.sh`\n13. **CLEAN**: Remove unnecessary artifacts\n14. **CHECK**: Ensure nothing is left unhandled (NEVER delete referenced files)\n",
+          "mappedRules": [
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Current System Mode: ENTERPRISE",
+          "content": "## Current System Mode: ENTERPRISE\nThis project operates in **Enterprise Mode** - combining Flutter development best practices with comprehensive task management for large-scale projects (50+ hours).\n",
+          "mappedRules": [
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "360870c0-0d7e-4407-91cf-9782f872ff84"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Enterprise Features",
+          "content": "## Enterprise Features\n- Epic-scale task orchestration (10-500+ hours)\n- Priority interrupt system with graceful suspension\n- Cross-machine synchronization with automatic git branching\n- Real-time monitoring and auto-save functionality\n- Milestone tracking with automatic checkpointing\n",
+          "mappedRules": [
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Task Management Structure (Enterprise)",
+          "content": "## Task Management Structure (Enterprise)\n```\n.tasks/\n├── system/              # Core system files (monitoring, sync, priorities)\n├── epics/              # Large-scale task orchestration\n├── 1_planning/         # Task planning and milestone definition\n├── 2_review/           # Task review and approval workflow\n├── 3_execution/        # Active task execution with interrupt handling\n├── 4_completion/       # Completion tracking and reporting\n└── cross_machine/      # Multi-machine synchronization\n```\n",
+          "mappedRules": [
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Available Commands",
+          "content": "## Available Commands\n- `task-management.sh` - Main enterprise orchestrator\n- `massive_task_orchestrator.sh` - Epic task management\n- `interrupt_handler.sh` - Priority interrupt system\n- `auto_save.sh` - Automatic state preservation\n- `sync_check.sh` - Cross-machine synchronization\n",
+          "mappedRules": [
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 0.55
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Enterprise Features",
+          "content": "## Enterprise Features\n- **Epic Task Orchestration**: Handle 10-500+ hour projects with automatic breakdown\n- **Priority Interrupt System**: Graceful task suspension for urgent items\n- **Cross-Machine Sync**: Automatic git branching and state synchronization\n- **Auto-Save**: 15-minute interval snapshots with state preservation\n- **Real-Time Monitoring**: Daemon processes for continuous oversight\n- **Milestone Tracking**: Automatic checkpointing and progress reporting\n",
+          "mappedRules": [
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Flutter Development Workflow (MANDATORY)",
+          "content": "## Flutter Development Workflow (MANDATORY)\n",
+          "mappedRules": [
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "f6165c09-e233-4134-aae0-89d6db048d8c"
+          ],
+          "confidence": 0.4
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "SOLID Principles Implementation (REQUIRED)",
+          "content": "### SOLID Principles Implementation (REQUIRED)\n1. **Single Responsibility**: One class = one responsibility\n2. **Open/Closed**: Open for extension, closed for modification\n3. **Liskov Substitution**: Derived classes must be substitutable\n4. **Interface Segregation**: No client forced to depend on unused interfaces\n5. **Dependency Inversion**: Depend on abstractions, not concretions\n",
+          "mappedRules": [
+            "58b8688c-4611-4318-bb76-fb8fd667a474",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Clean Architecture (ENFORCED)",
+          "content": "### Clean Architecture (ENFORCED)\n```\nlib/\n├── core/               # Core business logic, entities, interfaces\n├── data/              # Data layer (repositories, data sources, models)\n├── presentation/      # UI layer (pages, widgets, state management)\n└── domain/           # Domain layer (use cases, entities, repositories)\n```\n",
+          "mappedRules": [
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "f922806e-8aa8-474f-b4e3-b0d7b2190eb9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Mandatory File Practices",
+          "content": "### Mandatory File Practices\n- **NO SINGLE-FILE MONSTERS**: Max 200 lines per file\n- **EXTRACT**: Move reusable code to `lib/shared/`\n- **SEPARATE**: Business logic from UI components\n- **ORGANIZE**: Related files in appropriate subdirectories\n",
+          "mappedRules": [
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Testing Requirements (NON-NEGOTIABLE)",
+          "content": "### Testing Requirements (NON-NEGOTIABLE)\n- **Unit Tests**: All business logic classes\n- **Widget Tests**: All custom widgets\n- **Integration Tests**: Critical user flows\n- **Coverage**: Minimum 80% for core functionality\n",
+          "mappedRules": [
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "63355490-b2d1-4ee1-97a3-87b80f7407ee",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Backup Strategy (AUTOMATIC)",
+          "content": "### Backup Strategy (AUTOMATIC)\n- **Every Change**: Git commit with descriptive message\n- **Major Features**: Create feature branches\n- **Before Refactoring**: Create backup branch\n- **Daily**: Push to remote repository\n",
+          "mappedRules": [
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "State Management Rules",
+          "content": "### State Management Rules\n- **Small Apps**: Provider or setState\n- **Medium Apps**: Riverpod or Bloc\n- **Large Apps**: Bloc with Clean Architecture\n- **NEVER**: Global variables for state\n",
+          "mappedRules": [
+            "f922806e-8aa8-474f-b4e3-b0d7b2190eb9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Performance Guidelines",
+          "content": "### Performance Guidelines\n- **Lazy Loading**: Implement for lists and heavy widgets\n- **Image Optimization**: Use appropriate formats and caching\n- **Memory Management**: Dispose controllers and streams\n- **Build Optimization**: Use const constructors when possible\n",
+          "mappedRules": [
+            "b27c3e58-4638-4159-99ac-bb94ce60de99",
+            "30680b98-76ac-460c-bb5e-048d651c38e4",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Enterprise Code Preferences",
+          "content": "## Enterprise Code Preferences\n- Design for scalability and maintainability\n- Implement comprehensive error handling\n- Use advanced patterns and architectures\n- Focus on enterprise-grade solutions\n- Prioritize robustness and reliability\n- Follow Flutter best practices and Clean Architecture\n- Maintain high test coverage and documentation\n",
+          "mappedRules": [
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "4ce18541-196b-4a3c-a772-95be8b242359",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Mode Switching",
+          "content": "## Mode Switching\nTo simplify for basic tasks: `./mode-manager.sh simplified`\n\n---\n*Enterprise Mode Active - Full Flutter + Task Management feature set available*\n",
+          "mappedRules": [
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Project Rules - ENTERPRISE MODE",
+          "content": "# Project Rules - ENTERPRISE MODE\n",
+          "mappedRules": [
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514"
+          ],
+          "confidence": 0.5
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Flutter Development - Core Principles",
+          "content": "## Flutter Development - Core Principles\n- **SOLID**: Single responsibility, dependency injection, clean interfaces\n- **Pure Functions**: Same input = same output, no side effects\n- **Clean Architecture**: Domain-agnostic business logic, clear layer boundaries\n",
+          "mappedRules": [
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "58b8688c-4611-4318-bb76-fb8fd667a474",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Backup Strategy - DUAL SYSTEM",
+          "content": "## Backup Strategy - DUAL SYSTEM",
+          "mappedRules": [
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0"
+          ],
+          "confidence": 0.4
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Automatic Backup",
+          "content": "### Automatic Backup\n- **SYSTEM**: Editor creates `.history/{path}/{filename}_{timestamp}.ext` on changes\n- **TRIGGER**: Every file modification automatically\n- **LOCATION**: `.history/` folder structure mirrors source\n",
+          "mappedRules": [
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183",
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833"
+          ],
+          "confidence": 0.65
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Manual Backup",
+          "content": "### Manual Backup\n- **SYSTEM**: Place original files in `.legacy/{path}/{filename}.dart` during refactoring\n- **TRIGGER**: Before major refactoring operations\n- **LOCATION**: `.legacy/` folder preserves original implementations\n",
+          "mappedRules": [
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "30680b98-76ac-460c-bb5e-048d651c38e4"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Backup Requirements",
+          "content": "### Backup Requirements\n- **VERIFY**: Ensure both `.history/` and `.legacy/` folders exist\n- **PRESERVE**: Do not delete files from either backup location\n- **RELY ON**: Appropriate backup system based on situation\n",
+          "mappedRules": [
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183",
+            "30680b98-76ac-460c-bb5e-048d651c38e4",
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Testing Requirements",
+          "content": "## Testing Requirements",
+          "mappedRules": [
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "30680b98-76ac-460c-bb5e-048d651c38e4",
+            "25c0467c-4e16-46eb-862a-b66fef10f851"
+          ],
+          "confidence": 0.35
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Coverage by Complexity",
+          "content": "### Coverage by Complexity\n- **EASY (E)**: Basic validation only\n- **MEDIUM (M)**: Unit + Widget tests required\n- **HIGH (H)**: Unit + Widget + Integration tests required\n",
+          "mappedRules": [
+            "63355490-b2d1-4ee1-97a3-87b80f7407ee",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "532f542a-f64c-425e-9f11-385c345d60b9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Test Types",
+          "content": "### Test Types\n- **UNIT**: Data layer business logic\n- **WIDGET**: Presentation layer components  \n- **INTEGRATION**: Auth flows and navigation\n- **COVERAGE**: 70% critical paths minimum\n",
+          "mappedRules": [
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "63355490-b2d1-4ee1-97a3-87b80f7407ee"
+          ],
+          "confidence": 0.7
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Refactoring Guidelines",
+          "content": "## Refactoring Guidelines",
+          "mappedRules": [
+            "b27c3e58-4638-4159-99ac-bb94ce60de99",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183"
+          ],
+          "confidence": 0.3
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Safety-First Approach",
+          "content": "### Safety-First Approach\n- **BACKUP**: Editor auto-creates `.history/{path}/{filename}_{timestamp}.ext` backups\n- **PRESERVE**: Move original files to `.legacy/{path}/{filename}.dart`\n- **SUFFIX**: Create new files with `_refactored` or `_clean` suffix\n- **GRADUAL**: Switch via imports gradually\n- **INCREMENTAL**: Migration with full testing between steps\n- **NEVER**: Delete originals until 100% confident in replacement\n",
+          "mappedRules": [
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d"
+          ],
+          "confidence": 0.35
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Naming Conventions",
+          "content": "### Naming Conventions\n- **`_refactored.dart`**: Improved version with same interface\n- **`_clean.dart`**: Complete rewrite with simplified architecture\n- **`.create()`**: Factory method standard for proper dependency injection\n",
+          "mappedRules": [
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "58b8688c-4611-4318-bb76-fb8fd667a474",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af"
+          ],
+          "confidence": 0.25
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Enterprise Task Management Rules",
+          "content": "## Enterprise Task Management Rules\n1. **Epic Orchestration**: Break large tasks into manageable epics (10-500+ hours)\n2. **Priority Interrupts**: Handle urgent interrupts with graceful suspension\n3. **Cross-Machine Sync**: Maintain state across multiple development machines\n4. **Milestone Tracking**: Automatic checkpointing and progress reporting\n5. **Auto-Save**: 15-minute interval state preservation\n",
+          "mappedRules": [
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "File Organization",
+          "content": "## File Organization\n- Use hierarchical structure for complex projects\n- Implement comprehensive folder organization\n- Maintain detailed metadata and tracking\n- Leverage advanced automation scripts\n",
+          "mappedRules": [
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "532f542a-f64c-425e-9f11-385c345d60b9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Development Workflow",
+          "content": "## Development Workflow\n1. **Epic Planning**: Define large-scale objectives and milestones\n2. **Task Breakdown**: Decompose epics into manageable subtasks\n3. **Priority Management**: Handle interrupts with graceful suspension\n4. **Cross-Machine Sync**: Automatic git branching and state sync\n5. **Progress Tracking**: Real-time monitoring and reporting\n6. **Completion Archival**: Comprehensive completion documentation\n",
+          "mappedRules": [
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Enterprise Features",
+          "content": "## Enterprise Features\n- **Real-Time Monitoring**: Daemon processes for continuous oversight\n- **Scalability First**: Design for growth and complexity\n- **Comprehensive Automation**: Leverage full automation capabilities\n- **Enterprise Standards**: Follow enterprise-grade practices\n- **Advanced Monitoring**: Implement continuous oversight\n",
+          "mappedRules": [
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Task Management Rules",
+          "content": "## Task Management Rules\n1. **Epic Orchestration**: Break large tasks into manageable epics (10-500+ hours)\n2. **Priority Interrupts**: Handle urgent interrupts with graceful suspension\n3. **Cross-Machine Sync**: Maintain state across multiple development machines\n4. **Milestone Tracking**: Automatic checkpointing and progress reporting\n5. **Auto-Save**: 15-minute interval state preservation\n",
+          "mappedRules": [
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "File Organization",
+          "content": "## File Organization\n- Use hierarchical structure for complex projects\n- Implement comprehensive folder organization\n- Maintain detailed metadata and tracking\n- Leverage advanced automation scripts\n",
+          "mappedRules": [
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "532f542a-f64c-425e-9f11-385c345d60b9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Development Workflow",
+          "content": "## Development Workflow\n1. **Epic Planning**: Define large-scale objectives and milestones\n2. **Task Breakdown**: Decompose epics into manageable subtasks\n3. **Priority Management**: Handle interrupts with graceful suspension\n4. **Cross-Machine Sync**: Automatic git branching and state sync\n5. **Progress Tracking**: Real-time monitoring and reporting\n6. **Completion Archival**: Comprehensive completion documentation\n",
+          "mappedRules": [
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Enterprise Features",
+          "content": "## Enterprise Features\n- **Real-Time Monitoring**: Daemon processes for continuous oversight\n- **Automatic Backups**: Comprehensive state preservation every 15 minutes\n- **Git Integration**: Automatic branching and cross-machine synchronization\n- **Interrupt Handling**: Priority queue with graceful task suspension\n- **Epic Management**: Handle projects spanning 10-500+ hours\n- **Machine State Preservation**: Seamless switching between development machines\n",
+          "mappedRules": [
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Code Standards",
+          "content": "## Code Standards\n- Implement enterprise-grade architecture patterns\n- Use comprehensive error handling and logging\n- Design for maintainability and scalability\n- Follow advanced security practices\n- Implement comprehensive testing strategies\n",
+          "mappedRules": [
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "4ce18541-196b-4a3c-a772-95be8b242359",
+            "810b934e-8319-42a7-880d-accdfc89e52c"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Security Rules",
+          "content": "## Security Rules\n- Advanced security monitoring and validation\n- Real-time threat detection\n- Comprehensive file and system validation\n- Automated security reporting\n- Cross-machine security synchronization\n",
+          "mappedRules": [
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "810b934e-8319-42a7-880d-accdfc89e52c",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Performance Requirements",
+          "content": "## Performance Requirements\n- Handle large codebases (500+ files)\n- Support multiple concurrent development streams\n- Maintain responsiveness under load\n- Optimize for cross-machine operations\n",
+          "mappedRules": [
+            "30680b98-76ac-460c-bb5e-048d651c38e4",
+            "b27c3e58-4638-4159-99ac-bb94ce60de99",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Monitoring and Alerting",
+          "content": "## Monitoring and Alerting\n- Real-time progress monitoring\n- Automatic alert generation for issues\n- Performance metrics collection\n- Comprehensive logging and reporting\n",
+          "mappedRules": [
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "79097f46-493a-418e-8060-e65744054ebb"
+          ],
+          "confidence": 0.4
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Switching to Simplified",
+          "content": "## Switching to Simplified\nWhen project requirements decrease or for maintenance:\n- Simple bug fixes\n- Basic feature additions\n- Single-machine development\n- Reduced complexity needs\n\nUse: `./mode-manager.sh simplified`\n\n---\n*Enterprise Mode Rules - Scale with complexity, maintain reliability*\n",
+          "mappedRules": [
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "f5648caa-b7fb-4590-9a05-66088da96638"
+          ],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "success": true,
+      "modeType": "simplified",
+      "originalFiles": [
+        "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+        "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md"
+      ],
+      "convertedConfig": {
+        "id": "simplified_migrated_1749381140724",
+        "name": "Simplified Mode (Migrated)",
+        "description": "Migrated simplified mode configuration using rule-based system",
+        "type": "simplified",
+        "ruleSelection": {
+          "includeCategories": [
+            "CUSTOM",
+            "BASIC_FEATURES"
+          ],
+          "excludeCategories": [
+            "ENTERPRISE_FEATURES",
+            "ADVANCED_AUTOMATION"
+          ],
+          "minimumUrgency": "LOW",
+          "maxRules": 20,
+          "explicitIncludes": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "810b934e-8319-42a7-880d-accdfc89e52c",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "b27c3e58-4638-4159-99ac-bb94ce60de99",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "4ce18541-196b-4a3c-a772-95be8b242359",
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "bdad2106-8780-473f-93a2-aaf62996f68b"
+          ],
+          "explicitExcludes": []
+        },
+        "ruleOrganization": {
+          "groupBy": "category",
+          "sortBy": "urgency",
+          "customOrder": []
+        },
+        "templates": {
+          "instructionsTemplate": "simplified-instructions",
+          "rulesTemplate": "simplified-rules"
+        },
+        "structure": {
+          "includeAutomation": false,
+          "includeScripts": false,
+          "taskManagementLevel": "basic"
+        },
+        "deployment": {
+          "targetFiles": [
+            "copilot-instructions.md",
+            "project-rules.md"
+          ],
+          "includeAutomationFiles": false,
+          "includeScriptFiles": false
+        },
+        "metadata": {
+          "created": "2025-06-08T11:12:20.724Z",
+          "version": "1.0.0",
+          "migrationDate": "2025-06-08T11:12:20.724Z",
+          "originalFiles": [
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md"
+          ],
+          "migrationConfidence": 0.7904761904761906
+        }
+      },
+      "errors": [],
+      "warnings": [],
+      "contentMapping": [
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "GitHub Copilot Instructions - SIMPLIFIED MODE",
+          "content": "# GitHub Copilot Instructions - SIMPLIFIED MODE\n",
+          "mappedRules": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514"
+          ],
+          "confidence": 0.45
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Current System Mode: SIMPLIFIED",
+          "content": "## Current System Mode: SIMPLIFIED\nThis project operates in **Simplified Mode** - a streamlined task management system designed for small to medium projects (< 20 hours).\n",
+          "mappedRules": [
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638"
+          ],
+          "confidence": 0.6
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Mode Overview",
+          "content": "## Mode Overview\n- **Target**: Basic task management with essential automation\n- **Best For**: Single machine development, straightforward workflows\n- **Features**: Basic backup/recovery, security validation, simple documentation\n",
+          "mappedRules": [
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "810b934e-8319-42a7-880d-accdfc89e52c"
+          ],
+          "confidence": 0.75
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Project Context",
+          "content": "## Project Context\nThis is a Flutter M5 project using simplified task management. Focus on:\n- Basic task completion tracking\n- Simple backup and recovery\n- Essential security validation\n- Straightforward documentation updates\n",
+          "mappedRules": [
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "810b934e-8319-42a7-880d-accdfc89e52c",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f"
+          ],
+          "confidence": 0.55
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Task Management Structure (Simplified)",
+          "content": "## Task Management Structure (Simplified)\n```\n.tasks/\n├── current_task.json     # Your active task\n├── completed/           # Completed tasks\n├── backups/            # Automatic backups\n└── current/            # Current working files\n```\n",
+          "mappedRules": [
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "532f542a-f64c-425e-9f11-385c345d60b9"
+          ],
+          "confidence": 0.55
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Available Commands",
+          "content": "## Available Commands\n- `task-system.sh` - Basic task management\n- `security-check.sh` - Security validation\n- `project-update.sh` - Documentation updates\n",
+          "mappedRules": [
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514"
+          ],
+          "confidence": 0.6
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Flutter Development Guidelines",
+          "content": "## Flutter Development Guidelines\n",
+          "mappedRules": [
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "b27c3e58-4638-4159-99ac-bb94ce60de99",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9"
+          ],
+          "confidence": 0.35
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Essential Flutter Practices",
+          "content": "### Essential Flutter Practices\n- **Clean Code**: Follow Flutter/Dart conventions\n- **State Management**: Use Provider or setState for simple apps\n- **Widget Organization**: Separate UI components logically\n- **File Structure**: Keep related files together\n- **Testing**: Write basic tests for critical functionality\n",
+          "mappedRules": [
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "810b934e-8319-42a7-880d-accdfc89e52c"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Basic Architecture",
+          "content": "### Basic Architecture\n```\nlib/\n├── main.dart           # App entry point\n├── screens/           # App screens/pages\n├── widgets/          # Reusable widgets\n├── models/           # Data models\n└── services/         # API/data services\n```\n",
+          "mappedRules": [
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "b27c3e58-4638-4159-99ac-bb94ce60de99"
+          ],
+          "confidence": 0.7
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Development Rules",
+          "content": "### Development Rules\n- **File Size**: Keep files under 300 lines\n- **Naming**: Use descriptive names for files and classes\n- **Comments**: Add comments for complex logic\n- **Git**: Commit frequently with clear messages\n- **Testing**: Test critical user flows\n",
+          "mappedRules": [
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "810b934e-8319-42a7-880d-accdfc89e52c"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Code Preferences",
+          "content": "## Code Preferences\n- Keep solutions simple and straightforward\n- Focus on essential functionality\n- Avoid over-engineering\n- Prioritize clarity over complexity\n- Follow Flutter best practices\n- Maintain clean code structure\n",
+          "mappedRules": [
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "4ce18541-196b-4a3c-a772-95be8b242359",
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Mode Switching",
+          "content": "## Mode Switching\nTo access enterprise features: `../.github/mode-manager.sh enterprise`\n\n---\n*Simplified Mode Active - Enterprise features preserved but hidden*\n",
+          "mappedRules": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Project Rules - SIMPLIFIED MODE",
+          "content": "# Project Rules - SIMPLIFIED MODE\n",
+          "mappedRules": [
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514"
+          ],
+          "confidence": 0.5
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Core Principles",
+          "content": "## Core Principles\n- **Simplicity First**: Choose the simplest solution that works\n- **Essential Features Only**: Avoid feature creep and over-engineering\n- **Clear Documentation**: Keep docs simple and actionable\n- **Basic Automation**: Use only essential automation scripts\n",
+          "mappedRules": [
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Task Management Rules",
+          "content": "## Task Management Rules\n1. **One Active Task**: Focus on single task completion\n2. **Simple Status Tracking**: Ready → In Progress → Complete\n3. **Basic Backup**: Daily backups of important work\n4. **Essential Security**: Core security validations only\n",
+          "mappedRules": [
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "810b934e-8319-42a7-880d-accdfc89e52c",
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "File Organization",
+          "content": "## File Organization\n- Keep project structure flat and simple\n- Use clear, descriptive naming\n- Avoid deep nested structures\n- Limit automation to essential scripts\n",
+          "mappedRules": [
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Development Workflow",
+          "content": "## Development Workflow\n1. Check current task status\n2. Update task progress\n3. Complete and archive\n4. Run basic security check\n5. Update documentation\n",
+          "mappedRules": [
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "532f542a-f64c-425e-9f11-385c345d60b9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Automation Limits",
+          "content": "## Automation Limits\n- **Scripts**: Max 3 automation scripts\n- **Monitoring**: Basic file validation only\n- **Backups**: Simple daily backups\n- **Sync**: Manual git operations\n",
+          "mappedRules": [
+            "810b934e-8319-42a7-880d-accdfc89e52c",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833"
+          ],
+          "confidence": 0.55
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Code Standards",
+          "content": "## Code Standards\n- Prefer readable code over clever code\n- Use standard patterns and libraries\n- Keep functions small and focused\n- Write clear comments for complex logic\n",
+          "mappedRules": [
+            "4ce18541-196b-4a3c-a772-95be8b242359",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Security Rules",
+          "content": "## Security Rules\n- Basic file permission checks\n- Simple validation scripts\n- Standard security practices\n- No advanced monitoring\n",
+          "mappedRules": [
+            "810b934e-8319-42a7-880d-accdfc89e52c",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Switching to Enterprise",
+          "content": "## Switching to Enterprise\nWhen project grows beyond 20 hours or requires:\n- Multi-machine development\n- Complex task orchestration\n- Advanced automation\n- Real-time monitoring\n\nUse: `./mode-manager.sh enterprise`\n\n---\n*Simplified Mode Rules - Keep it simple, keep it working*\n",
+          "mappedRules": [
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f"
+          ],
+          "confidence": 1
+        }
+      ]
+    },
+    {
+      "success": true,
+      "modeType": "hybrid",
+      "originalFiles": [
+        "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+        "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md"
+      ],
+      "convertedConfig": {
+        "id": "hybrid_migrated_1749381140732",
+        "name": "Hybrid Mode (Migrated)",
+        "description": "Migrated hybrid mode configuration using rule-based system",
+        "type": "hybrid",
+        "ruleSelection": {
+          "includeCategories": [
+            "CUSTOM",
+            "TASK_MANAGEMENT"
+          ],
+          "excludeCategories": [],
+          "minimumUrgency": "MEDIUM",
+          "maxRules": 35,
+          "explicitIncludes": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "f922806e-8aa8-474f-b4e3-b0d7b2190eb9",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "f6165c09-e233-4134-aae0-89d6db048d8c"
+          ],
+          "explicitExcludes": []
+        },
+        "ruleOrganization": {
+          "groupBy": "category",
+          "sortBy": "urgency",
+          "customOrder": []
+        },
+        "templates": {
+          "instructionsTemplate": "hybrid-instructions",
+          "rulesTemplate": "hybrid-rules"
+        },
+        "structure": {
+          "includeAutomation": true,
+          "includeScripts": false,
+          "taskManagementLevel": "hybrid"
+        },
+        "deployment": {
+          "targetFiles": [
+            "copilot-instructions.md",
+            "project-rules.md"
+          ],
+          "includeAutomationFiles": true,
+          "includeScriptFiles": false
+        },
+        "metadata": {
+          "created": "2025-06-08T11:12:20.732Z",
+          "version": "1.0.0",
+          "migrationDate": "2025-06-08T11:12:20.732Z",
+          "originalFiles": [
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md"
+          ],
+          "migrationConfidence": 0.840625
+        }
+      },
+      "errors": [],
+      "warnings": [],
+      "contentMapping": [
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "GitHub Copilot Instructions - HYBRID MODE",
+          "content": "# GitHub Copilot Instructions - HYBRID MODE\n",
+          "mappedRules": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "bdad2106-8780-473f-93a2-aaf62996f68b"
+          ],
+          "confidence": 0.4
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "Current System Mode: HYBRID",
+          "content": "## Current System Mode: HYBRID\nThis project operates in **Hybrid Mode** - a balanced approach combining simplified workflows with selected enterprise features.\n",
+          "mappedRules": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "bdad2106-8780-473f-93a2-aaf62996f68b"
+          ],
+          "confidence": 0.75
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "Mode Overview",
+          "content": "## Mode Overview\n- **Target**: Selective automation with enterprise capabilities when needed\n- **Best For**: Medium projects (20-50 hours), selective feature adoption\n- **Features**: Configurable automation, optional cross-machine sync, flexible monitoring\n",
+          "mappedRules": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 0.7
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "Project Context",
+          "content": "## Project Context\nThis is a Flutter M5 project using hybrid task management. Focus on:\n- Flexible task management with optional enterprise features\n- Configurable automation based on current needs\n- Selective use of advanced features\n- Balanced approach to complexity\n",
+          "mappedRules": [
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 0.6
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "Task Management Structure (Hybrid)",
+          "content": "## Task Management Structure (Hybrid)\n```\n.tasks/\n├── current/            # Active tasks (simplified style)\n├── completed/          # Completed tasks\n├── epics/             # Optional epic management (when needed)\n├── system/            # Optional system monitoring (configurable)\n└── backups/           # Flexible backup strategy\n```\n",
+          "mappedRules": [
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "e4909de7-eeeb-41db-8e25-4d2813477671"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "Available Features (Configurable)",
+          "content": "## Available Features (Configurable)\n- **Basic**: Always available - task tracking, simple completion\n- **Optional**: Cross-machine sync (enable when needed)\n- **Advanced**: Epic management (for larger tasks)\n- **Enterprise**: Priority interrupts (enable for urgent workflows)\n",
+          "mappedRules": [
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "Mode Switching",
+          "content": "## Mode Switching\n- To simplified: `./mode-manager.sh simplified`\n- To enterprise: `./mode-manager.sh enterprise`\n- Configure hybrid: `./mode-manager.sh hybrid --configure`\n\n---\n*Hybrid Mode Active - Balanced flexibility with selective enterprise features*\n",
+          "mappedRules": [
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Project Rules - HYBRID MODE",
+          "content": "# Project Rules - HYBRID MODE\n",
+          "mappedRules": [
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f922806e-8aa8-474f-b4e3-b0d7b2190eb9"
+          ],
+          "confidence": 0.4
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Core Principles",
+          "content": "## Core Principles\n- **Balanced Approach**: Combine simplicity with selective complexity\n- **Configurable Features**: Enable enterprise features as needed\n- **Flexible Scaling**: Adapt to changing project requirements\n- **Selective Automation**: Use automation where it adds value\n",
+          "mappedRules": [
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Task Management Rules",
+          "content": "## Task Management Rules\n1. **Adaptive Structure**: Switch between simple and epic management\n2. **Optional Interrupts**: Enable priority handling when needed\n3. **Configurable Sync**: Cross-machine sync available but optional\n4. **Flexible Monitoring**: Enable monitoring for complex phases\n5. **Selective Auto-Save**: Configure save intervals based on task complexity\n",
+          "mappedRules": [
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "e4909de7-eeeb-41db-8e25-4d2813477671"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "File Organization",
+          "content": "## File Organization\n- Start simple, add complexity as needed\n- Configurable folder structures\n- Optional enterprise organization\n- Flexible automation deployment\n",
+          "mappedRules": [
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "22980cec-cb96-4b99-9937-af4468cb6c03"
+          ],
+          "confidence": 0.7
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Development Workflow",
+          "content": "## Development Workflow\n1. **Assess Complexity**: Determine required feature level\n2. **Configure Mode**: Enable/disable features as needed\n3. **Flexible Execution**: Adapt workflow to current task\n4. **Optional Monitoring**: Enable when beneficial\n5. **Configurable Completion**: Simple or detailed as appropriate\n",
+          "mappedRules": [
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Configurable Features",
+          "content": "## Configurable Features\n- **Cross-Machine Sync**: Enable for multi-machine development\n- **Epic Management**: Activate for large tasks (20+ hours)\n- **Priority Interrupts**: Enable for urgent workflow requirements\n- **Advanced Monitoring**: Activate for complex project phases\n- **Auto-Save Intervals**: Configure based on task criticality\n",
+          "mappedRules": [
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "e4909de7-eeeb-41db-8e25-4d2813477671"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Mode Selection Guidelines",
+          "content": "## Mode Selection Guidelines\n- **Use Simplified**: Single tasks, basic requirements, <20 hours\n- **Use Enterprise**: Large projects, multi-machine, >50 hours\n- **Use Hybrid**: Variable complexity, selective features, 20-50 hours\n",
+          "mappedRules": [
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Feature Configuration",
+          "content": "## Feature Configuration\n```bash\n# Enable specific features\n./mode-manager.sh hybrid --enable cross-sync\n./mode-manager.sh hybrid --enable epic-management\n./mode-manager.sh hybrid --enable priority-interrupts\n\n# Disable features\n./mode-manager.sh hybrid --disable cross-sync\n./mode-manager.sh hybrid --configure\n```\n",
+          "mappedRules": [
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Switching Guidelines",
+          "content": "## Switching Guidelines\n- **To Simplified**: When reducing complexity permanently\n- **To Enterprise**: When scaling up to full enterprise needs\n- **Reconfigure Hybrid**: When changing feature requirements\n\n---\n*Hybrid Mode Rules - Flexible adaptation to changing complexity*\n",
+          "mappedRules": [
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "f5648caa-b7fb-4590-9a05-66088da96638"
+          ],
+          "confidence": 1
+        }
+      ]
+    }
+  ],
+  "batchResults": [
+    {
+      "success": true,
+      "modeType": "enterprise",
+      "originalFiles": [
+        "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+        "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md"
+      ],
+      "convertedConfig": {
+        "id": "enterprise_migrated_1749381140751",
+        "name": "Enterprise Mode (Migrated)",
+        "description": "Migrated enterprise mode configuration using rule-based system",
+        "type": "enterprise",
+        "ruleSelection": {
+          "includeCategories": [
+            "CUSTOM",
+            "TASK_MANAGEMENT",
+            "ENTERPRISE_FEATURES"
+          ],
+          "excludeCategories": [],
+          "minimumUrgency": "MEDIUM",
+          "maxRules": 50,
+          "explicitIncludes": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "30680b98-76ac-460c-bb5e-048d651c38e4",
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "58b8688c-4611-4318-bb76-fb8fd667a474",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af",
+            "f922806e-8aa8-474f-b4e3-b0d7b2190eb9",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "63355490-b2d1-4ee1-97a3-87b80f7407ee",
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "b27c3e58-4638-4159-99ac-bb94ce60de99",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "4ce18541-196b-4a3c-a772-95be8b242359",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "810b934e-8319-42a7-880d-accdfc89e52c"
+          ],
+          "explicitExcludes": []
+        },
+        "ruleOrganization": {
+          "groupBy": "category",
+          "sortBy": "urgency",
+          "customOrder": []
+        },
+        "templates": {
+          "instructionsTemplate": "enterprise-instructions",
+          "rulesTemplate": "enterprise-rules"
+        },
+        "structure": {
+          "includeAutomation": true,
+          "includeScripts": true,
+          "taskManagementLevel": "enterprise"
+        },
+        "deployment": {
+          "targetFiles": [
+            "copilot-instructions.md",
+            "project-rules.md"
+          ],
+          "includeAutomationFiles": true,
+          "includeScriptFiles": true
+        },
+        "metadata": {
+          "created": "2025-06-08T11:12:20.751Z",
+          "version": "1.0.0",
+          "migrationDate": "2025-06-08T11:12:20.751Z",
+          "originalFiles": [
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md"
+          ],
+          "migrationConfidence": 0.8313953488372093
+        }
+      },
+      "errors": [],
+      "warnings": [],
+      "contentMapping": [
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "CRITICAL REQUIREMENTS",
+          "content": "## CRITICAL REQUIREMENTS\n⚠️  **MANDATORY**: Always work with FRESH project structure information  \n📍 **READ FIRST**: `.github/PROJECT_MAP.md` before making ANY changes  \n🔄 **UPDATE ALWAYS**: `./update_project_map.sh` after ANY file/folder modifications  \n",
+          "mappedRules": [
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "30680b98-76ac-460c-bb5e-048d651c38e4"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "MANDATORY WORKFLOW - NEVER SKIP STEPS",
+          "content": "## MANDATORY WORKFLOW - NEVER SKIP STEPS\n1. **READ**: `README.md`\n2. **READ**: `.github/project-rules.md`  \n3. **READ**: `.github/PROJECT_MAP.md` (current structure snapshot)\n4. **CHECK**: `.tasks/` folder (all files)\n5. **UPDATE**: Project map for fresh structure: `./update_project_map.sh`\n6. **VERIFY**: Project structure compliance against map and rules\n7. **ASSESS**: Complexity: E(5-15min|≤3files) | M(15-60min|≤10files) | H(60min+|unlimited)\n8. **CREATE**: Task file in `.tasks/`\n9. **FOLLOW**: File placement rules (use `PROJECT_MAP.md` as reference)\n10. **VALIDATE**: Test after each atomic change\n11. **VERIFY**: Final validation before task completion  \n12. **UPDATE**: Project map after ANY file/folder changes: `./update_project_map.sh`\n13. **CLEAN**: Remove unnecessary artifacts\n14. **CHECK**: Ensure nothing is left unhandled (NEVER delete referenced files)\n",
+          "mappedRules": [
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Task Management Structure (Enterprise)",
+          "content": "## Task Management Structure (Enterprise)\n```\n.tasks/\n├── system/              # Core system files (monitoring, sync, priorities)\n├── epics/              # Large-scale task orchestration\n├── 1_planning/         # Task planning and milestone definition\n├── 2_review/           # Task review and approval workflow\n├── 3_execution/        # Active task execution with interrupt handling\n├── 4_completion/       # Completion tracking and reporting\n└── cross_machine/      # Multi-machine synchronization\n```\n",
+          "mappedRules": [
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Enterprise Features",
+          "content": "## Enterprise Features\n- **Epic Task Orchestration**: Handle 10-500+ hour projects with automatic breakdown\n- **Priority Interrupt System**: Graceful task suspension for urgent items\n- **Cross-Machine Sync**: Automatic git branching and state synchronization\n- **Auto-Save**: 15-minute interval snapshots with state preservation\n- **Real-Time Monitoring**: Daemon processes for continuous oversight\n- **Milestone Tracking**: Automatic checkpointing and progress reporting\n",
+          "mappedRules": [
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "SOLID Principles Implementation (REQUIRED)",
+          "content": "### SOLID Principles Implementation (REQUIRED)\n1. **Single Responsibility**: One class = one responsibility\n2. **Open/Closed**: Open for extension, closed for modification\n3. **Liskov Substitution**: Derived classes must be substitutable\n4. **Interface Segregation**: No client forced to depend on unused interfaces\n5. **Dependency Inversion**: Depend on abstractions, not concretions\n",
+          "mappedRules": [
+            "58b8688c-4611-4318-bb76-fb8fd667a474",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Clean Architecture (ENFORCED)",
+          "content": "### Clean Architecture (ENFORCED)\n```\nlib/\n├── core/               # Core business logic, entities, interfaces\n├── data/              # Data layer (repositories, data sources, models)\n├── presentation/      # UI layer (pages, widgets, state management)\n└── domain/           # Domain layer (use cases, entities, repositories)\n```\n",
+          "mappedRules": [
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "f922806e-8aa8-474f-b4e3-b0d7b2190eb9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Mandatory File Practices",
+          "content": "### Mandatory File Practices\n- **NO SINGLE-FILE MONSTERS**: Max 200 lines per file\n- **EXTRACT**: Move reusable code to `lib/shared/`\n- **SEPARATE**: Business logic from UI components\n- **ORGANIZE**: Related files in appropriate subdirectories\n",
+          "mappedRules": [
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Testing Requirements (NON-NEGOTIABLE)",
+          "content": "### Testing Requirements (NON-NEGOTIABLE)\n- **Unit Tests**: All business logic classes\n- **Widget Tests**: All custom widgets\n- **Integration Tests**: Critical user flows\n- **Coverage**: Minimum 80% for core functionality\n",
+          "mappedRules": [
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "63355490-b2d1-4ee1-97a3-87b80f7407ee",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Backup Strategy (AUTOMATIC)",
+          "content": "### Backup Strategy (AUTOMATIC)\n- **Every Change**: Git commit with descriptive message\n- **Major Features**: Create feature branches\n- **Before Refactoring**: Create backup branch\n- **Daily**: Push to remote repository\n",
+          "mappedRules": [
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "State Management Rules",
+          "content": "### State Management Rules\n- **Small Apps**: Provider or setState\n- **Medium Apps**: Riverpod or Bloc\n- **Large Apps**: Bloc with Clean Architecture\n- **NEVER**: Global variables for state\n",
+          "mappedRules": [
+            "f922806e-8aa8-474f-b4e3-b0d7b2190eb9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Performance Guidelines",
+          "content": "### Performance Guidelines\n- **Lazy Loading**: Implement for lists and heavy widgets\n- **Image Optimization**: Use appropriate formats and caching\n- **Memory Management**: Dispose controllers and streams\n- **Build Optimization**: Use const constructors when possible\n",
+          "mappedRules": [
+            "b27c3e58-4638-4159-99ac-bb94ce60de99",
+            "30680b98-76ac-460c-bb5e-048d651c38e4",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Enterprise Code Preferences",
+          "content": "## Enterprise Code Preferences\n- Design for scalability and maintainability\n- Implement comprehensive error handling\n- Use advanced patterns and architectures\n- Focus on enterprise-grade solutions\n- Prioritize robustness and reliability\n- Follow Flutter best practices and Clean Architecture\n- Maintain high test coverage and documentation\n",
+          "mappedRules": [
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "4ce18541-196b-4a3c-a772-95be8b242359",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Mode Switching",
+          "content": "## Mode Switching\nTo simplify for basic tasks: `./mode-manager.sh simplified`\n\n---\n*Enterprise Mode Active - Full Flutter + Task Management feature set available*\n",
+          "mappedRules": [
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Flutter Development - Core Principles",
+          "content": "## Flutter Development - Core Principles\n- **SOLID**: Single responsibility, dependency injection, clean interfaces\n- **Pure Functions**: Same input = same output, no side effects\n- **Clean Architecture**: Domain-agnostic business logic, clear layer boundaries\n",
+          "mappedRules": [
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "58b8688c-4611-4318-bb76-fb8fd667a474",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Backup Requirements",
+          "content": "### Backup Requirements\n- **VERIFY**: Ensure both `.history/` and `.legacy/` folders exist\n- **PRESERVE**: Do not delete files from either backup location\n- **RELY ON**: Appropriate backup system based on situation\n",
+          "mappedRules": [
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183",
+            "30680b98-76ac-460c-bb5e-048d651c38e4",
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Coverage by Complexity",
+          "content": "### Coverage by Complexity\n- **EASY (E)**: Basic validation only\n- **MEDIUM (M)**: Unit + Widget tests required\n- **HIGH (H)**: Unit + Widget + Integration tests required\n",
+          "mappedRules": [
+            "63355490-b2d1-4ee1-97a3-87b80f7407ee",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "532f542a-f64c-425e-9f11-385c345d60b9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Enterprise Task Management Rules",
+          "content": "## Enterprise Task Management Rules\n1. **Epic Orchestration**: Break large tasks into manageable epics (10-500+ hours)\n2. **Priority Interrupts**: Handle urgent interrupts with graceful suspension\n3. **Cross-Machine Sync**: Maintain state across multiple development machines\n4. **Milestone Tracking**: Automatic checkpointing and progress reporting\n5. **Auto-Save**: 15-minute interval state preservation\n",
+          "mappedRules": [
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "File Organization",
+          "content": "## File Organization\n- Use hierarchical structure for complex projects\n- Implement comprehensive folder organization\n- Maintain detailed metadata and tracking\n- Leverage advanced automation scripts\n",
+          "mappedRules": [
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "532f542a-f64c-425e-9f11-385c345d60b9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Development Workflow",
+          "content": "## Development Workflow\n1. **Epic Planning**: Define large-scale objectives and milestones\n2. **Task Breakdown**: Decompose epics into manageable subtasks\n3. **Priority Management**: Handle interrupts with graceful suspension\n4. **Cross-Machine Sync**: Automatic git branching and state sync\n5. **Progress Tracking**: Real-time monitoring and reporting\n6. **Completion Archival**: Comprehensive completion documentation\n",
+          "mappedRules": [
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Task Management Rules",
+          "content": "## Task Management Rules\n1. **Epic Orchestration**: Break large tasks into manageable epics (10-500+ hours)\n2. **Priority Interrupts**: Handle urgent interrupts with graceful suspension\n3. **Cross-Machine Sync**: Maintain state across multiple development machines\n4. **Milestone Tracking**: Automatic checkpointing and progress reporting\n5. **Auto-Save**: 15-minute interval state preservation\n",
+          "mappedRules": [
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "File Organization",
+          "content": "## File Organization\n- Use hierarchical structure for complex projects\n- Implement comprehensive folder organization\n- Maintain detailed metadata and tracking\n- Leverage advanced automation scripts\n",
+          "mappedRules": [
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "532f542a-f64c-425e-9f11-385c345d60b9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Development Workflow",
+          "content": "## Development Workflow\n1. **Epic Planning**: Define large-scale objectives and milestones\n2. **Task Breakdown**: Decompose epics into manageable subtasks\n3. **Priority Management**: Handle interrupts with graceful suspension\n4. **Cross-Machine Sync**: Automatic git branching and state sync\n5. **Progress Tracking**: Real-time monitoring and reporting\n6. **Completion Archival**: Comprehensive completion documentation\n",
+          "mappedRules": [
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Enterprise Features",
+          "content": "## Enterprise Features\n- **Real-Time Monitoring**: Daemon processes for continuous oversight\n- **Automatic Backups**: Comprehensive state preservation every 15 minutes\n- **Git Integration**: Automatic branching and cross-machine synchronization\n- **Interrupt Handling**: Priority queue with graceful task suspension\n- **Epic Management**: Handle projects spanning 10-500+ hours\n- **Machine State Preservation**: Seamless switching between development machines\n",
+          "mappedRules": [
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Code Standards",
+          "content": "## Code Standards\n- Implement enterprise-grade architecture patterns\n- Use comprehensive error handling and logging\n- Design for maintainability and scalability\n- Follow advanced security practices\n- Implement comprehensive testing strategies\n",
+          "mappedRules": [
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "4ce18541-196b-4a3c-a772-95be8b242359",
+            "810b934e-8319-42a7-880d-accdfc89e52c"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Security Rules",
+          "content": "## Security Rules\n- Advanced security monitoring and validation\n- Real-time threat detection\n- Comprehensive file and system validation\n- Automated security reporting\n- Cross-machine security synchronization\n",
+          "mappedRules": [
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "810b934e-8319-42a7-880d-accdfc89e52c",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Performance Requirements",
+          "content": "## Performance Requirements\n- Handle large codebases (500+ files)\n- Support multiple concurrent development streams\n- Maintain responsiveness under load\n- Optimize for cross-machine operations\n",
+          "mappedRules": [
+            "30680b98-76ac-460c-bb5e-048d651c38e4",
+            "b27c3e58-4638-4159-99ac-bb94ce60de99",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Switching to Simplified",
+          "content": "## Switching to Simplified\nWhen project requirements decrease or for maintenance:\n- Simple bug fixes\n- Basic feature additions\n- Single-machine development\n- Reduced complexity needs\n\nUse: `./mode-manager.sh simplified`\n\n---\n*Enterprise Mode Rules - Scale with complexity, maintain reliability*\n",
+          "mappedRules": [
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "f5648caa-b7fb-4590-9a05-66088da96638"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Enterprise Features",
+          "content": "## Enterprise Features\n- Epic-scale task orchestration (10-500+ hours)\n- Priority interrupt system with graceful suspension\n- Cross-machine synchronization with automatic git branching\n- Real-time monitoring and auto-save functionality\n- Milestone tracking with automatic checkpointing\n",
+          "mappedRules": [
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Current System Mode: ENTERPRISE",
+          "content": "## Current System Mode: ENTERPRISE\nThis project operates in **Enterprise Mode** - combining Flutter development best practices with comprehensive task management for large-scale projects (50+ hours).\n",
+          "mappedRules": [
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "360870c0-0d7e-4407-91cf-9782f872ff84"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Manual Backup",
+          "content": "### Manual Backup\n- **SYSTEM**: Place original files in `.legacy/{path}/{filename}.dart` during refactoring\n- **TRIGGER**: Before major refactoring operations\n- **LOCATION**: `.legacy/` folder preserves original implementations\n",
+          "mappedRules": [
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "30680b98-76ac-460c-bb5e-048d651c38e4"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Enterprise Features",
+          "content": "## Enterprise Features\n- **Real-Time Monitoring**: Daemon processes for continuous oversight\n- **Scalability First**: Design for growth and complexity\n- **Comprehensive Automation**: Leverage full automation capabilities\n- **Enterprise Standards**: Follow enterprise-grade practices\n- **Advanced Monitoring**: Implement continuous oversight\n",
+          "mappedRules": [
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Test Types",
+          "content": "### Test Types\n- **UNIT**: Data layer business logic\n- **WIDGET**: Presentation layer components  \n- **INTEGRATION**: Auth flows and navigation\n- **COVERAGE**: 70% critical paths minimum\n",
+          "mappedRules": [
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "63355490-b2d1-4ee1-97a3-87b80f7407ee"
+          ],
+          "confidence": 0.7
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Automatic Backup",
+          "content": "### Automatic Backup\n- **SYSTEM**: Editor creates `.history/{path}/{filename}_{timestamp}.ext` on changes\n- **TRIGGER**: Every file modification automatically\n- **LOCATION**: `.history/` folder structure mirrors source\n",
+          "mappedRules": [
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183",
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833"
+          ],
+          "confidence": 0.65
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Available Commands",
+          "content": "## Available Commands\n- `task-management.sh` - Main enterprise orchestrator\n- `massive_task_orchestrator.sh` - Epic task management\n- `interrupt_handler.sh` - Priority interrupt system\n- `auto_save.sh` - Automatic state preservation\n- `sync_check.sh` - Cross-machine synchronization\n",
+          "mappedRules": [
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 0.55
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Project Rules - ENTERPRISE MODE",
+          "content": "# Project Rules - ENTERPRISE MODE\n",
+          "mappedRules": [
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514"
+          ],
+          "confidence": 0.5
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "GitHub Copilot Instructions - ENTERPRISE MODE",
+          "content": "# GitHub Copilot Instructions - ENTERPRISE MODE\n",
+          "mappedRules": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b"
+          ],
+          "confidence": 0.45
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/copilot-instructions.md",
+          "section": "Flutter Development Workflow (MANDATORY)",
+          "content": "## Flutter Development Workflow (MANDATORY)\n",
+          "mappedRules": [
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "f6165c09-e233-4134-aae0-89d6db048d8c"
+          ],
+          "confidence": 0.4
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Backup Strategy - DUAL SYSTEM",
+          "content": "## Backup Strategy - DUAL SYSTEM",
+          "mappedRules": [
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0"
+          ],
+          "confidence": 0.4
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Monitoring and Alerting",
+          "content": "## Monitoring and Alerting\n- Real-time progress monitoring\n- Automatic alert generation for issues\n- Performance metrics collection\n- Comprehensive logging and reporting\n",
+          "mappedRules": [
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "79097f46-493a-418e-8060-e65744054ebb"
+          ],
+          "confidence": 0.4
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Testing Requirements",
+          "content": "## Testing Requirements",
+          "mappedRules": [
+            "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "30680b98-76ac-460c-bb5e-048d651c38e4",
+            "25c0467c-4e16-46eb-862a-b66fef10f851"
+          ],
+          "confidence": 0.35
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Safety-First Approach",
+          "content": "### Safety-First Approach\n- **BACKUP**: Editor auto-creates `.history/{path}/{filename}_{timestamp}.ext` backups\n- **PRESERVE**: Move original files to `.legacy/{path}/{filename}.dart`\n- **SUFFIX**: Create new files with `_refactored` or `_clean` suffix\n- **GRADUAL**: Switch via imports gradually\n- **INCREMENTAL**: Migration with full testing between steps\n- **NEVER**: Delete originals until 100% confident in replacement\n",
+          "mappedRules": [
+            "b558beb4-0fb3-48bd-9574-7bb1761f7df7",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d"
+          ],
+          "confidence": 0.35
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Refactoring Guidelines",
+          "content": "## Refactoring Guidelines",
+          "mappedRules": [
+            "b27c3e58-4638-4159-99ac-bb94ce60de99",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "1a829bd8-3fda-45ca-ac88-d68488f0b183"
+          ],
+          "confidence": 0.3
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/enterprise/project-rules.md",
+          "section": "Naming Conventions",
+          "content": "### Naming Conventions\n- **`_refactored.dart`**: Improved version with same interface\n- **`_clean.dart`**: Complete rewrite with simplified architecture\n- **`.create()`**: Factory method standard for proper dependency injection\n",
+          "mappedRules": [
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "58b8688c-4611-4318-bb76-fb8fd667a474",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af"
+          ],
+          "confidence": 0.25
+        }
+      ]
+    },
+    {
+      "success": true,
+      "modeType": "simplified",
+      "originalFiles": [
+        "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+        "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md"
+      ],
+      "convertedConfig": {
+        "id": "simplified_migrated_1749381140758",
+        "name": "Simplified Mode (Migrated)",
+        "description": "Migrated simplified mode configuration using rule-based system",
+        "type": "simplified",
+        "ruleSelection": {
+          "includeCategories": [
+            "CUSTOM",
+            "BASIC_FEATURES"
+          ],
+          "excludeCategories": [
+            "ENTERPRISE_FEATURES",
+            "ADVANCED_AUTOMATION"
+          ],
+          "minimumUrgency": "LOW",
+          "maxRules": 20,
+          "explicitIncludes": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "810b934e-8319-42a7-880d-accdfc89e52c",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "b27c3e58-4638-4159-99ac-bb94ce60de99",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "4ce18541-196b-4a3c-a772-95be8b242359",
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "bdad2106-8780-473f-93a2-aaf62996f68b"
+          ],
+          "explicitExcludes": []
+        },
+        "ruleOrganization": {
+          "groupBy": "category",
+          "sortBy": "urgency",
+          "customOrder": []
+        },
+        "templates": {
+          "instructionsTemplate": "simplified-instructions",
+          "rulesTemplate": "simplified-rules"
+        },
+        "structure": {
+          "includeAutomation": false,
+          "includeScripts": false,
+          "taskManagementLevel": "basic"
+        },
+        "deployment": {
+          "targetFiles": [
+            "copilot-instructions.md",
+            "project-rules.md"
+          ],
+          "includeAutomationFiles": false,
+          "includeScriptFiles": false
+        },
+        "metadata": {
+          "created": "2025-06-08T11:12:20.758Z",
+          "version": "1.0.0",
+          "migrationDate": "2025-06-08T11:12:20.758Z",
+          "originalFiles": [
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md"
+          ],
+          "migrationConfidence": 0.7904761904761906
+        }
+      },
+      "errors": [],
+      "warnings": [],
+      "contentMapping": [
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Essential Flutter Practices",
+          "content": "### Essential Flutter Practices\n- **Clean Code**: Follow Flutter/Dart conventions\n- **State Management**: Use Provider or setState for simple apps\n- **Widget Organization**: Separate UI components logically\n- **File Structure**: Keep related files together\n- **Testing**: Write basic tests for critical functionality\n",
+          "mappedRules": [
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "810b934e-8319-42a7-880d-accdfc89e52c"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Development Rules",
+          "content": "### Development Rules\n- **File Size**: Keep files under 300 lines\n- **Naming**: Use descriptive names for files and classes\n- **Comments**: Add comments for complex logic\n- **Git**: Commit frequently with clear messages\n- **Testing**: Test critical user flows\n",
+          "mappedRules": [
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "810b934e-8319-42a7-880d-accdfc89e52c"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Code Preferences",
+          "content": "## Code Preferences\n- Keep solutions simple and straightforward\n- Focus on essential functionality\n- Avoid over-engineering\n- Prioritize clarity over complexity\n- Follow Flutter best practices\n- Maintain clean code structure\n",
+          "mappedRules": [
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "4ce18541-196b-4a3c-a772-95be8b242359",
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Mode Switching",
+          "content": "## Mode Switching\nTo access enterprise features: `../.github/mode-manager.sh enterprise`\n\n---\n*Simplified Mode Active - Enterprise features preserved but hidden*\n",
+          "mappedRules": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Core Principles",
+          "content": "## Core Principles\n- **Simplicity First**: Choose the simplest solution that works\n- **Essential Features Only**: Avoid feature creep and over-engineering\n- **Clear Documentation**: Keep docs simple and actionable\n- **Basic Automation**: Use only essential automation scripts\n",
+          "mappedRules": [
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Task Management Rules",
+          "content": "## Task Management Rules\n1. **One Active Task**: Focus on single task completion\n2. **Simple Status Tracking**: Ready → In Progress → Complete\n3. **Basic Backup**: Daily backups of important work\n4. **Essential Security**: Core security validations only\n",
+          "mappedRules": [
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "810b934e-8319-42a7-880d-accdfc89e52c",
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "File Organization",
+          "content": "## File Organization\n- Keep project structure flat and simple\n- Use clear, descriptive naming\n- Avoid deep nested structures\n- Limit automation to essential scripts\n",
+          "mappedRules": [
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Development Workflow",
+          "content": "## Development Workflow\n1. Check current task status\n2. Update task progress\n3. Complete and archive\n4. Run basic security check\n5. Update documentation\n",
+          "mappedRules": [
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "532f542a-f64c-425e-9f11-385c345d60b9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Code Standards",
+          "content": "## Code Standards\n- Prefer readable code over clever code\n- Use standard patterns and libraries\n- Keep functions small and focused\n- Write clear comments for complex logic\n",
+          "mappedRules": [
+            "4ce18541-196b-4a3c-a772-95be8b242359",
+            "0f1abb49-4be1-4ab1-a05a-27565b6da673",
+            "0d67641b-8c17-47e5-bfe8-8e9554b4e61b",
+            "25c0467c-4e16-46eb-862a-b66fef10f851",
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Security Rules",
+          "content": "## Security Rules\n- Basic file permission checks\n- Simple validation scripts\n- Standard security practices\n- No advanced monitoring\n",
+          "mappedRules": [
+            "810b934e-8319-42a7-880d-accdfc89e52c",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "8e5458f9-ebb6-4c20-a43b-6c9f0b19233d"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Switching to Enterprise",
+          "content": "## Switching to Enterprise\nWhen project grows beyond 20 hours or requires:\n- Multi-machine development\n- Complex task orchestration\n- Advanced automation\n- Real-time monitoring\n\nUse: `./mode-manager.sh enterprise`\n\n---\n*Simplified Mode Rules - Keep it simple, keep it working*\n",
+          "mappedRules": [
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Mode Overview",
+          "content": "## Mode Overview\n- **Target**: Basic task management with essential automation\n- **Best For**: Single machine development, straightforward workflows\n- **Features**: Basic backup/recovery, security validation, simple documentation\n",
+          "mappedRules": [
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "810b934e-8319-42a7-880d-accdfc89e52c"
+          ],
+          "confidence": 0.75
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Basic Architecture",
+          "content": "### Basic Architecture\n```\nlib/\n├── main.dart           # App entry point\n├── screens/           # App screens/pages\n├── widgets/          # Reusable widgets\n├── models/           # Data models\n└── services/         # API/data services\n```\n",
+          "mappedRules": [
+            "c44c6c4a-54c2-44dd-b1ba-12b12805c5af",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "69ef8b0c-8764-4a5a-b9df-30985ea103f3",
+            "b27c3e58-4638-4159-99ac-bb94ce60de99"
+          ],
+          "confidence": 0.7
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Current System Mode: SIMPLIFIED",
+          "content": "## Current System Mode: SIMPLIFIED\nThis project operates in **Simplified Mode** - a streamlined task management system designed for small to medium projects (< 20 hours).\n",
+          "mappedRules": [
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638"
+          ],
+          "confidence": 0.6
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Available Commands",
+          "content": "## Available Commands\n- `task-system.sh` - Basic task management\n- `security-check.sh` - Security validation\n- `project-update.sh` - Documentation updates\n",
+          "mappedRules": [
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "e2645372-647c-4438-afa0-7c605952f097",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514"
+          ],
+          "confidence": 0.6
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Project Context",
+          "content": "## Project Context\nThis is a Flutter M5 project using simplified task management. Focus on:\n- Basic task completion tracking\n- Simple backup and recovery\n- Essential security validation\n- Straightforward documentation updates\n",
+          "mappedRules": [
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "b51e6313-c5e4-4979-bcc2-bcf305f4efc0",
+            "810b934e-8319-42a7-880d-accdfc89e52c",
+            "532f542a-f64c-425e-9f11-385c345d60b9",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f"
+          ],
+          "confidence": 0.55
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Task Management Structure (Simplified)",
+          "content": "## Task Management Structure (Simplified)\n```\n.tasks/\n├── current_task.json     # Your active task\n├── completed/           # Completed tasks\n├── backups/            # Automatic backups\n└── current/            # Current working files\n```\n",
+          "mappedRules": [
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "532f542a-f64c-425e-9f11-385c345d60b9"
+          ],
+          "confidence": 0.55
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Automation Limits",
+          "content": "## Automation Limits\n- **Scripts**: Max 3 automation scripts\n- **Monitoring**: Basic file validation only\n- **Backups**: Simple daily backups\n- **Sync**: Manual git operations\n",
+          "mappedRules": [
+            "810b934e-8319-42a7-880d-accdfc89e52c",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833"
+          ],
+          "confidence": 0.55
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/project-rules.md",
+          "section": "Project Rules - SIMPLIFIED MODE",
+          "content": "# Project Rules - SIMPLIFIED MODE\n",
+          "mappedRules": [
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514"
+          ],
+          "confidence": 0.5
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "GitHub Copilot Instructions - SIMPLIFIED MODE",
+          "content": "# GitHub Copilot Instructions - SIMPLIFIED MODE\n",
+          "mappedRules": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514"
+          ],
+          "confidence": 0.45
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/simplified/copilot-instructions.md",
+          "section": "Flutter Development Guidelines",
+          "content": "## Flutter Development Guidelines\n",
+          "mappedRules": [
+            "ee12033b-c566-4f31-a966-e2d1c52a36c8",
+            "b27c3e58-4638-4159-99ac-bb94ce60de99",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9"
+          ],
+          "confidence": 0.35
+        }
+      ]
+    },
+    {
+      "success": true,
+      "modeType": "hybrid",
+      "originalFiles": [
+        "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+        "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md"
+      ],
+      "convertedConfig": {
+        "id": "hybrid_migrated_1749381140766",
+        "name": "Hybrid Mode (Migrated)",
+        "description": "Migrated hybrid mode configuration using rule-based system",
+        "type": "hybrid",
+        "ruleSelection": {
+          "includeCategories": [
+            "CUSTOM",
+            "TASK_MANAGEMENT"
+          ],
+          "excludeCategories": [],
+          "minimumUrgency": "MEDIUM",
+          "maxRules": 35,
+          "explicitIncludes": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "f922806e-8aa8-474f-b4e3-b0d7b2190eb9",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "f6165c09-e233-4134-aae0-89d6db048d8c"
+          ],
+          "explicitExcludes": []
+        },
+        "ruleOrganization": {
+          "groupBy": "category",
+          "sortBy": "urgency",
+          "customOrder": []
+        },
+        "templates": {
+          "instructionsTemplate": "hybrid-instructions",
+          "rulesTemplate": "hybrid-rules"
+        },
+        "structure": {
+          "includeAutomation": true,
+          "includeScripts": false,
+          "taskManagementLevel": "hybrid"
+        },
+        "deployment": {
+          "targetFiles": [
+            "copilot-instructions.md",
+            "project-rules.md"
+          ],
+          "includeAutomationFiles": true,
+          "includeScriptFiles": false
+        },
+        "metadata": {
+          "created": "2025-06-08T11:12:20.766Z",
+          "version": "1.0.0",
+          "migrationDate": "2025-06-08T11:12:20.766Z",
+          "originalFiles": [
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+            "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md"
+          ],
+          "migrationConfidence": 0.840625
+        }
+      },
+      "errors": [],
+      "warnings": [],
+      "contentMapping": [
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "Available Features (Configurable)",
+          "content": "## Available Features (Configurable)\n- **Basic**: Always available - task tracking, simple completion\n- **Optional**: Cross-machine sync (enable when needed)\n- **Advanced**: Epic management (for larger tasks)\n- **Enterprise**: Priority interrupts (enable for urgent workflows)\n",
+          "mappedRules": [
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "Mode Switching",
+          "content": "## Mode Switching\n- To simplified: `./mode-manager.sh simplified`\n- To enterprise: `./mode-manager.sh enterprise`\n- Configure hybrid: `./mode-manager.sh hybrid --configure`\n\n---\n*Hybrid Mode Active - Balanced flexibility with selective enterprise features*\n",
+          "mappedRules": [
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Core Principles",
+          "content": "## Core Principles\n- **Balanced Approach**: Combine simplicity with selective complexity\n- **Configurable Features**: Enable enterprise features as needed\n- **Flexible Scaling**: Adapt to changing project requirements\n- **Selective Automation**: Use automation where it adds value\n",
+          "mappedRules": [
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Task Management Rules",
+          "content": "## Task Management Rules\n1. **Adaptive Structure**: Switch between simple and epic management\n2. **Optional Interrupts**: Enable priority handling when needed\n3. **Configurable Sync**: Cross-machine sync available but optional\n4. **Flexible Monitoring**: Enable monitoring for complex phases\n5. **Selective Auto-Save**: Configure save intervals based on task complexity\n",
+          "mappedRules": [
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "e4909de7-eeeb-41db-8e25-4d2813477671"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Development Workflow",
+          "content": "## Development Workflow\n1. **Assess Complexity**: Determine required feature level\n2. **Configure Mode**: Enable/disable features as needed\n3. **Flexible Execution**: Adapt workflow to current task\n4. **Optional Monitoring**: Enable when beneficial\n5. **Configurable Completion**: Simple or detailed as appropriate\n",
+          "mappedRules": [
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "e4909de7-eeeb-41db-8e25-4d2813477671",
+            "0153ddea-031f-4b2f-adf6-88267ef220e9"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Configurable Features",
+          "content": "## Configurable Features\n- **Cross-Machine Sync**: Enable for multi-machine development\n- **Epic Management**: Activate for large tasks (20+ hours)\n- **Priority Interrupts**: Enable for urgent workflow requirements\n- **Advanced Monitoring**: Activate for complex project phases\n- **Auto-Save Intervals**: Configure based on task criticality\n",
+          "mappedRules": [
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "e4909de7-eeeb-41db-8e25-4d2813477671"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Mode Selection Guidelines",
+          "content": "## Mode Selection Guidelines\n- **Use Simplified**: Single tasks, basic requirements, <20 hours\n- **Use Enterprise**: Large projects, multi-machine, >50 hours\n- **Use Hybrid**: Variable complexity, selective features, 20-50 hours\n",
+          "mappedRules": [
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Feature Configuration",
+          "content": "## Feature Configuration\n```bash\n# Enable specific features\n./mode-manager.sh hybrid --enable cross-sync\n./mode-manager.sh hybrid --enable epic-management\n./mode-manager.sh hybrid --enable priority-interrupts\n\n# Disable features\n./mode-manager.sh hybrid --disable cross-sync\n./mode-manager.sh hybrid --configure\n```\n",
+          "mappedRules": [
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Switching Guidelines",
+          "content": "## Switching Guidelines\n- **To Simplified**: When reducing complexity permanently\n- **To Enterprise**: When scaling up to full enterprise needs\n- **Reconfigure Hybrid**: When changing feature requirements\n\n---\n*Hybrid Mode Rules - Flexible adaptation to changing complexity*\n",
+          "mappedRules": [
+            "bdad2106-8780-473f-93a2-aaf62996f68b",
+            "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+            "f5648caa-b7fb-4590-9a05-66088da96638"
+          ],
+          "confidence": 1
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "Task Management Structure (Hybrid)",
+          "content": "## Task Management Structure (Hybrid)\n```\n.tasks/\n├── current/            # Active tasks (simplified style)\n├── completed/          # Completed tasks\n├── epics/             # Optional epic management (when needed)\n├── system/            # Optional system monitoring (configurable)\n└── backups/           # Flexible backup strategy\n```\n",
+          "mappedRules": [
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "79097f46-493a-418e-8060-e65744054ebb",
+            "dc604965-c855-4858-91d9-e9af8f67d7d1",
+            "2ac4460b-6998-45cf-874e-266d1955a6f0",
+            "e4909de7-eeeb-41db-8e25-4d2813477671"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "Current System Mode: HYBRID",
+          "content": "## Current System Mode: HYBRID\nThis project operates in **Hybrid Mode** - a balanced approach combining simplified workflows with selected enterprise features.\n",
+          "mappedRules": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "bdad2106-8780-473f-93a2-aaf62996f68b"
+          ],
+          "confidence": 0.75
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "Mode Overview",
+          "content": "## Mode Overview\n- **Target**: Selective automation with enterprise capabilities when needed\n- **Best For**: Medium projects (20-50 hours), selective feature adoption\n- **Features**: Configurable automation, optional cross-machine sync, flexible monitoring\n",
+          "mappedRules": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1"
+          ],
+          "confidence": 0.7
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "File Organization",
+          "content": "## File Organization\n- Start simple, add complexity as needed\n- Configurable folder structures\n- Optional enterprise organization\n- Flexible automation deployment\n",
+          "mappedRules": [
+            "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+            "89bb3bee-952b-4705-b19c-10c7f898bb02",
+            "66f817c8-a6ae-402e-8c96-265665e65820",
+            "f6165c09-e233-4134-aae0-89d6db048d8c",
+            "22980cec-cb96-4b99-9937-af4468cb6c03"
+          ],
+          "confidence": 0.7
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "Project Context",
+          "content": "## Project Context\nThis is a Flutter M5 project using hybrid task management. Focus on:\n- Flexible task management with optional enterprise features\n- Configurable automation based on current needs\n- Selective use of advanced features\n- Balanced approach to complexity\n",
+          "mappedRules": [
+            "22980cec-cb96-4b99-9937-af4468cb6c03",
+            "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+            "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36"
+          ],
+          "confidence": 0.6
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+          "section": "GitHub Copilot Instructions - HYBRID MODE",
+          "content": "# GitHub Copilot Instructions - HYBRID MODE\n",
+          "mappedRules": [
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "bdad2106-8780-473f-93a2-aaf62996f68b"
+          ],
+          "confidence": 0.4
+        },
+        {
+          "originalFile": "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+          "section": "Project Rules - HYBRID MODE",
+          "content": "# Project Rules - HYBRID MODE\n",
+          "mappedRules": [
+            "f5648caa-b7fb-4590-9a05-66088da96638",
+            "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+            "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+            "360870c0-0d7e-4407-91cf-9782f872ff84",
+            "f922806e-8aa8-474f-b4e3-b0d7b2190eb9"
+          ],
+          "confidence": 0.4
+        }
+      ]
+    }
+  ]
+}

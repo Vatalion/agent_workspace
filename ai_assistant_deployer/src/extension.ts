@@ -6,6 +6,7 @@ import { FileDeployer } from './services/fileDeployer';
 import { ConfigurationManager } from './services/configurationManager';
 import { BackupManager } from './services/backupManager';
 import { AIAssistantWebviewProvider } from './ui/aiAssistantWebviewProvider';
+import { runModeGenerationIntegrationTests } from './services/modeGenerationIntegrationTest';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('AI Assistant Deployer extension is now active!');
@@ -140,7 +141,17 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    context.subscriptions.push(deployCommand, detectCommand, setupConfigCommand, removeCommand);
+    // Test Mode Generation Pipeline Integration
+    const testModeGenerationCommand = vscode.commands.registerCommand('aiAssistantDeployer.testModeGeneration', async () => {
+        try {
+            vscode.window.showInformationMessage('Running Mode Generation Pipeline Integration Tests...');
+            await runModeGenerationIntegrationTests(context.extensionPath);
+        } catch (error) {
+            vscode.window.showErrorMessage(`Integration test failed: ${error}`);
+        }
+    });
+
+    context.subscriptions.push(deployCommand, detectCommand, setupConfigCommand, removeCommand, testModeGenerationCommand);
 }
 
 function getWorkspaceFolder(uri?: vscode.Uri): vscode.WorkspaceFolder | undefined {

@@ -29,7 +29,8 @@
     "onCommand:aiAssistantDeployer.showQuickActions",
     "onCommand:aiAssistantDeployer.quickDeploy",
     "onCommand:aiAssistantDeployer.test",
-    "onCommand:aiAssistantDeployer.reset"
+    "onCommand:aiAssistantDeployer.reset",
+    "onCommand:aiAssistantDeployer.testModeGeneration"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -53,6 +54,11 @@
         "command": "aiAssistantDeployer.reset",
         "title": "AI Assistant: Reset",
         "category": "AI Assistant"
+      },
+      {
+        "command": "aiAssistantDeployer.testModeGeneration",
+        "title": "AI Assistant: Test Mode Generation Pipeline",
+        "category": "AI Assistant"
       }
     ],
     "menus": {
@@ -68,7 +74,8 @@
           "id": "aiAssistantDeployer.controlCenter",
           "name": "Control Center",
           "type": "webview",
-          "contextualTitle": "AI Assistant Deployer"
+          "contextualTitle": "AI Assistant Deployer",
+          "icon": "$(gear)"
         }
       ]
     },
@@ -131,14 +138,17 @@
     "@vscode/test-electron": "^2.2.0",
     "eslint": "^8.28.0",
     "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
     "typescript": "^4.9.4",
     "vsce": "^2.15.0",
     "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
+    "@types/uuid": "^10.0.0",
     "fs-extra": "^11.1.1",
     "glob": "^8.1.0",
+    "uuid": "^11.1.0",
     "yaml": "^2.3.4"
   }
 }

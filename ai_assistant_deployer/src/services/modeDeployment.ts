@@ -2,6 +2,9 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ModeInfo } from './modeDiscovery';
+import { ModeGenerationPipeline, GenerationResult } from './modeGenerationPipeline';
+import { ModeConfigurationService } from './modeConfigurationService';
+import { RulePoolService } from './rulePoolService';
 
 export interface DeploymentResult {
     success: boolean;
@@ -9,6 +12,8 @@ export interface DeploymentResult {
     deployedFiles: string[];
     cleanedFiles: string[];
     mode: string;
+    deploymentMethod?: 'template-based' | 'rule-based';
+    generationResult?: GenerationResult;
 }
 
 export class ModeDeploymentService {
@@ -16,9 +21,12 @@ export class ModeDeploymentService {
     private sourcePath: string;
     private targetPath: string;
     private backupPath: string;
+    private extensionPath?: string;
+    private generationPipeline?: ModeGenerationPipeline;
 
     constructor(workspaceRoot: string, extensionPath?: string) {
         this.workspaceRoot = workspaceRoot;
+        this.extensionPath = extensionPath;
         // Use extensionPath if provided, otherwise fall back to __dirname calculation
         if (extensionPath) {
             this.sourcePath = path.join(extensionPath, 'out', '.github');
@@ -27,6 +35,33 @@ export class ModeDeploymentService {
         }
         this.targetPath = path.join(workspaceRoot, '.github');
         this.backupPath = path.join(workspaceRoot, '.github-backup');
+    }
+
+    /**
+     * Initialize the generation pipeline for rule-based deployment
+     */
+    async initializeGenerationPipeline(): Promise<void> {
+        if (!this.extensionPath) {
+            console.warn('[ModeDeployment] Extension path not provided, rule-based deployment unavailable');
+            return;
+        }
+
+        try {
+            const rulePoolService = new RulePoolService(this.extensionPath);
+            await rulePoolService.initialize();
+            
+            const modeConfigService = new ModeConfigurationService(rulePoolService);
+            
+            this.generationPipeline = new ModeGenerationPipeline(
+                modeConfigService, 
+                rulePoolService, 
+                this.extensionPath
+            );
+            
+            console.log('[ModeDeployment] Generation pipeline initialized successfully');
+        } catch (error) {
+            console.error('[ModeDeployment] Failed to initialize generation pipeline:', error);
+        }
     }
 
     /**
@@ -49,20 +84,36 @@ export class ModeDeploymentService {
             const cleanedFiles = await this.cleanupExistingDeployment();
             result.cleanedFiles = cleanedFiles;
 
-            // Step 3: Deploy base configuration files
-            const baseFiles = await this.deployBaseFiles();
-            result.deployedFiles.push(...baseFiles);
+            // Step 3: Check if this is a migrated configuration (rule-based deployment)
+            const migratedConfigPath = await this.findMigratedConfiguration(modeInfo.id);
+            
+            if (migratedConfigPath && this.generationPipeline) {
+                // Use rule-based deployment
+                result.deploymentMethod = 'rule-based';
+                const generationResult = await this.deployModeFromConfiguration(migratedConfigPath, modeInfo);
+                result.generationResult = generationResult;
+                result.deployedFiles = generationResult.generatedFiles;
+                result.success = generationResult.success;
+                result.message = generationResult.message;
+            } else {
+                // Fall back to template-based deployment
+                result.deploymentMethod = 'template-based';
+                
+                // Deploy base configuration files
+                const baseFiles = await this.deployBaseFiles();
+                result.deployedFiles.push(...baseFiles);
 
-            // Step 4: Deploy mode-specific files
-            const modeFiles = await this.deployModeFiles(modeInfo);
-            result.deployedFiles.push(...modeFiles);
+                // Deploy mode-specific files
+                const modeFiles = await this.deployModeFiles(modeInfo);
+                result.deployedFiles.push(...modeFiles);
 
-            // Step 5: Update system configuration
-            await this.updateSystemConfig(modeInfo.id);
+                result.success = true;
+                result.message = `Successfully deployed ${modeInfo.name} mode (template-based)`;
+            }
+
+            // Step 4: Update system configuration
+            await this.updateSystemConfig(modeInfo.id, result.deploymentMethod);
             result.deployedFiles.push('system-config.json');
-
-            result.success = true;
-            result.message = `Successfully deployed ${modeInfo.name} mode`;
             
             console.log(`Mode deployment completed:`, result);
             return result;
@@ -83,6 +134,86 @@ export class ModeDeploymentService {
 
             return result;
         }
+    }
+
+    /**
+     * Deploy mode from migrated configuration using rule-based generation
+     */
+    async deployModeFromConfiguration(configPath: string, modeInfo: ModeInfo): Promise<GenerationResult> {
+        if (!this.generationPipeline) {
+            throw new Error('Generation pipeline not initialized');
+        }
+
+        console.log(`[ModeDeployment] Deploying ${modeInfo.name} from configuration: ${configPath}`);
+
+        // Generate mode files directly to target directory
+        const generationResult = await this.generationPipeline.generateModeFromMigratedConfig(
+            configPath,
+            this.targetPath
+        );
+
+        console.log(`[ModeDeployment] Rule-based generation completed:`, generationResult);
+        return generationResult;
+    }
+
+    /**
+     * Find migrated configuration for a mode
+     */
+    private async findMigratedConfiguration(modeId: string): Promise<string | null> {
+        if (!this.extensionPath) {
+            return null;
+        }
+
+        const migratedConfigsPath = path.join(this.extensionPath, 'migrated-configs');
+        
+        if (!fs.existsSync(migratedConfigsPath)) {
+            return null;
+        }
+
+        // Check for exact match first
+        const exactMatch = path.join(migratedConfigsPath, `${modeId}-migrated.json`);
+        if (fs.existsSync(exactMatch)) {
+            return exactMatch;
+        }
+
+        // Check for partial matches (enterprise, simplified, hybrid)
+        const partialMatches = [
+            `${modeId}-migrated.json`,
+            `${modeId.toLowerCase()}-migrated.json`,
+            `${modeId.replace('_', '-')}-migrated.json`
+        ];
+
+        for (const filename of partialMatches) {
+            const filePath = path.join(migratedConfigsPath, filename);
+            if (fs.existsSync(filePath)) {
+                return filePath;
+            }
+        }
+
+        // Look for any configuration that might match this mode
+        try {
+            const configFiles = fs.readdirSync(migratedConfigsPath).filter(f => f.endsWith('-migrated.json'));
+            
+            for (const configFile of configFiles) {
+                const configPath = path.join(migratedConfigsPath, configFile);
+                try {
+                    const configContent = await fs.promises.readFile(configPath, 'utf-8');
+                    const config = JSON.parse(configContent);
+                    
+                    // Check if this configuration matches the mode
+                    if (config.type === modeId || config.name?.toLowerCase().includes(modeId.toLowerCase())) {
+                        console.log(`[ModeDeployment] Found matching configuration: ${configFile}`);
+                        return configPath;
+                    }
+                } catch (error) {
+                    console.warn(`[ModeDeployment] Could not read config file ${configFile}:`, error);
+                }
+            }
+        } catch (error) {
+            console.warn(`[ModeDeployment] Error scanning migrated configs:`, error);
+        }
+
+        return null;
     }
 
     /**
@@ -208,18 +339,19 @@ export class ModeDeploymentService {
     /**
      * Update system configuration with the active mode
      */
-    private async updateSystemConfig(modeId: string): Promise<void> {
+    private async updateSystemConfig(modeId: string, deploymentMethod?: string): Promise<void> {
         const systemConfig = {
             mode: modeId,
             first_time_setup: false,
             deployment_timestamp: new Date().toISOString(),
-            deployed_by: 'AI Assistant Deployer Extension'
+            deployed_by: 'AI Assistant Deployer Extension',
+            deployment_method: deploymentMethod || 'template-based'
         };
 
         const configPath = path.join(this.targetPath, 'system-config.json');
         fs.writeFileSync(configPath, JSON.stringify(systemConfig, null, 2));
         
-        console.log(`Updated system config for mode: ${modeId}`);
+        console.log(`Updated system config for mode: ${modeId} (${deploymentMethod || 'template-based'})`);
     }
 
     /**

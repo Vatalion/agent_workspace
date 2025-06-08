@@ -1,0 +1,156 @@
+{
+  "name": "Enterprise Mode",
+  "description": "Full-featured enterprise development environment with comprehensive task management",
+  "metadata": {
+    "version": "1.0.0",
+    "projectTypes": [
+      "flutter",
+      "typescript",
+      "javascript"
+    ],
+    "complexity": "enterprise",
+    "estimatedHours": {
+      "min": 50,
+      "max": 500
+    },
+    "tags": [
+      "enterprise",
+      "task-management",
+      "automation"
+    ],
+    "created": "2025-06-08T11:07:53.060Z",
+    "lastModified": "2025-06-08T11:07:53.062Z"
+  },
+  "rules": {
+    "copilotInstructions": {
+      "selection": {
+        "include": [
+          {
+            "categories": [
+              "CUSTOM",
+              "TASK_MANAGEMENT",
+              "ENTERPRISE_FEATURES"
+            ]
+          },
+          {
+            "urgency": [
+              "CRITICAL",
+              "HIGH"
+            ]
+          }
+        ],
+        "minUrgency": "MEDIUM"
+      },
+      "organization": {
+        "groupBy": "category",
+        "orderBy": "urgency",
+        "includeHeaders": true
+      }
+    },
+    "projectRules": {
+      "selection": {
+        "include": [
+          {
+            "categories": [
+              "CLEAN_ARCHITECTURE",
+              "SOLID_PRINCIPLES",
+              "FILE_PRACTICES"
+            ]
+          },
+          {
+            "urgency": [
+              "CRITICAL",
+              "HIGH"
+            ]
+          }
+        ]
+      },
+      "organization": {
+        "groupBy": "category",
+        "orderBy": "urgency",
+        "includeHeaders": true
+      }
+    }
+  },
+  "structure": {
+    "directories": [
+      {
+        "path": ".tasks/system",
+        "description": "Core system files",
+        "required": true
+      },
+      {
+        "path": ".tasks/epics",
+        "description": "Large-scale task orchestration",
+        "required": true
+      },
+      {
+        "path": ".tasks/1_planning",
+        "description": "Task planning",
+        "required": true
+      },
+      {
+        "path": ".tasks/2_review",
+        "description": "Task review",
+        "required": true
+      },
+      {
+        "path": ".tasks/3_execution",
+        "description": "Active task execution",
+        "required": true
+      },
+      {
+        "path": ".tasks/4_completion",
+        "description": "Completion tracking",
+        "required": true
+      },
+      {
+        "path": ".tasks/cross_machine",
+        "description": "Multi-machine sync",
+        "required": true
+      }
+    ],
+    "scripts": [],
+    "automation": []
+  },
+  "templates": {
+    "baseTemplate": "enterprise",
+    "variables": {
+      "mode": "ENTERPRISE",
+      "features": "Epic-scale task orchestration, Priority interrupt system, Cross-machine sync"
+    }
+  },
+  "deployment": {
+    "structure": {
+      "root": ".",
+      "github": {
+        "useGitHubDir": true,
+        "files": [
+          {
+            "source": "copilot-instructions.md",
+            "target": "copilot-instructions.md",
+            "type": "copilot-instructions"
+          },
+          {
+            "source": "project-rules.md",
+            "target": "project-rules.md",
+            "type": "project-rules"
+          }
+        ]
+      },
+      "tasks": {
+        "structure": [
+          ".tasks/system",
+          ".tasks/epics",
+          ".tasks/1_planning",
+          ".tasks/2_review",
+          ".tasks/3_execution",
+          ".tasks/4_completion",
+          ".tasks/cross_machine"
+        ],
+        "type": "enterprise"
+      }
+    }
+  },
+  "id": "mode_1749380873060_wdelbnat9"
+}

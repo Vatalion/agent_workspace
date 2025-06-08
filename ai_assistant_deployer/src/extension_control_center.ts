@@ -54,6 +54,15 @@ export function activate(context: vscode.ExtensionContext) {
         }
     );
 
+    // Add Custom Mode Builder command
+    const customModeBuilderCommand = vscode.commands.registerCommand(
+        'aiAssistantDeployer.customModeBuilder',
+        async () => {
+            // Open custom mode builder webview
+            await webviewProvider.openCustomModeBuilder();
+        }
+    );
+
     const resetCommand = vscode.commands.registerCommand(
         'aiAssistantDeployer.reset',
         async () => {
@@ -78,6 +87,7 @@ export function activate(context: vscode.ExtensionContext) {
         showQuickActionsCommand,
         quickDeployCommand,
         testCommand,
+        customModeBuilderCommand,
         resetCommand
     );
 

@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-06-08T10:48:06.823Z",
+  "rulePool": {
+    "metadata": {
+      "version": "1.0.0",
+      "created": "2025-06-08T10:48:06.821Z",
+      "lastModified": "2025-06-08T10:48:06.821Z",
+      "totalRules": 0,
+      "description": "AI Assistant Deployer Rule Pool"
+    },
+    "rules": {},
+    "categories": [
+      "TASK_MANAGEMENT",
+      "ENTERPRISE_FEATURES",
+      "SOLID_PRINCIPLES",
+      "CLEAN_ARCHITECTURE",
+      "FILE_PRACTICES",
+      "TESTING_REQUIREMENTS",
+      "BACKUP_STRATEGY",
+      "STATE_MANAGEMENT",
+      "PERFORMANCE_GUIDELINES",
+      "REFACTORING_GUIDELINES",
+      "SECURITY_RULES",
+      "DEVELOPMENT_WORKFLOW",
+      "MODE_SWITCHING",
+      "CUSTOM"
+    ],
+    "urgencyLevels": [
+      "CRITICAL",
+      "HIGH",
+      "MEDIUM",
+      "LOW",
+      "INFO"
+    ]
+  }
+}

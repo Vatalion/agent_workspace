@@ -1,0 +1,100 @@
+{
+  "timestamp": "2025-06-08T11:54:19.830Z",
+  "totalTests": 16,
+  "passed": 16,
+  "failed": 0,
+  "slow": 0,
+  "duration": 2220,
+  "results": {
+    "configurationTests": [
+      {
+        "test": "Configuration Integrity: enterprise-migrated.json",
+        "status": "PASS",
+        "details": "5 sections validated"
+      },
+      {
+        "test": "Configuration Integrity: simplified-migrated.json",
+        "status": "PASS",
+        "details": "5 sections validated"
+      },
+      {
+        "test": "Configuration Integrity: hybrid-migrated.json",
+        "status": "PASS",
+        "details": "5 sections validated"
+      },
+      {
+        "test": "Rule Pool Structure",
+        "status": "PASS",
+        "details": "41 rules, valid metadata"
+      }
+    ],
+    "deploymentTests": [
+      {
+        "test": "Service Compilation: modeGenerationPipeline.js",
+        "status": "PASS",
+        "details": "22.7KB compiled"
+      },
+      {
+        "test": "Service Compilation: modeConfigurationService.js",
+        "status": "PASS",
+        "details": "28.4KB compiled"
+      },
+      {
+        "test": "Service Compilation: rulePoolService.js",
+        "status": "PASS",
+        "details": "22.1KB compiled"
+      },
+      {
+        "test": "Service Compilation: modeMigrationService.js",
+        "status": "PASS",
+        "details": "19.2KB compiled"
+      },
+      {
+        "test": "Service Compilation: modeConfigurationAdapter.js",
+        "status": "PASS",
+        "details": "7.4KB compiled"
+      },
+      {
+        "test": "Extension Package Build",
+        "status": "PASS",
+        "details": "272.5KB package created"
+      }
+    ],
+    "performanceTests": [
+      {
+        "test": "Configuration Loading Speed",
+        "status": "PASS",
+        "details": "0ms for 3 configurations"
+      },
+      {
+        "test": "Rule Pool Loading Speed",
+        "status": "PASS",
+        "details": "0ms for 41 rules"
+      }
+    ],
+    "integrationTests": [
+      {
+        "test": "TypeScript Compilation",
+        "status": "PASS",
+        "details": "No compilation errors"
+      },
+      {
+        "test": "Webpack Production Build",
+        "status": "PASS",
+        "details": "Build completed successfully"
+      }
+    ],
+    "backwardCompatibilityTests": [
+      {
+        "test": "Template Structure Preservation",
+        "status": "PASS",
+        "details": "3 template modes available"
+      },
+      {
+        "test": "Deployment Structure",
+        "status": "PASS",
+        "details": "84 deployment files ready"
+      }
+    ]
+  }
+}

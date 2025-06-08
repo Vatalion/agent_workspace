@@ -1,0 +1,86 @@
+{
+  "id": "hybrid_migrated_1749381140766",
+  "name": "Hybrid Mode (Migrated)",
+  "description": "Migrated hybrid mode configuration using rule-based system",
+  "type": "hybrid",
+  "ruleSelection": {
+    "includeCategories": [
+      "CUSTOM",
+      "TASK_MANAGEMENT"
+    ],
+    "excludeCategories": [],
+    "minimumUrgency": "MEDIUM",
+    "maxRules": 35,
+    "explicitIncludes": [
+      "360870c0-0d7e-4407-91cf-9782f872ff84",
+      "f5648caa-b7fb-4590-9a05-66088da96638",
+      "4d695e22-2121-4a2d-afeb-826caa4bfd4f",
+      "7502eb1c-a6e4-40dd-9113-f2c54e6e5514",
+      "bdad2106-8780-473f-93a2-aaf62996f68b",
+      "22980cec-cb96-4b99-9937-af4468cb6c03",
+      "178ec177-bbe5-45a0-acc3-ff57816ab8f1",
+      "a4bed1f9-176c-4b1a-bd6e-9282879f7e33",
+      "162b1d02-25b4-4c74-9b8e-2e5f25f0ed36",
+      "79097f46-493a-418e-8060-e65744054ebb",
+      "dc604965-c855-4858-91d9-e9af8f67d7d1",
+      "2ac4460b-6998-45cf-874e-266d1955a6f0",
+      "e4909de7-eeeb-41db-8e25-4d2813477671",
+      "0153ddea-031f-4b2f-adf6-88267ef220e9",
+      "69c3a9d0-0f86-474f-9ab4-3d1192512763",
+      "f922806e-8aa8-474f-b4e3-b0d7b2190eb9",
+      "3c52a3bf-c1d1-4061-94ab-0af78395b273",
+      "2548de3b-5dbb-41a0-a1dd-0593e0acb819",
+      "e6ef18bd-3bb4-4a0c-92f7-265fce3c0833",
+      "89bb3bee-952b-4705-b19c-10c7f898bb02",
+      "66f817c8-a6ae-402e-8c96-265665e65820",
+      "f6165c09-e233-4134-aae0-89d6db048d8c"
+    ],
+    "explicitExcludes": []
+  },
+  "ruleOrganization": {
+    "groupBy": "category",
+    "sortBy": "urgency",
+    "customOrder": []
+  },
+  "templates": {
+    "instructionsTemplate": "hybrid-instructions",
+    "rulesTemplate": "hybrid-rules"
+  },
+  "structure": {
+    "includeAutomation": true,
+    "includeScripts": false,
+    "taskManagementLevel": "hybrid"
+  },
+  "deployment": {
+    "targetFiles": [
+      "copilot-instructions.md",
+      "project-rules.md"
+    ],
+    "includeAutomationFiles": true,
+    "includeScriptFiles": false
+  },
+  "metadata": {
+    "created": "2025-06-08T11:12:20.766Z",
+    "version": "1.0.0",
+    "migrationDate": "2025-06-08T11:12:20.766Z",
+    "originalFiles": [
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/copilot-instructions.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md",
+      "/Users/vitalijsimko/workspace/projects/other/agent_workspace/ai_assistant_deployer/templates/modes/hybrid/project-rules.md"
+    ],
+    "migrationConfidence": 0.840625
+  }
+}
