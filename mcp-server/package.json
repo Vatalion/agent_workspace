@@ -1,0 +1,37 @@
+{
+  "name": "flutter-debug-assistant-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server for Flutter Debug Assistant - captures and organizes Flutter debugging data for AI analysis",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc && node dist/index.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "mcp",
+    "flutter",
+    "debug",
+    "assistant",
+    "ai",
+    "model-context-protocol"
+  ],
+  "author": "Vitalijs Simko",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "bin": {
+    "flutter-debug-assistant": "dist/index.js"
+  }
+}
