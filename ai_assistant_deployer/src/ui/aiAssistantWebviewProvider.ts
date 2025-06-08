@@ -1,137 +1,43 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs-extra';
 import * as path from 'path';
-// import { StateMonitor } from '../services/stateMonitor';
-import { FileDeployer } from '../services/fileDeployer';
+import { ModeDiscoveryService, ModeInfo } from '../services/modeDiscovery';
+import { ModeDeploymentService, DeploymentResult } from '../services/modeDeployment';
 
-interface WorkspaceState {
+interface UIState {
+    isLoading: boolean;
+    availableModes: ModeInfo[];
+    currentMode: string | null;
     isDeployed: boolean;
-    currentMode: string;
-    projectType: string;
-    hasSystemConfig: boolean;
-    hasModeManager: boolean;
     lastUpdated: Date;
-}
-
-// Temporary StateMonitor class with improved state detection
-class StateMonitor {
-    private _onStateChanged = new vscode.EventEmitter<WorkspaceState>();
-    public readonly onStateChanged = this._onStateChanged.event;
-    
-    startMonitoring() {}
-    stopMonitoring() {}
-    
-    async getWorkspaceState(workspacePath?: string): Promise<WorkspaceState | null> {
-        if (!workspacePath) {
-            const workspaceFolder = this.getCurrentWorkspaceFolder();
-            if (!workspaceFolder) {
-                return null;
-            }
-            workspacePath = workspaceFolder.uri.fsPath;
-        }
-
-        // Check for AI Assistant deployment
-        const githubPath = path.join(workspacePath, '.github');
-        const systemConfigPath = path.join(githubPath, 'system-config.json');
-        const modeManagerPath = path.join(githubPath, 'mode-manager.sh');
-        const copilotInstructionsPath = path.join(githubPath, 'copilot-instructions.md');
-
-        const hasSystemConfig = await fs.pathExists(systemConfigPath);
-        const hasModeManager = await fs.pathExists(modeManagerPath);
-        const hasCopilotInstructions = await fs.pathExists(copilotInstructionsPath);
-        
-        const isDeployed = hasSystemConfig && hasModeManager && hasCopilotInstructions;
-
-        // Get current mode
-        let currentMode = 'none';
-        if (hasSystemConfig) {
-            try {
-                const config = await fs.readJson(systemConfigPath);
-                currentMode = config.current_mode || 'none';
-            } catch (error) {
-                console.error('Error reading system config:', error);
-            }
-        }
-
-        // Detect project type
-        const projectType = await this.detectProjectType(workspacePath);
-
-        return {
-            isDeployed,
-            currentMode,
-            projectType,
-            hasSystemConfig,
-            hasModeManager,
-            lastUpdated: new Date()
-        };
-    }
-
-    private async detectProjectType(workspacePath: string): Promise<string> {
-        // Check for Flutter
-        if (await fs.pathExists(path.join(workspacePath, 'pubspec.yaml'))) {
-            return 'Flutter';
-        }
-        
-        // Check for React/Node.js
-        if (await fs.pathExists(path.join(workspacePath, 'package.json'))) {
-            try {
-                const packageJson = await fs.readJson(path.join(workspacePath, 'package.json'));
-                const dependencies = { ...packageJson.dependencies, ...packageJson.devDependencies };
-                
-                if (dependencies.react) return 'React';
-                if (dependencies['@angular/core']) return 'Angular';
-                if (dependencies.vue) return 'Vue';
-                if (packageJson.engines && packageJson.engines.vscode) return 'VS Code Extension';
-                if (dependencies.express || dependencies.fastify) return 'Node.js API';
-                
-                return 'Node.js';
-            } catch {
-                return 'Node.js';
-            }
-        }
-        
-        // Check for Python
-        if (await fs.pathExists(path.join(workspacePath, 'requirements.txt')) ||
-            await fs.pathExists(path.join(workspacePath, 'pyproject.toml')) ||
-            await fs.pathExists(path.join(workspacePath, 'setup.py'))) {
-            return 'Python';
-        }
-
-        return 'Unknown';
-    }
-
-    private getCurrentWorkspaceFolder(): vscode.WorkspaceFolder | undefined {
-        if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
-            return vscode.workspace.workspaceFolders[0];
-        }
-        return undefined;
-    }
-    
-    dispose() {
-        this._onStateChanged.dispose();
-    }
+    error?: string;
 }
 
 export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
     public static readonly viewType = 'aiAssistantDeployer.panel';
     private _view?: vscode.WebviewView;
-    private stateMonitor: StateMonitor;
-    private fileDeployer: FileDeployer;
+    private modeDiscovery: ModeDiscoveryService;
+    private modeDeployment: ModeDeploymentService;
+    private fileWatcher?: vscode.Disposable;
+    private currentState: UIState;
 
     constructor(
         private readonly _extensionUri: vscode.Uri,
         private readonly context: vscode.ExtensionContext
     ) {
-        this.stateMonitor = new StateMonitor();
-        this.fileDeployer = new FileDeployer(context);
+        const workspaceRoot = this.getCurrentWorkspaceRoot();
+        this.modeDiscovery = new ModeDiscoveryService(workspaceRoot);
+        this.modeDeployment = new ModeDeploymentService(workspaceRoot);
         
-        // Monitor state changes and update UI
-        this.stateMonitor.onStateChanged(() => {
-            this.updateUI();
-        });
-        
-        // Start monitoring
-        this.stateMonitor.startMonitoring();
+        this.currentState = {
+            isLoading: true,
+            availableModes: [],
+            currentMode: null,
+            isDeployed: false,
+            lastUpdated: new Date()
+        };
+
+        // Set up file watcher for reactive updates
+        this.setupFileWatcher();
     }
 
     public resolveWebviewView(
@@ -146,8 +52,6 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
             localResourceRoots: [this._extensionUri]
         };
 
-        this.updateUI();
-
         // Handle messages from webview
         webviewView.webview.onDidReceiveMessage(
             (message: any) => {
@@ -156,137 +60,149 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
             undefined,
             this.context.subscriptions
         );
+
+        // Initial UI update
+        this.refreshState();
     }
 
     private async handleWebviewMessage(message: any) {
-        const workspaceFolder = this.getCurrentWorkspaceFolder();
-        if (!workspaceFolder) {
-            vscode.window.showErrorMessage('No workspace folder found.');
+        try {
+            switch (message.type) {
+                case 'deployMode':
+                    await this.handleDeployMode(message.modeId);
+                    break;
+                case 'resetDeployment':
+                    await this.handleResetDeployment();
+                    break;
+                case 'refreshState':
+                    await this.refreshState();
+                    break;
+            }
+        } catch (error) {
+            console.error('Error handling webview message:', error);
+            this.currentState.error = `Error: ${error}`;
+            this.updateUI();
+        }
+    }
+
+    private async handleDeployMode(modeId: string) {
+        const modeInfo = this.currentState.availableModes.find(m => m.id === modeId);
+        if (!modeInfo) {
+            vscode.window.showErrorMessage(`Mode '${modeId}' not found`);
             return;
         }
 
-        switch (message.type) {
-            case 'deploy':
-                await this.deployAIAssistant(workspaceFolder.uri.fsPath, message.mode);
-                break;
-            case 'remove':
-                await this.removeAIAssistant(workspaceFolder.uri.fsPath);
-                break;
-            case 'switchMode':
-                await this.switchMode(workspaceFolder.uri.fsPath, message.mode);
-                break;
-            case 'reset':
-                await this.resetDeployedFiles();
-                break;
-            case 'refresh':
-                this.updateUI();
-                break;
-        }
-    }
+        this.currentState.isLoading = true;
+        this.updateUI();
 
-    private async deployAIAssistant(workspacePath: string, mode: string) {
         try {
-            // Show progress
-            vscode.window.withProgress({
+            const result = await vscode.window.withProgress({
                 location: vscode.ProgressLocation.Notification,
-                title: `Deploying AI Assistant (${mode} mode)...`,
+                title: `Deploying ${modeInfo.name} mode...`,
                 cancellable: false
-            }, async (progress: any) => {
+            }, async (progress) => {
                 progress.report({ increment: 20, message: 'Preparing deployment...' });
                 
-                // Deploy from out folder
-                const outPath = path.join(this.context.extensionPath, 'out', '.github');
-                progress.report({ increment: 40, message: 'Copying files...' });
+                const result = await this.modeDeployment.deployMode(modeInfo);
                 
-                await this.fileDeployer.deployFromOutFolder(workspacePath, outPath, mode);
-                progress.report({ increment: 80, message: 'Configuring mode...' });
-                
-                // Set the mode
-                await this.setWorkspaceMode(workspacePath, mode);
                 progress.report({ increment: 100, message: 'Complete!' });
+                return result;
             });
 
-            vscode.window.showInformationMessage(`AI Assistant deployed successfully in ${mode} mode! 🚀`);
-            this.updateUI();
+            if (result.success) {
+                vscode.window.showInformationMessage(
+                    `🚀 ${modeInfo.name} mode deployed successfully!`
+                );
+            } else {
+                vscode.window.showErrorMessage(result.message);
+            }
+
+            await this.refreshState();
         } catch (error) {
+            console.error('Deployment error:', error);
             vscode.window.showErrorMessage(`Deployment failed: ${error}`);
+        } finally {
+            this.currentState.isLoading = false;
+            this.updateUI();
         }
     }
 
-    private async removeAIAssistant(workspacePath: string) {
-        try {
-            const confirm = await vscode.window.showWarningMessage(
-                'Remove AI Assistant from workspace?',
-                { modal: true },
-                'Remove',
-                'Cancel'
-            );
+    private async handleResetDeployment() {
+        const confirm = await vscode.window.showWarningMessage(
+            'Reset will remove all deployed AI Assistant files and return to mode selection. Continue?',
+            { modal: true },
+            'Reset',
+            'Cancel'
+        );
 
-            if (confirm === 'Remove') {
-                await this.fileDeployer.removeFromWorkspace(workspacePath);
-                vscode.window.showInformationMessage('AI Assistant removed successfully.');
-                this.updateUI();
+        if (confirm !== 'Reset') {
+            return;
+        }
+
+        this.currentState.isLoading = true;
+        this.updateUI();
+
+        try {
+            const result = await this.modeDeployment.resetDeployment();
+
+            if (result.success) {
+                vscode.window.showInformationMessage('🔄 Deployment reset successfully!');
+            } else {
+                vscode.window.showErrorMessage(result.message);
             }
+
+            await this.refreshState();
         } catch (error) {
-            vscode.window.showErrorMessage(`Removal failed: ${error}`);
+            console.error('Reset error:', error);
+            vscode.window.showErrorMessage(`Reset failed: ${error}`);
+        } finally {
+            this.currentState.isLoading = false;
+            this.updateUI();
         }
     }
 
-    private async switchMode(workspacePath: string, newMode: string) {
+    private async refreshState() {
         try {
-            // Run mode manager script
-            const modeManagerPath = path.join(workspacePath, '.github', 'mode-manager.sh');
-            if (await fs.pathExists(modeManagerPath)) {
-                await vscode.commands.executeCommand('workbench.action.terminal.new');
-                const terminal = vscode.window.activeTerminal;
-                if (terminal) {
-                    terminal.sendText(`cd "${workspacePath}" && ./.github/mode-manager.sh ${newMode}`);
-                }
-            }
+            this.currentState.isLoading = true;
+            this.updateUI();
+
+            // Discover available modes
+            const availableModes = await this.modeDiscovery.discoverAvailableModes();
+            
+            // Find currently active mode
+            const activeMode = availableModes.find(mode => mode.isActive);
+            const currentMode = activeMode ? activeMode.id : null;
+            const isDeployed = activeMode !== undefined;
+
+            this.currentState = {
+                isLoading: false,
+                availableModes,
+                currentMode,
+                isDeployed,
+                lastUpdated: new Date(),
+                error: undefined
+            };
+
+            console.log('State refreshed:', this.currentState);
             this.updateUI();
         } catch (error) {
-            vscode.window.showErrorMessage(`Mode switch failed: ${error}`);
+            console.error('Error refreshing state:', error);
+            this.currentState.isLoading = false;
+            this.currentState.error = `Failed to refresh state: ${error}`;
+            this.updateUI();
         }
     }
 
-    private async setWorkspaceMode(workspacePath: string, mode: string) {
-        const configPath = path.join(workspacePath, '.github', 'system-config.json');
-        if (await fs.pathExists(configPath)) {
-            const config = await fs.readJson(configPath);
-            config.current_mode = mode;
-            config.first_time_setup = false;
-            await fs.writeJson(configPath, config, { spaces: 2 });
-        }
-    }
-
-    private getCurrentWorkspaceFolder(): vscode.WorkspaceFolder | undefined {
-        if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
-            return vscode.workspace.workspaceFolders[0];
-        }
-        return undefined;
-    }
-
-    private async updateUI() {
+    private updateUI() {
         if (!this._view) {
             return;
         }
 
-        const workspaceFolder = this.getCurrentWorkspaceFolder();
-        const state = workspaceFolder ? 
-            await this.stateMonitor.getWorkspaceState(workspaceFolder.uri.fsPath) : 
-            null;
-
-        this._view.webview.html = this.getHtmlForWebview(state);
+        this._view.webview.html = this.generateWebviewHTML();
     }
 
-    private getHtmlForWebview(state: any): string {
-        const isDeployed = state?.isDeployed || false;
-        const currentMode = state?.currentMode || 'none';
-        const projectType = state?.projectType || 'unknown';
-        
-        const statusIcon = isDeployed ? '✅' : '❌';
-        const statusText = isDeployed ? 'Deployed' : 'Not Deployed';
-        const statusColor = isDeployed ? '#4CAF50' : '#F44336';
+    private generateWebviewHTML(): string {
+        const { isLoading, availableModes, currentMode, isDeployed, error } = this.currentState;
 
         return `<!DOCTYPE html>
 <html lang="en">
@@ -300,76 +216,24 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
             padding: 16px;
             color: var(--vscode-foreground);
             background: var(--vscode-editor-background);
+            margin: 0;
         }
-        .status-card {
-            background: var(--vscode-editor-background);
-            border: 1px solid var(--vscode-widget-border);
-            border-radius: 6px;
-            padding: 16px;
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--vscode-widget-border);
         }
-        .status-header {
+        .title {
+            font-size: 16px;
+            font-weight: bold;
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 12px;
         }
-        .status-icon {
-            font-size: 18px;
-        }
-        .status-text {
-            font-weight: bold;
-            color: ${statusColor};
-        }
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            margin: 4px 0;
-            font-size: 13px;
-        }
-        .button {
-            background: var(--vscode-button-background);
-            color: var(--vscode-button-foreground);
-            border: none;
-            border-radius: 4px;
-            padding: 8px 16px;
-            margin: 4px;
-            cursor: pointer;
-            font-size: 13px;
-            width: calc(50% - 8px);
-        }
-        .button:hover {
-            background: var(--vscode-button-hoverBackground);
-        }
-        .button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .button-row {
-            display: flex;
-            gap: 8px;
-            margin: 8px 0;
-        }
-        .mode-selector {
-            margin: 12px 0;
-        }
-        .mode-button {
-            background: var(--vscode-button-secondaryBackground);
-            color: var(--vscode-button-secondaryForeground);
-            border: 1px solid var(--vscode-widget-border);
-            border-radius: 4px;
-            padding: 6px 12px;
-            margin: 2px;
-            cursor: pointer;
-            font-size: 12px;
-            width: calc(50% - 4px);
-        }
-        .mode-button.active {
-            background: var(--vscode-button-background);
-            color: var(--vscode-button-foreground);
-        }
-        .refresh-button {
-            float: right;
+        .refresh-btn {
             background: transparent;
             border: 1px solid var(--vscode-widget-border);
             color: var(--vscode-foreground);
@@ -378,143 +242,306 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
             cursor: pointer;
             font-size: 12px;
         }
+        .refresh-btn:hover {
+            background: var(--vscode-list-hoverBackground);
+        }
+        .status-card {
+            background: var(--vscode-editor-background);
+            border: 1px solid var(--vscode-widget-border);
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .status-deployed {
+            background: var(--vscode-inputValidation-infoBackground);
+            color: var(--vscode-inputValidation-infoForeground);
+        }
+        .status-not-deployed {
+            background: var(--vscode-inputValidation-warningBackground);
+            color: var(--vscode-inputValidation-warningForeground);
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--vscode-descriptionForeground);
+        }
+        .error {
+            background: var(--vscode-inputValidation-errorBackground);
+            color: var(--vscode-inputValidation-errorForeground);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+        .modes-section {
+            margin: 16px 0;
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .mode-card {
+            background: var(--vscode-editor-background);
+            border: 1px solid var(--vscode-widget-border);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+        .mode-card:hover {
+            background: var(--vscode-list-hoverBackground);
+            border-color: var(--vscode-focusBorder);
+        }
+        .mode-card.active {
+            border-color: var(--vscode-focusBorder);
+            background: var(--vscode-list-activeSelectionBackground);
+        }
+        .mode-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .mode-name {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .mode-badge {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            background: var(--vscode-badge-background);
+            color: var(--vscode-badge-foreground);
+        }
+        .mode-description {
+            font-size: 12px;
+            color: var(--vscode-descriptionForeground);
+            margin-bottom: 8px;
+        }
+        .mode-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+        .feature-tag {
+            font-size: 10px;
+            padding: 2px 4px;
+            background: var(--vscode-textBlockQuote-background);
+            border-radius: 2px;
+            color: var(--vscode-descriptionForeground);
+        }
+        .mode-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: var(--vscode-descriptionForeground);
+            margin-bottom: 8px;
+        }
+        .deploy-btn {
+            background: var(--vscode-button-background);
+            color: var(--vscode-button-foreground);
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            width: 100%;
+        }
+        .deploy-btn:hover {
+            background: var(--vscode-button-hoverBackground);
+        }
+        .deploy-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .current-mode-section {
+            margin-bottom: 16px;
+        }
+        .reset-btn {
+            background: var(--vscode-inputValidation-warningBackground);
+            color: var(--vscode-inputValidation-warningForeground);
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 13px;
+            width: 100%;
+            margin-top: 12px;
+        }
+        .reset-btn:hover {
+            opacity: 0.8;
+        }
+        .spinner {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid var(--vscode-descriptionForeground);
+            border-radius: 50%;
+            border-top-color: var(--vscode-focusBorder);
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
-    <div class="status-card">
-        <div class="status-header">
-            <span class="status-icon">${statusIcon}</span>
-            <span class="status-text">${statusText}</span>
-            <button class="refresh-button" onclick="refresh()">🔄</button>
+    <div class="header">
+        <div class="title">
+            🚀 AI Assistant Deployer
         </div>
-        <div class="info-row">
-            <span>Mode:</span>
-            <span><strong>${currentMode}</strong></span>
-        </div>
-        <div class="info-row">
-            <span>Project:</span>
-            <span><strong>${projectType}</strong></span>
-        </div>
+        <button class="refresh-btn" onclick="refreshState()" ${isLoading ? 'disabled' : ''}>
+            ${isLoading ? '<span class="spinner"></span>' : '🔄'} Refresh
+        </button>
     </div>
 
-    ${!isDeployed ? `
-    <div class="mode-selector">
-        <h4>Select Mode to Deploy:</h4>
-        <div class="button-row">
-            <button class="mode-button" onclick="deploy('simplified')">
-                🟢 Simplified
-            </button>
-            <button class="mode-button" onclick="deploy('enterprise')">
-                🟠 Enterprise
-            </button>
+    ${error ? `<div class="error">⚠️ ${error}</div>` : ''}
+
+    ${isLoading ? `
+        <div class="loading">
+            <span class="spinner"></span>
+            <p>Loading modes...</p>
         </div>
-    </div>
-    ` : `
-    <div class="button-row">
-        <button class="button" onclick="switchMode('simplified')" ${currentMode === 'simplified' ? 'disabled' : ''}>
-            Switch to Simplified
-        </button>
-        <button class="button" onclick="switchMode('enterprise')" ${currentMode === 'enterprise' ? 'disabled' : ''}>
-            Switch to Enterprise
-        </button>
-    </div>
-    <div class="button-row">
-        <button class="button" onclick="reset()" style="background: var(--vscode-inputValidation-warningBackground); width: calc(50% - 4px);">
-            🔄 Reset Files
-        </button>
-        <button class="button" onclick="remove()" style="background: var(--vscode-inputValidation-errorBackground); width: calc(50% - 4px);">
-            🗑️ Remove AI Assistant
-        </button>
-    </div>
-    `}
+    ` : ''}
+
+    ${!isLoading ? `
+        <div class="status-card">
+            <div class="status-badge ${isDeployed ? 'status-deployed' : 'status-not-deployed'}">
+                ${isDeployed ? '✅' : '❌'} 
+                ${isDeployed ? 'Deployed' : 'Not Deployed'}
+            </div>
+            ${isDeployed && currentMode ? `
+                <div><strong>Active Mode:</strong> ${availableModes.find(m => m.id === currentMode)?.name || currentMode}</div>
+            ` : ''}
+        </div>
+
+        ${isDeployed ? `
+            <div class="current-mode-section">
+                <div class="section-title">🎯 Current Deployment</div>
+                ${availableModes.filter(mode => mode.isActive).map(mode => `
+                    <div class="mode-card active">
+                        <div class="mode-header">
+                            <div class="mode-name">
+                                ${mode.name}
+                                <span class="mode-badge">ACTIVE</span>
+                            </div>
+                        </div>
+                        <div class="mode-description">${mode.description}</div>
+                        <div class="mode-meta">
+                            <span>Target: ${mode.targetProject}</span>
+                            <span>Estimated: ${mode.estimatedHours}</span>
+                        </div>
+                    </div>
+                `).join('')}
+                <button class="reset-btn" onclick="resetDeployment()">
+                    🔄 Reset & Choose Different Mode
+                </button>
+            </div>
+        ` : `
+            <div class="modes-section">
+                <div class="section-title">📋 Available Modes</div>
+                ${availableModes.length === 0 ? `
+                    <div style="text-align: center; padding: 20px; color: var(--vscode-descriptionForeground);">
+                        No modes found. Please check your configuration.
+                    </div>
+                ` : availableModes.map(mode => `
+                    <div class="mode-card">
+                        <div class="mode-header">
+                            <div class="mode-name">
+                                ${mode.name}
+                                ${mode.hasConflicts ? '<span class="mode-badge" style="background: var(--vscode-inputValidation-warningBackground);">CONFLICTS</span>' : ''}
+                            </div>
+                        </div>
+                        <div class="mode-description">${mode.description}</div>
+                        <div class="mode-features">
+                            ${mode.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+                        </div>
+                        <div class="mode-meta">
+                            <span>Target: ${mode.targetProject}</span>
+                            <span>Estimated: ${mode.estimatedHours}</span>
+                        </div>
+                        <button class="deploy-btn" onclick="deployMode('${mode.id}')" ${mode.hasConflicts ? '' : ''}>
+                            Deploy ${mode.name} Mode
+                        </button>
+                    </div>
+                `).join('')}
+            </div>
+        `}
+    ` : ''}
 
     <script>
         const vscode = acquireVsCodeApi();
 
-        function deploy(mode) {
-            vscode.postMessage({ type: 'deploy', mode: mode });
+        function deployMode(modeId) {
+            vscode.postMessage({ type: 'deployMode', modeId: modeId });
         }
 
-        function remove() {
-            vscode.postMessage({ type: 'remove' });
+        function resetDeployment() {
+            vscode.postMessage({ type: 'resetDeployment' });
         }
 
-        function reset() {
-            vscode.postMessage({ type: 'reset' });
+        function refreshState() {
+            vscode.postMessage({ type: 'refreshState' });
         }
 
-        function switchMode(mode) {
-            vscode.postMessage({ type: 'switchMode', mode: mode });
-        }
-
-        function refresh() {
-            vscode.postMessage({ type: 'refresh' });
-        }
-
-        // Auto-refresh every 5 seconds
-        setInterval(refresh, 5000);
+        // Auto-refresh every 10 seconds
+        setInterval(refreshState, 10000);
     </script>
 </body>
 </html>`;
     }
 
-    // Public method to deploy from out folder
-    public async deployFromOutFolder(): Promise<void> {
+    private getCurrentWorkspaceRoot(): string {
         const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
         if (!workspaceFolder) {
             throw new Error('No workspace folder found');
         }
-
-        const workspacePath = workspaceFolder.uri.fsPath;
-        const outPath = path.join(this.context.extensionPath, 'out', '.github');
-        
-        // Deploy in simplified mode by default
-        await this.fileDeployer.deployFromOutFolder(workspacePath, outPath, 'simplified');
-        
-        // Refresh the UI
-        this.updateUI();
+        return workspaceFolder.uri.fsPath;
     }
 
-    // Public method to reset deployed files
+    private setupFileWatcher() {
+        const workspaceRoot = this.getCurrentWorkspaceRoot();
+        this.fileWatcher = this.modeDiscovery.setupFileWatcher(() => {
+            console.log('File system change detected, refreshing state...');
+            this.refreshState();
+        });
+    }
+
+    // Public methods for external access
+    public async deployFromOutFolder(): Promise<void> {
+        // For backward compatibility - deploy first available mode
+        const availableModes = await this.modeDiscovery.discoverAvailableModes();
+        if (availableModes.length > 0) {
+            await this.handleDeployMode(availableModes[0].id);
+        } else {
+            throw new Error('No modes available for deployment');
+        }
+    }
+
     public async resetDeployedFiles(): Promise<void> {
-        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
-        if (!workspaceFolder) {
-            throw new Error('No workspace folder found');
+        await this.handleResetDeployment();
+    }
+
+    dispose() {
+        if (this.fileWatcher) {
+            this.fileWatcher.dispose();
         }
-
-        const workspacePath = workspaceFolder.uri.fsPath;
-        const githubPath = path.join(workspacePath, '.github');
-
-        // Check if .github folder exists
-        if (!await fs.pathExists(githubPath)) {
-            throw new Error('No AI Assistant files found to reset');
-        }
-
-        // Create backup before reset
-        const backupPath = path.join(githubPath, 'backups', `reset_backup_${new Date().toISOString().replace(/[:.]/g, '-')}`);
-        await fs.ensureDir(backupPath);
-        
-        // Copy current .github contents to backup (excluding backups folder)
-        const items = await fs.readdir(githubPath);
-        for (const item of items) {
-            if (item !== 'backups') {
-                const sourcePath = path.join(githubPath, item);
-                const backupItemPath = path.join(backupPath, item);
-                await fs.copy(sourcePath, backupItemPath);
-            }
-        }
-
-        // Remove all AI Assistant files except backups
-        for (const item of items) {
-            if (item !== 'backups') {
-                const itemPath = path.join(githubPath, item);
-                await fs.remove(itemPath);
-            }
-        }
-
-        // Refresh the UI
-        this.updateUI();
-        
-        vscode.window.showInformationMessage(`🔄 AI Assistant files reset successfully! Backup created in .github/backups/`);
     }
 }
