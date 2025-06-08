@@ -17,9 +17,14 @@ export class ModeDeploymentService {
     private targetPath: string;
     private backupPath: string;
 
-    constructor(workspaceRoot: string) {
+    constructor(workspaceRoot: string, extensionPath?: string) {
         this.workspaceRoot = workspaceRoot;
-        this.sourcePath = path.join(__dirname, '..', '..', 'out', '.github');
+        // Use extensionPath if provided, otherwise fall back to __dirname calculation
+        if (extensionPath) {
+            this.sourcePath = path.join(extensionPath, 'out', '.github');
+        } else {
+            this.sourcePath = path.join(__dirname, '..', '..', 'out', '.github');
+        }
         this.targetPath = path.join(workspaceRoot, '.github');
         this.backupPath = path.join(workspaceRoot, '.github-backup');
     }

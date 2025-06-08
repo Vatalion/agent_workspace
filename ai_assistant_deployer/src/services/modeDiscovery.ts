@@ -19,9 +19,14 @@ export class ModeDiscoveryService {
     private modesPath: string;
     private deployedPath: string;
 
-    constructor(workspaceRoot: string) {
+    constructor(workspaceRoot: string, extensionPath?: string) {
         this.workspaceRoot = workspaceRoot;
-        this.modesPath = path.join(__dirname, '..', '..', 'out', '.github', 'modes');
+        // Use extensionPath if provided, otherwise fall back to __dirname calculation
+        if (extensionPath) {
+            this.modesPath = path.join(extensionPath, 'out', '.github', 'modes');
+        } else {
+            this.modesPath = path.join(__dirname, '..', '..', 'out', '.github', 'modes');
+        }
         this.deployedPath = path.join(workspaceRoot, '.github');
     }
 

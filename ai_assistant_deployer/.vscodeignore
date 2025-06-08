@@ -1,0 +1,76 @@
+# VS Code ignore file - excludes files from the extension package
+
+# Source files
+src/**
+templates/**
+scripts/**
+
+# Configuration files
+.vscode/**
+.github/**
+.gitignore
+.eslintrc.js
+tsconfig.json
+webpack.config.js
+.history/**
+
+# Build files - exclude out directory when using bundled dist
+out/**
+# But include deployment files
+!out/.github/**
+*.ts
+*.js.map
+
+# Test files
+test/**
+**/test/**
+**/*.test.js
+**/*.test.ts
+
+# Documentation (keep only essential)
+BUILD_SYSTEM.md
+DEPLOYMENT_GUIDE.md
+INSTALLATION.md
+debug_rules_test.md
+test_rules_debug.js
+test_rules_fix.md
+CHANGELOG.md
+
+# Scripts
+build.sh
+quick_install.sh
+test_extension.sh
+test_extension_working.sh
+
+# Node modules (already excluded by default)
+node_modules/**
+
+# Git files
+.git/**
+.gitignore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Development files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+tmp/**
+temp/**
+
+# Other build artifacts
+coverage/**
+.nyc_output/**
+.eslintcache
+
+# Include bundled extension in dist (required for packaging)
+!dist/extension.js
+!dist/extension.js.map
+
+# VS Code extension artifacts
+*.vsix

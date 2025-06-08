@@ -4,6 +4,11 @@
   "description": "Deploy AI assistant configuration and files into any project workspace",
   "version": "1.0.0",
   "publisher": "ai-assistant-tools",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ai-assistant-tools/ai-assistant-deployer.git"
+  },
+  "license": "MIT",
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -21,9 +26,12 @@
     "automation"
   ],
   "activationEvents": [
-    "*"
+    "onCommand:aiAssistantDeployer.showQuickActions",
+    "onCommand:aiAssistantDeployer.quickDeploy",
+    "onCommand:aiAssistantDeployer.test",
+    "onCommand:aiAssistantDeployer.reset"
   ],
-  "main": "./out/extension_control_center.js",
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -100,10 +108,15 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm run build:production",
+    "build": "npm run compile && npm run build:deployment",
+    "build:production": "npm run compile:production && npm run build:deployment",
+    "build:deployment": "node scripts/build-deployment-files.js",
     "compile": "tsc -p ./",
+    "compile:production": "webpack --mode production",
+    "compile:watch": "webpack --mode development --watch",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
+    "pretest": "npm run build && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
     "package": "vsce package",
@@ -117,8 +130,11 @@
     "@typescript-eslint/parser": "^5.45.0",
     "@vscode/test-electron": "^2.2.0",
     "eslint": "^8.28.0",
+    "ts-loader": "^9.5.2",
     "typescript": "^4.9.4",
-    "vsce": "^2.15.0"
+    "vsce": "^2.15.0",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
   },
   "dependencies": {
     "fs-extra": "^11.1.1",

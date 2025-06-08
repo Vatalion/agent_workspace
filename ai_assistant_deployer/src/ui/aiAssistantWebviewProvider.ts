@@ -33,8 +33,8 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
         private readonly context: vscode.ExtensionContext
     ) {
         const workspaceRoot = this.getCurrentWorkspaceRoot();
-        this.modeDiscovery = new ModeDiscoveryService(workspaceRoot);
-        this.modeDeployment = new ModeDeploymentService(workspaceRoot);
+        this.modeDiscovery = new ModeDiscoveryService(workspaceRoot, context.extensionPath);
+        this.modeDeployment = new ModeDeploymentService(workspaceRoot, context.extensionPath);
         this.ruleDiscovery = new RuleDiscoveryService(workspaceRoot);
         this.ruleManagement = new RuleManagementService(workspaceRoot);
         
