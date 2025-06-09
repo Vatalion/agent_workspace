@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import * as fs from 'fs';
 import { ModeDiscoveryService, ModeInfo } from '../services/modeDiscovery';
 import { ModeDeploymentService, DeploymentResult } from '../services/modeDeployment';
 import { RuleDiscoveryService } from '../services/ruleDiscovery';
@@ -120,6 +121,12 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
                     break;
                 case 'importRules':
                     await this.handleImportRules();
+                    break;
+                case 'deployCustomMode':
+                    await this.handleDeployCustomMode(message.customModeData);
+                    break;
+                case 'openCustomModeBuilder':
+                    await this.openCustomModeBuilder();
                     break;
             }
         } catch (error) {
@@ -1405,6 +1412,176 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
 
     public async resetDeployedFiles(): Promise<void> {
         await this.handleResetDeployment();
+    }
+
+    private async handleDeployCustomMode(customModeData: any) {
+        try {
+            console.log('🎯 handleDeployCustomMode: Starting custom mode deployment', customModeData);
+            
+            // Validate input data
+            if (!customModeData?.name || !customModeData?.selectedRules || customModeData.selectedRules.length === 0) {
+                vscode.window.showErrorMessage('❌ Invalid custom mode data. Name and at least one rule are required.');
+                return;
+            }
+
+            // Show progress
+            this.currentState.isLoading = true;
+            this.updateUI();
+
+            const result = await vscode.window.withProgress({
+                location: vscode.ProgressLocation.Notification,
+                title: `Deploying custom mode: ${customModeData.name}`,
+                cancellable: false
+            }, async (progress) => {
+                progress.report({ increment: 10, message: 'Creating custom mode configuration...' });
+
+                // Create mode configuration from user selection
+                const customMode = await this.createCustomModeConfiguration(customModeData);
+                
+                progress.report({ increment: 30, message: 'Saving custom mode...' });
+
+                // Save the custom mode configuration
+                await this.saveCustomModeConfiguration(customMode);
+                
+                progress.report({ increment: 50, message: 'Deploying custom mode...' });
+
+                // Create ModeInfo for deployment
+                const modeInfo: ModeInfo = {
+                    id: customMode.id,
+                    name: customMode.name,
+                    description: customMode.description,
+                    features: [`${customModeData.selectedRules.length} custom rules`, 'User-configured mode'],
+                    targetProject: customModeData.target || 'flutter',
+                    estimatedHours: this.calculateComplexity(customModeData.selectedRules.length),
+                    isActive: false,
+                    hasConflicts: false,
+                    path: '' // Will be set during deployment
+                };
+
+                // Deploy using existing infrastructure
+                const deploymentResult = await this.modeDeployment.deployMode(modeInfo);
+                
+                progress.report({ increment: 100, message: 'Complete!' });
+                return deploymentResult;
+            });
+
+            if (result.success) {
+                vscode.window.showInformationMessage(
+                    `🚀 Custom mode "${customModeData.name}" deployed successfully! ` +
+                    `Deployed ${result.deployedFiles.length} files with ${customModeData.selectedRules.length} rules.`
+                );
+            } else {
+                vscode.window.showErrorMessage(`❌ Custom mode deployment failed: ${result.message}`);
+            }
+
+            // Refresh the UI to show the new mode
+            await this.refreshState();
+
+        } catch (error) {
+            console.error('❌ Error deploying custom mode:', error);
+            vscode.window.showErrorMessage(`❌ Custom mode deployment failed: ${error}`);
+        } finally {
+            this.currentState.isLoading = false;
+            this.updateUI();
+        }
+    }
+
+    private async createCustomModeConfiguration(customModeData: any): Promise<any> {
+        const modeId = `custom-${Date.now()}`;
+        
+        // Create a custom mode configuration based on user selection
+        const customMode = {
+            id: modeId,
+            name: customModeData.name,
+            description: customModeData.description || `Custom mode with ${customModeData.selectedRules.length} selected rules`,
+            type: 'custom',
+            metadata: {
+                version: '1.0.0',
+                author: 'user',
+                createdAt: customModeData.createdAt || new Date().toISOString(),
+                targetProject: customModeData.target || 'flutter',
+                estimatedSetupTime: customModeData.estimatedHours || (customModeData.selectedRules.length * 0.03),
+                complexity: this.calculateComplexity(customModeData.selectedRules.length),
+                tags: ['custom', 'user-created', customModeData.target || 'flutter']
+            },
+            rules: {
+                instructions: customModeData.selectedRules
+            },
+            structure: {
+                targetDirectory: '.github',
+                files: ['project-rules.md', 'PROJECT_MAP.md'],
+                automation: {
+                    scripts: [],
+                    hooks: []
+                }
+            },
+            templates: {
+                instructionsTemplate: 'custom-instructions.md',
+                projectMapTemplate: 'custom-project-map.md'
+            },
+            deployment: {
+                mode: 'rule-based',
+                requiresBackup: true,
+                cleanupOnDeploy: true,
+                validationSteps: ['rule-validation', 'file-generation']
+            }
+        };
+
+        console.log('✅ Created custom mode configuration:', customMode);
+        return customMode;
+    }
+
+    private async saveCustomModeConfiguration(customMode: any): Promise<void> {
+        try {
+            // Save to workspace custom modes directory
+            const customModesDir = path.join(this.getCurrentWorkspaceRoot(), '.ai-assistant', 'custom-modes');
+            
+            // Ensure directory exists
+            if (!fs.existsSync(customModesDir)) {
+                fs.mkdirSync(customModesDir, { recursive: true });
+            }
+
+            const configPath = path.join(customModesDir, `${customMode.id}.json`);
+            await fs.promises.writeFile(configPath, JSON.stringify(customMode, null, 2), 'utf-8');
+            
+            console.log(`✅ Saved custom mode configuration to: ${configPath}`);
+        } catch (error) {
+            console.error('❌ Error saving custom mode configuration:', error);
+            throw error;
+        }
+    }
+
+    private calculateComplexity(ruleCount: number): string {
+        if (ruleCount <= 5) return 'simple';
+        if (ruleCount <= 15) return 'medium';
+        if (ruleCount <= 30) return 'complex';
+        return 'advanced';
+    }
+
+    /**
+     * Open the Custom Mode Builder interface
+     */
+    public async openCustomModeBuilder(): Promise<void> {
+        try {
+            console.log('🎯 Opening Custom Mode Builder');
+            
+            // Make sure the webview is visible
+            if (this._view) {
+                this._view.show(true);
+            }
+            
+            // Send a message to the webview to open the Custom Mode Builder modal
+            if (this._view?.webview) {
+                await this._view.webview.postMessage({
+                    type: 'openCustomModeBuilder'
+                });
+            }
+            
+            console.log('✅ Custom Mode Builder interface opened');
+        } catch (error) {
+            console.error('❌ Error opening Custom Mode Builder:', error);
+            vscode.window.showErrorMessage(`Failed to open Custom Mode Builder: ${error}`);
+        }
     }
 
     dispose() {
