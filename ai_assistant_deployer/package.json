@@ -30,7 +30,8 @@
     "onCommand:aiAssistantDeployer.quickDeploy",
     "onCommand:aiAssistantDeployer.test",
     "onCommand:aiAssistantDeployer.reset",
-    "onCommand:aiAssistantDeployer.testModeGeneration"
+    "onCommand:aiAssistantDeployer.testModeGeneration",
+    "onCommand:aiAssistantDeployer.customModeBuilder"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -59,12 +60,20 @@
         "command": "aiAssistantDeployer.testModeGeneration",
         "title": "AI Assistant: Test Mode Generation Pipeline",
         "category": "AI Assistant"
+      },
+      {
+        "command": "aiAssistantDeployer.customModeBuilder",
+        "title": "AI Assistant: Custom Mode Builder",
+        "category": "AI Assistant"
       }
     ],
     "menus": {
       "commandPalette": [
         {
           "command": "aiAssistantDeployer.showQuickActions"
+        },
+        {
+          "command": "aiAssistantDeployer.customModeBuilder"
         }
       ]
     },
@@ -133,8 +142,8 @@
     "@types/fs-extra": "^11.0.4",
     "@types/node": "16.x",
     "@types/vscode": "^1.74.0",
-    "@typescript-eslint/eslint-plugin": "^5.45.0",
-    "@typescript-eslint/parser": "^5.45.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
     "@vscode/test-electron": "^2.2.0",
     "eslint": "^8.28.0",
     "ts-loader": "^9.5.2",

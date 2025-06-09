@@ -128,6 +128,12 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
                 case 'openCustomModeBuilder':
                     await this.openCustomModeBuilder();
                     break;
+                case 'loadAvailableRules':
+                    await this.handleLoadAvailableRules();
+                    break;
+                case 'createCustomMode':
+                    await this.handleCreateCustomMode(message.customModeData);
+                    break;
             }
         } catch (error) {
             console.error('Error handling webview message:', error);
@@ -950,6 +956,107 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
             padding: 2px 6px;
             font-size: 11px;
         }
+        
+        /* Custom Mode Builder Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: var(--vscode-editor-background);
+            border: 1px solid var(--vscode-widget-border);
+            border-radius: 8px;
+            padding: 24px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--vscode-widget-border);
+        }
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--vscode-foreground);
+            padding: 4px;
+        }
+        .close-btn:hover {
+            background: var(--vscode-list-hoverBackground);
+            border-radius: 4px;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            background: var(--vscode-input-background);
+            border: 1px solid var(--vscode-input-border);
+            color: var(--vscode-input-foreground);
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 13px;
+            box-sizing: border-box;
+        }
+        .form-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .rule-checkbox-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--vscode-widget-border);
+            border-radius: 4px;
+            padding: 8px;
+        }
+        .rule-checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 4px;
+        }
+        .rule-checkbox-item:hover {
+            background: var(--vscode-list-hoverBackground);
+            border-radius: 4px;
+        }
+        .rule-checkbox {
+            margin-right: 8px;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        }
         .btn-sm {
             padding: 4px 8px;
             font-size: 11px;
@@ -1066,6 +1173,17 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
                             </button>
                         </div>
                     `).join('')}
+                    <div style="margin-top: 20px; padding: 16px; border: 1px solid var(--vscode-widget-border); border-radius: 4px; background: var(--vscode-textBlockQuote-background);">
+                        <div style="margin-bottom: 12px;">
+                            <strong>🛠️ Create Custom Mode</strong>
+                        </div>
+                        <div style="font-size: 12px; color: var(--vscode-descriptionForeground); margin-bottom: 12px;">
+                            Build a custom mode with your own rules and settings.
+                        </div>
+                        <button class="deploy-btn" onclick="openCustomModeBuilder()" style="background: var(--vscode-button-secondaryBackground); color: var(--vscode-button-secondaryForeground);">
+                            🚀 Open Custom Mode Builder
+                        </button>
+                    </div>
                 </div>
             `}
         </div>
@@ -1075,6 +1193,47 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
             ${this.generateRulesHTML()}
         </div>
     ` : ''}
+
+    <!-- Custom Mode Builder Modal -->
+    <div id="customModeBuilderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Custom Mode Builder</h2>
+                <button class="close-btn" onclick="closeCustomModeBuilder()">&times;</button>
+            </div>
+            <form id="customModeForm">
+                <div class="form-group">
+                    <label class="form-label" for="mode-name-input">Mode Name *</label>
+                    <input type="text" id="mode-name-input" class="form-input" placeholder="Enter mode name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="mode-description-input">Description *</label>
+                    <textarea id="mode-description-input" class="form-textarea" placeholder="Describe your custom mode" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="target-project-input">Target Project Type</label>
+                    <select id="target-project-input" class="form-select">
+                        <option value="general">General</option>
+                        <option value="web">Web Development</option>
+                        <option value="mobile">Mobile Development</option>
+                        <option value="backend">Backend Development</option>
+                        <option value="data">Data Science</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Select Rules</label>
+                    <div id="rulesCheckboxList" class="rule-checkbox-list">
+                        <!-- Rules will be populated here dynamically -->
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeCustomModeBuilder()">Cancel</button>
+                    <button type="submit" class="btn">Create Custom Mode</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script>
         const vscode = acquireVsCodeApi();
@@ -1140,6 +1299,103 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
         function bulkDisable() {
             vscode.postMessage({ type: 'bulkOperation', operation: { type: 'disable', ruleIds: [] } });
         }
+
+        // Custom Mode Builder functions
+        function openCustomModeBuilder() {
+            console.log('🎯 [Webview] Opening Custom Mode Builder modal');
+            const modal = document.getElementById('customModeBuilderModal');
+            if (modal) {
+                modal.classList.add('show');
+                loadAvailableRules();
+            }
+        }
+
+        function closeCustomModeBuilder() {
+            console.log('🎯 [Webview] Closing Custom Mode Builder modal');
+            const modal = document.getElementById('customModeBuilderModal');
+            if (modal) {
+                modal.classList.remove('show');
+                // Clear form
+                document.getElementById('customModeForm').reset();
+            }
+        }
+
+        function loadAvailableRules() {
+            console.log('📋 [Webview] Loading available rules for Custom Mode Builder');
+            vscode.postMessage({ type: 'loadAvailableRules' });
+        }
+
+        function populateRulesCheckboxList(rules) {
+            const container = document.getElementById('rulesCheckboxList');
+            if (!container || !rules) return;
+            
+            container.innerHTML = '';
+            rules.forEach(rule => {
+                const item = document.createElement('div');
+                item.className = 'rule-checkbox-item';
+                item.innerHTML = \`
+                    <input type="checkbox" id="rule-\${rule.id}" class="rule-checkbox" value="\${rule.id}">
+                    <label for="rule-\${rule.id}">
+                        <strong>\${rule.title}</strong>
+                        <br><small>\${rule.description || 'No description'}</small>
+                    </label>
+                \`;
+                container.appendChild(item);
+            });
+        }
+
+        // Handle custom mode form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('customModeForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(form);
+                    const selectedRules = Array.from(document.querySelectorAll('.rule-checkbox:checked'))
+                        .map(checkbox => checkbox.value);
+                    
+                    const customModeData = {
+                        name: document.getElementById('mode-name-input').value,
+                        description: document.getElementById('mode-description-input').value,
+                        targetProject: document.getElementById('target-project-input').value,
+                        selectedRules: selectedRules
+                    };
+                    
+                    console.log('🚀 [Webview] Submitting custom mode:', customModeData);
+                    vscode.postMessage({ 
+                        type: 'createCustomMode', 
+                        customModeData: customModeData 
+                    });
+                    
+                    closeCustomModeBuilder();
+                });
+            }
+        });
+
+        // Listen for messages from extension
+        window.addEventListener('message', event => {
+            const message = event.data;
+            console.log('📨 [Webview] Received message:', message);
+            
+            switch (message.type) {
+                case 'openCustomModeBuilder':
+                    openCustomModeBuilder();
+                    break;
+                case 'populateAvailableRules':
+                    populateRulesCheckboxList(message.rules);
+                    break;
+                case 'closeCustomModeBuilder':
+                    closeCustomModeBuilder();
+                    break;
+                case 'showError':
+                    alert('Error: ' + message.error);
+                    break;
+                case 'showSuccess':
+                    alert('Success: ' + message.message);
+                    break;
+            }
+        });
 
         // Auto-refresh every 10 seconds
         setInterval(refreshState, 10000);
@@ -1556,6 +1812,138 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider {
         if (ruleCount <= 15) return 'medium';
         if (ruleCount <= 30) return 'complex';
         return 'advanced';
+    }
+
+    /**
+     * Load available rules for Custom Mode Builder
+     */
+    private async handleLoadAvailableRules(): Promise<void> {
+        try {
+            console.log('📋 [Extension] Loading available rules for Custom Mode Builder');
+            
+            // Get all available rules from the rule pool
+            const workspaceRoot = this.getCurrentWorkspaceRoot();
+            const rulePoolPath = path.join(this.context.extensionPath, 'data', 'rule-pool.json');
+            
+            if (!fs.existsSync(rulePoolPath)) {
+                console.error('❌ Rule pool not found at:', rulePoolPath);
+                this.sendMessageToWebview({
+                    type: 'showError',
+                    error: 'Rule pool not found. Please ensure the extension is properly installed.'
+                });
+                return;
+            }
+            
+            const rulePoolContent = fs.readFileSync(rulePoolPath, 'utf8');
+            const rulePool = JSON.parse(rulePoolContent);
+            
+            // Convert rule pool to array format suitable for UI
+            const rules = Object.values(rulePool).map((rule: any) => ({
+                id: rule.id,
+                title: rule.title,
+                description: rule.description,
+                category: rule.category,
+                urgency: rule.urgency
+            }));
+            
+            console.log(`✅ [Extension] Loaded ${rules.length} rules for Custom Mode Builder`);
+            
+            // Send rules to webview
+            this.sendMessageToWebview({
+                type: 'populateAvailableRules',
+                rules: rules
+            });
+            
+        } catch (error) {
+            console.error('❌ Error loading available rules:', error);
+            this.sendMessageToWebview({
+                type: 'showError',
+                error: `Failed to load available rules: ${error}`
+            });
+        }
+    }
+
+    /**
+     * Handle creation of custom mode
+     */
+    private async handleCreateCustomMode(customModeData: any): Promise<void> {
+        try {
+            console.log('🚀 [Extension] Creating custom mode:', customModeData);
+            
+            if (!customModeData.name || !customModeData.description) {
+                this.sendMessageToWebview({
+                    type: 'showError',
+                    error: 'Mode name and description are required'
+                });
+                return;
+            }
+            
+            // Create custom mode configuration
+            const modeConfig = {
+                id: `custom-${Date.now()}`,
+                name: customModeData.name,
+                description: customModeData.description,
+                version: '1.0.0',
+                targetProject: customModeData.targetProject || 'general',
+                features: ['Custom Mode', 'Rule-based'],
+                estimatedHours: '1-3 hours',
+                rules: customModeData.selectedRules || [],
+                created: new Date().toISOString(),
+                isCustom: true
+            };
+            
+            // Save custom mode to workspace
+            const workspaceRoot = this.getCurrentWorkspaceRoot();
+            const customModesDir = path.join(workspaceRoot, '.vscode', 'custom-modes');
+            
+            if (!fs.existsSync(customModesDir)) {
+                fs.mkdirSync(customModesDir, { recursive: true });
+            }
+            
+            const modeFilePath = path.join(customModesDir, `${modeConfig.id}.json`);
+            fs.writeFileSync(modeFilePath, JSON.stringify(modeConfig, null, 2));
+            
+            console.log(`✅ [Extension] Custom mode saved to: ${modeFilePath}`);
+            
+            // Deploy the custom mode immediately
+            const modeInfo: ModeInfo = {
+                id: modeConfig.id,
+                name: modeConfig.name,
+                description: modeConfig.description,
+                targetProject: modeConfig.targetProject,
+                features: modeConfig.features,
+                estimatedHours: modeConfig.estimatedHours,
+                isActive: false,
+                hasConflicts: false,
+                path: modeFilePath
+            };
+            
+            await this.modeDeployment.deployMode(modeInfo);
+            
+            // Update state and UI
+            await this.refreshState();
+            
+            this.sendMessageToWebview({
+                type: 'showSuccess',
+                message: `Custom mode "${customModeData.name}" created and deployed successfully!`
+            });
+            
+        } catch (error) {
+            console.error('❌ Error creating custom mode:', error);
+            this.sendMessageToWebview({
+                type: 'showError',
+                error: `Failed to create custom mode: ${error}`
+            });
+        }
+    }
+
+    /**
+     * Send message to webview safely
+     */
+    private sendMessageToWebview(message: any): void {
+        if (this._view?.webview) {
+            this._view.webview.postMessage(message);
+        }
     }
 
     /**
