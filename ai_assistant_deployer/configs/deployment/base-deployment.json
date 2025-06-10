@@ -1,0 +1,44 @@
+{
+  "name": "AI Assistant Deployer Base Deployment",
+  "version": "2.0.0",
+  "structure": {
+    "github": {
+      "useGitHubDir": true,
+      "requiredFiles": [
+        {
+          "template": "copilot-instructions.template.md",
+          "target": "copilot-instructions.md",
+          "type": "generated"
+        },
+        {
+          "template": "project-rules.template.md", 
+          "target": "project-rules.md",
+          "type": "generated"
+        },
+        {
+          "source": "mode-manager.sh",
+          "target": "mode-manager.sh",
+          "type": "static"
+        },
+        {
+          "source": "PROJECT_MAP.md",
+          "target": "PROJECT_MAP.md", 
+          "type": "static"
+        }
+      ]
+    },
+    "tasks": {
+      "createDirectory": true,
+      "initialFiles": ["current_task.json"]
+    }
+  },
+  "postDeployment": [
+    {
+      "type": "script",
+      "config": {
+        "command": "chmod +x .github/mode-manager.sh"
+      },
+      "order": 1
+    }
+  ]
+}

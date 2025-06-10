@@ -1,0 +1,35 @@
+{
+  "id": "enterprise",
+  "name": "Enterprise Mode", 
+  "description": "Full enterprise features with advanced task management",
+  "type": "enterprise",
+  "ruleSelection": {
+    "copilotInstructions": {
+      "includeRuleIds": [
+        "6de0c86a-4108-4411-9771-ac2ffe3292f2",
+        "532f542a-f64c-425e-9f11-385c345d60b9", 
+        "58b8688c-4611-4318-bb76-fb8fd667a474",
+        "c44c6c4a-54c2-44dd-b1ba-12b12805c5af",
+        "f6165c09-e233-4134-aae0-89d6db048d8c",
+        "69ef8b0c-8764-4a5a-b9df-30985ea103f3"
+      ],
+      "includeCategories": ["CRITICAL", "ENTERPRISE_FEATURES", "CLEAN_ARCHITECTURE"],
+      "urgencyFilter": "HIGH",
+      "organization": {
+        "groupBy": "category",
+        "orderBy": "urgency"
+      }
+    },
+    "projectRules": {
+      "includeCategories": ["TASK_MANAGEMENT", "ENTERPRISE_FEATURES", "CLEAN_ARCHITECTURE"],
+      "urgencyFilter": "MEDIUM",
+      "maxRules": 50
+    }
+  },
+  "deployment": {
+    "structure": "enterprise",
+    "includeAutomation": true,
+    "includeScripts": ["epic-management", "cross-machine-sync", "advanced-monitoring"],
+    "taskSystem": "enterprise"
+  }
+}

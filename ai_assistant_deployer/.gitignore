@@ -11,3 +11,7 @@ dist/
 coverage/
 .nyc_output/
 .eslintcache
+
+# Generated artifacts and temporary files
+.artifacts/
+temp/

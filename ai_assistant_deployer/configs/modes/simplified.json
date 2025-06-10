@@ -1,0 +1,29 @@
+{
+  "id": "simplified",
+  "name": "Simplified Mode",
+  "description": "Basic features for small projects",
+  "type": "simplified", 
+  "ruleSelection": {
+    "copilotInstructions": {
+      "includeCategories": ["FILE_PRACTICES", "TESTING_REQUIREMENTS"],
+      "excludeCategories": ["ENTERPRISE_FEATURES"],
+      "urgencyFilter": "HIGH",
+      "maxRules": 15,
+      "organization": {
+        "groupBy": "urgency",
+        "orderBy": "category"
+      }
+    },
+    "projectRules": {
+      "includeCategories": ["DEVELOPMENT_WORKFLOW", "FILE_PRACTICES"],
+      "urgencyFilter": "HIGH",
+      "maxRules": 10
+    }
+  },
+  "deployment": {
+    "structure": "simple",
+    "includeAutomation": false,
+    "includeScripts": ["basic-backup"],
+    "taskSystem": "simple"
+  }
+}

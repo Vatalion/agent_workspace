@@ -1,0 +1,28 @@
+{
+  "id": "hybrid",
+  "name": "Hybrid Mode",
+  "description": "Balanced approach with selective enterprise features",
+  "type": "hybrid",
+  "ruleSelection": {
+    "copilotInstructions": {
+      "includeCategories": ["ENTERPRISE_FEATURES", "FILE_PRACTICES", "TASK_MANAGEMENT"],
+      "urgencyFilter": "MEDIUM",
+      "maxRules": 25,
+      "organization": {
+        "groupBy": "category", 
+        "orderBy": "urgency"
+      }
+    },
+    "projectRules": {
+      "includeCategories": ["TASK_MANAGEMENT", "ENTERPRISE_FEATURES"],
+      "urgencyFilter": "LOW",
+      "maxRules": 20
+    }
+  },
+  "deployment": {
+    "structure": "hybrid",
+    "includeAutomation": "configurable", 
+    "includeScripts": ["selective-automation", "optional-sync"],
+    "taskSystem": "hybrid"
+  }
+}
