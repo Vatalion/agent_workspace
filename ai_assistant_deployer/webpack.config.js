@@ -3,9 +3,9 @@ const path = require('path');
 module.exports = {
     target: 'node',
     mode: 'none', // this leaves the source code as close as possible to the original (when packaging we set this to 'production')
-    entry: path.resolve(__dirname, 'src/extension_control_center.ts'), // the entry point of this extension, 📖 -> https://webpack.js.org/configuration/entry-context/
+    entry: path.resolve(__dirname, 'src/extension.ts'), // the entry point of this extension, 📖 -> https://webpack.js.org/configuration/entry-context/
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'out'),
         filename: 'extension.js',
         libraryTarget: 'commonjs2',
         devtoolModuleFilenameTemplate: '../[resource-path]',

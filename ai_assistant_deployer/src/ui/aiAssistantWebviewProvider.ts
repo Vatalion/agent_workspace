@@ -22,7 +22,7 @@ interface UIState {
 }
 
 export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, IWebviewProvider {
-    public static readonly viewType = 'aiAssistantDeployer.panel';
+    public static readonly viewType = 'aiAssistantDeployer.controlCenter';
     private _view?: vscode.WebviewView;
     private modeDiscovery: ModeDiscoveryService;
     private modeDeployment: ModeDeploymentService;
@@ -39,14 +39,24 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
         private readonly _extensionUri: vscode.Uri,
         private readonly context: vscode.ExtensionContext
     ) {
-        const workspaceRoot = this.getCurrentWorkspaceRoot();
-        this.modeDiscovery = new ModeDiscoveryService(workspaceRoot, context.extensionPath);
-        this.modeDeployment = new ModeDeploymentService(workspaceRoot, context.extensionPath);
-        this.ruleDiscovery = new RuleDiscoveryService(workspaceRoot);
-        this.ruleManagement = new RuleManagementService(workspaceRoot);
+        try {
+            const workspaceRoot = this.getCurrentWorkspaceRoot();
+            this.modeDiscovery = new ModeDiscoveryService(workspaceRoot, context.extensionPath);
+            this.modeDeployment = new ModeDeploymentService(workspaceRoot, context.extensionPath);
+            this.ruleDiscovery = new RuleDiscoveryService(workspaceRoot);
+            this.ruleManagement = new RuleManagementService(workspaceRoot);
+        } catch (error) {
+            console.error('Failed to initialize services:', error);
+            // Initialize with fallback - use extension path as workspace root
+            const fallbackWorkspaceRoot = context.extensionPath;
+            this.modeDiscovery = new ModeDiscoveryService(fallbackWorkspaceRoot, context.extensionPath);
+            this.modeDeployment = new ModeDeploymentService(fallbackWorkspaceRoot, context.extensionPath);
+            this.ruleDiscovery = new RuleDiscoveryService(fallbackWorkspaceRoot);
+            this.ruleManagement = new RuleManagementService(fallbackWorkspaceRoot);
+        }
         
         this.currentState = {
-            isLoading: true,
+            isLoading: false, // Start with false so we show something immediately
             availableModes: [],
             currentMode: null,
             isDeployed: false,
@@ -83,8 +93,16 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
             this.context.subscriptions
         );
 
-        // Initial UI update
-        this.refreshState();
+        // Initial UI update - ensure we show something immediately
+        this.updateUI();
+        
+        // Then refresh state asynchronously
+        this.refreshState().catch(error => {
+            console.error('Initial state refresh failed:', error);
+            this.currentState.isLoading = false;
+            this.currentState.error = `Failed to initialize: ${error}`;
+            this.updateUI();
+        });
     }
 
     // =============================================================================
@@ -185,8 +203,16 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
             this.currentState.isLoading = true;
             this.updateUI();
 
-            // Discover available modes
-            const availableModes = await this.modeDiscovery.discoverAvailableModes();
+            // Discover available modes with timeout
+            console.log('🔍 refreshState: Discovering modes...');
+            const availableModes = await Promise.race([
+                this.modeDiscovery.discoverAvailableModes(),
+                new Promise<any[]>((_, reject) => 
+                    setTimeout(() => reject(new Error('Mode discovery timeout')), 10000)
+                )
+            ]);
+            
+            console.log(`✅ refreshState: Found ${availableModes.length} modes`);
             
             // Find currently active mode
             const activeMode = availableModes.find(mode => mode.isActive);
@@ -435,17 +461,23 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
     private getCurrentWorkspaceRoot(): string {
         const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
         if (!workspaceFolder) {
-            throw new Error('No workspace folder found');
+            // Return a default workspace root if no workspace is open
+            return this.context.extensionPath;
         }
         return workspaceFolder.uri.fsPath;
     }
 
     private setupFileWatcher() {
-        const workspaceRoot = this.getCurrentWorkspaceRoot();
-        this.fileWatcher = this.modeDiscovery.setupFileWatcher(() => {
-            console.log('File system change detected, refreshing state...');
-            this.refreshState();
-        });
+        try {
+            const workspaceRoot = this.getCurrentWorkspaceRoot();
+            this.fileWatcher = this.modeDiscovery.setupFileWatcher(() => {
+                console.log('File system change detected, refreshing state...');
+                this.refreshState();
+            });
+        } catch (error) {
+            console.error('Failed to setup file watcher:', error);
+            // Continue without file watcher
+        }
     }
 
     // Public methods for external access
@@ -762,6 +794,116 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
         } catch (error) {
             console.error('❌ Error opening Custom Mode Builder:', error);
             vscode.window.showErrorMessage(`Failed to open Custom Mode Builder: ${error}`);
+        }
+    }
+
+    /**
+     * Open the Mode Selection interface
+     */
+    public async openModeSelection(): Promise<void> {
+        try {
+            console.log('🎯 Opening Mode Selection');
+            
+            // Use VS Code quick pick for mode selection
+            const modes = [
+                {
+                    label: '🏢 Enterprise Mode',
+                    description: 'Full-featured deployment for large organizations',
+                    detail: 'Includes comprehensive rules, documentation, and enterprise features'
+                },
+                {
+                    label: '🔄 Hybrid Mode', 
+                    description: 'Balanced approach with essential features',
+                    detail: 'Mix of automation and manual control for flexibility'
+                },
+                {
+                    label: '⚡ Simplified Mode',
+                    description: 'Quick deployment with minimal configuration',
+                    detail: 'Streamlined setup for fast development'
+                },
+                {
+                    label: '🛠️ Custom Mode',
+                    description: 'Create a tailored mode for your specific needs',
+                    detail: 'Build and configure a custom mode from available components'
+                }
+            ];
+
+            const selectedMode = await vscode.window.showQuickPick(modes, {
+                placeHolder: 'Select a deployment mode for your AI Assistant',
+                canPickMany: false
+            });
+
+            if (selectedMode) {
+                const modeType = selectedMode.label.toLowerCase().includes('enterprise') ? 'enterprise' :
+                              selectedMode.label.toLowerCase().includes('hybrid') ? 'hybrid' :
+                              selectedMode.label.toLowerCase().includes('simplified') ? 'simplified' : 'custom';
+                
+                console.log(`✅ Mode selected: ${modeType}`);
+                
+                if (modeType === 'custom') {
+                    // Open custom mode builder for custom mode
+                    await this.openCustomModeBuilder();
+                } else {
+                    // Deploy the selected mode
+                    await this.deploySelectedMode(modeType);
+                }
+            }
+            
+        } catch (error) {
+            console.error('❌ Error opening Mode Selection:', error);
+            vscode.window.showErrorMessage(`Failed to open Mode Selection: ${error}`);
+        }
+    }
+
+    /**
+     * Deploy the selected mode
+     */
+    private async deploySelectedMode(modeType: string): Promise<void> {
+        try {
+            console.log(`🚀 Deploying ${modeType} mode`);
+            
+            // Show progress
+            await vscode.window.withProgress({
+                location: vscode.ProgressLocation.Notification,
+                title: `Deploying ${modeType.charAt(0).toUpperCase() + modeType.slice(1)} Mode`,
+                cancellable: false
+            }, async (progress) => {
+                progress.report({ increment: 0, message: "Preparing deployment..." });
+                
+                // Use existing deployment functionality
+                const workspaceRoot = this.getCurrentWorkspaceRoot();
+                const modePath = path.join(this.context.extensionPath, 'templates', 'modes', modeType);
+                
+                progress.report({ increment: 30, message: "Copying mode files..." });
+                
+                // Check if mode exists
+                if (fs.existsSync(modePath)) {
+                    // Deploy using existing mode deployment service
+                    const availableModes = await this.modeDiscovery.discoverAvailableModes();
+                    const modeInfo = availableModes.find(mode => mode.id === modeType);
+                    if (modeInfo) {
+                        progress.report({ increment: 60, message: "Configuring mode..." });
+                        await this.modeDeployment.deployMode(modeInfo);
+                        progress.report({ increment: 100, message: "Deployment complete!" });
+                    } else {
+                        throw new Error(`Mode info not found for ${modeType}`);
+                    }
+                } else {
+                    // Fall back to deployment files if mode doesn't exist
+                    progress.report({ increment: 50, message: "Using deployment template..." });
+                    await this.deployFromOutFolder();
+                    progress.report({ increment: 100, message: "Deployment complete!" });
+                }
+            });
+            
+            vscode.window.showInformationMessage(`✅ ${modeType.charAt(0).toUpperCase() + modeType.slice(1)} Mode deployed successfully! 🚀`);
+            
+            // Refresh the UI state
+            await this.refreshState();
+            
+        } catch (error) {
+            console.error(`❌ Error deploying ${modeType} mode:`, error);
+            vscode.window.showErrorMessage(`Failed to deploy ${modeType} mode: ${error}`);
         }
     }
 

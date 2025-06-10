@@ -1,24 +1,46 @@
-# Project Rules - ENTERPRISE MODE
+# 🎯 Project Rules - Mode Selection State
 
-## Flutter Development - Core Principles
-- **SOLID**: Single responsibility, dependency injection, clean interfaces
-- **Pure Functions**: Same input = same output, no side effects
-- **Clean Architecture**: Domain-agnostic business logic, clear layer boundaries
+## Current Status: Mode Selection Pending
 
-## Backup Strategy - DUAL SYSTEM
-### Automatic Backup
-- **SYSTEM**: Editor creates `.history/{path}/{filename}_{timestamp}.ext` on changes
-- **TRIGGER**: Every file modification automatically
-- **LOCATION**: `.history/` folder structure mirrors source
+This project is currently in **mode selection** state. Project-specific rules will be populated once you select your preferred AI assistant mode.
 
-### Manual Backup
-- **SYSTEM**: Place original files in `.legacy/{path}/{filename}.dart` during refactoring
-- **TRIGGER**: Before major refactoring operations
-- **LOCATION**: `.legacy/` folder preserves original implementations
+## Available Modes
 
-### Backup Requirements
-- **VERIFY**: Ensure both `.history/` and `.legacy/` folders exist
-- **PRESERVE**: Do not delete files from either backup location
+- **Enterprise Mode**: Comprehensive rules for large-scale projects
+- **Hybrid Mode**: Balanced approach for medium projects  
+- **Simplified Mode**: Essential rules for quick prototypes
+- **Custom Mode**: Tailored configuration based on specific needs
+
+## How to Activate Rules
+
+1. **Tell your AI assistant** which mode you prefer:
+   - "I want Enterprise mode"
+   - "Set up Hybrid mode for this project"
+   - "Use Simplified mode"
+   - "I need Custom mode configuration"
+
+2. **Use the extension** (if installed):
+   - Open Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`)
+   - Type: `AI Assistant: Set Mode`
+   - Select your mode
+
+3. **Run the script manually**:
+   ```bash
+   ./mode-manager.sh [enterprise|hybrid|simplified|custom]
+   ```
+
+## What Happens After Mode Selection?
+
+Once you select a mode, this file will be replaced with:
+- Mode-specific coding standards
+- Project structure guidelines
+- Testing requirements
+- Architecture patterns
+- Best practices for your chosen approach
+
+---
+
+**⏰ Ready to get started?** Choose your mode using any of the methods above!
 - **RELY ON**: Appropriate backup system based on situation
 
 ## Testing Requirements

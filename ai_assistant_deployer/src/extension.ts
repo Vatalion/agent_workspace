@@ -151,7 +151,75 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    context.subscriptions.push(deployCommand, detectCommand, setupConfigCommand, removeCommand, testModeGenerationCommand);
+    // Mode Selection Command
+    const selectModeCommand = vscode.commands.registerCommand('aiAssistantDeployer.selectMode', async () => {
+        try {
+            await webviewProvider.openModeSelection();
+        } catch (error) {
+            vscode.window.showErrorMessage(`Mode selection failed: ${error}`);
+        }
+    });
+
+    // Custom Mode Builder Command
+    const customModeBuilderCommand = vscode.commands.registerCommand('aiAssistantDeployer.customModeBuilder', async () => {
+        try {
+            await webviewProvider.openCustomModeBuilder();
+        } catch (error) {
+            vscode.window.showErrorMessage(`Custom mode builder failed: ${error}`);
+        }
+    });
+
+    // Quick Actions Command
+    const showQuickActionsCommand = vscode.commands.registerCommand('aiAssistantDeployer.showQuickActions', async () => {
+        try {
+            // Trigger refresh of the webview state
+            await webviewProvider.refreshState();
+            vscode.window.showInformationMessage('AI Assistant Quick Actions panel refreshed!');
+        } catch (error) {
+            vscode.window.showErrorMessage(`Quick actions failed: ${error}`);
+        }
+    });
+
+    // Quick Deploy Command
+    const quickDeployCommand = vscode.commands.registerCommand('aiAssistantDeployer.quickDeploy', async () => {
+        try {
+            await webviewProvider.deployFromOutFolder();
+        } catch (error) {
+            vscode.window.showErrorMessage(`Quick deploy failed: ${error}`);
+        }
+    });
+
+    // Test Command
+    const testCommand = vscode.commands.registerCommand('aiAssistantDeployer.test', async () => {
+        try {
+            vscode.window.showInformationMessage('AI Assistant test command executed!');
+        } catch (error) {
+            vscode.window.showErrorMessage(`Test command failed: ${error}`);
+        }
+    });
+
+    // Reset Command
+    const resetCommand = vscode.commands.registerCommand('aiAssistantDeployer.reset', async () => {
+        try {
+            await webviewProvider.resetDeployedFiles();
+        } catch (error) {
+            vscode.window.showErrorMessage(`Reset failed: ${error}`);
+        }
+    });
+
+    context.subscriptions.push(
+        deployCommand, 
+        detectCommand, 
+        setupConfigCommand, 
+        removeCommand, 
+        testModeGenerationCommand, 
+        selectModeCommand, 
+        customModeBuilderCommand,
+        showQuickActionsCommand,
+        quickDeployCommand,
+        testCommand,
+        resetCommand
+    );
 }
 
 function getWorkspaceFolder(uri?: vscode.Uri): vscode.WorkspaceFolder | undefined {

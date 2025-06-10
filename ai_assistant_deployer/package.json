@@ -31,9 +31,10 @@
     "onCommand:aiAssistantDeployer.test",
     "onCommand:aiAssistantDeployer.reset",
     "onCommand:aiAssistantDeployer.testModeGeneration",
-    "onCommand:aiAssistantDeployer.customModeBuilder"
+    "onCommand:aiAssistantDeployer.customModeBuilder",
+    "onCommand:aiAssistantDeployer.selectMode"
   ],
-  "main": "./dist/extension.js",
+  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
@@ -65,6 +66,11 @@
         "command": "aiAssistantDeployer.customModeBuilder",
         "title": "AI Assistant: Custom Mode Builder",
         "category": "AI Assistant"
+      },
+      {
+        "command": "aiAssistantDeployer.selectMode",
+        "title": "AI Assistant: Set Mode",
+        "category": "AI Assistant"
       }
     ],
     "menus": {
@@ -74,6 +80,9 @@
         },
         {
           "command": "aiAssistantDeployer.customModeBuilder"
+        },
+        {
+          "command": "aiAssistantDeployer.selectMode"
         }
       ]
     },

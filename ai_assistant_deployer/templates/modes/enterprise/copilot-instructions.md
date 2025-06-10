@@ -67,14 +67,82 @@ This project operates in **Enterprise Mode** - combining Flutter development bes
 4. **Interface Segregation**: No client forced to depend on unused interfaces
 5. **Dependency Inversion**: Depend on abstractions, not concretions
 
-### Clean Architecture (ENFORCED)
+### Feature-Layered Clean Architecture (ENFORCED)
+
+## 🏗️ Feature-Layered Clean Architecture
+
+### 📁 Project Structure
 ```
 lib/
-├── core/               # Core business logic, entities, interfaces
-├── data/              # Data layer (repositories, data sources, models)
-├── presentation/      # UI layer (pages, widgets, state management)
-└── domain/           # Domain layer (use cases, entities, repositories)
+├── features/                    # Feature-based organization
+│   ├── user_management/
+│   │   ├── domain/             # Pure business logic (innermost)
+│   │   │   ├── entities/       # Business objects (User, Profile)
+│   │   │   ├── repositories/   # Abstract interfaces only
+│   │   │   └── use_cases/      # Business rules & orchestration
+│   │   ├── data/              # Data access layer
+│   │   │   ├── repositories/   # Concrete repository implementations
+│   │   │   ├── data_sources/   # Remote/Local data sources
+│   │   │   └── models/        # Data transfer objects (DTOs)
+│   │   └── presentation/      # UI layer (outermost)
+│   │       ├── pages/         # Screen controllers
+│   │       ├── widgets/       # UI components
+│   │       └── state/         # State management (BLoC/Provider)
+│   └── product_catalog/       # Another feature
+│       ├── domain/
+│       ├── data/
+│       └── presentation/
+├── shared/                     # Cross-cutting concerns
+│   ├── core/                  # App-wide foundations
+│   │   ├── error/            # Error handling
+│   │   ├── network/          # HTTP client setup
+│   │   └── constants/        # App constants
+│   ├── infrastructure/        # External dependencies
+│   │   ├── database/         # Local storage
+│   │   └── services/         # Third-party integrations
+│   └── utils/                # Helper functions
+└── main.dart                  # App entry point
 ```
+
+### 🔄 Layer Dependency Rules
+**CRITICAL**: Dependencies flow INWARD ONLY
+- **Presentation** → **Domain** (via use cases)
+- **Data** → **Domain** (implements interfaces)
+- **Domain** → NO external dependencies
+
+### 🎯 Layer Responsibilities & Wrappers
+
+#### 1. Domain Layer (Core)
+- **Entities**: Pure business objects with no dependencies
+- **Repositories**: Abstract contracts (interfaces only)
+- **Use Cases**: Business logic orchestration, return `Result<T>`
+
+#### 2. Data Layer (Infrastructure)  
+- **Models/DTOs**: Data transfer objects that convert to entities
+- **Repository Implementations**: Concrete implementations returning entities
+- **Data Sources**: External API/database access returning DTOs
+
+#### 3. Presentation Layer (UI)
+- **State Management**: Handle UI state, consume use cases
+- **Pages**: Screen controllers using BLoC/Provider
+- **Widgets**: Pure UI components receiving entities
+
+### 🛡️ Result Wrapper Pattern
+**MANDATORY**: All operations return `Result<T>` for proper error handling
+
+### ✅ Validation Rules
+1. **Feature Independence**: Each feature folder is self-contained
+2. **Layer Separation**: Domain never imports from data/presentation  
+3. **Entity Purity**: Domain entities have no external dependencies
+4. **Repository Pattern**: Data layer implements domain contracts
+5. **Result Wrapping**: All async operations return `Result<T>`
+6. **Error Handling**: Centralized error types in shared/core
+
+### 🚫 Forbidden Patterns
+- Direct database calls from use cases
+- UI widgets importing data models
+- Entities depending on external packages
+- Repositories returning DTOs instead of entities
 
 ### Mandatory File Practices
 - **NO SINGLE-FILE MONSTERS**: Max 200 lines per file

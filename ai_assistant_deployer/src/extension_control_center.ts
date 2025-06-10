@@ -63,6 +63,15 @@ export function activate(context: vscode.ExtensionContext) {
         }
     );
 
+    // Add Select Mode command
+    const selectModeCommand = vscode.commands.registerCommand(
+        'aiAssistantDeployer.selectMode',
+        async () => {
+            // Open mode selection interface
+            await webviewProvider.openModeSelection();
+        }
+    );
+
     const resetCommand = vscode.commands.registerCommand(
         'aiAssistantDeployer.reset',
         async () => {
@@ -88,6 +97,7 @@ export function activate(context: vscode.ExtensionContext) {
         quickDeployCommand,
         testCommand,
         customModeBuilderCommand,
+        selectModeCommand,
         resetCommand
     );
 

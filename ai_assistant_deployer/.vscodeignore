@@ -14,8 +14,12 @@ tsconfig.json
 webpack.config.js
 .history/**
 
-# Build files - exclude out directory when using bundled dist
-out/**
+# Build files - include out directory since we moved from dist to out
+!out/extension.js
+!out/extension.js.map
+# But exclude most other out files except deployment
+out/services/**
+out/ui/**
 # But include deployment files
 !out/.github/**
 *.ts
