@@ -73,7 +73,7 @@ export class ModeGenerationIntegrationTest {
 
             // Verify migrated configurations exist
             const migratedConfigsPath = path.join(this.extensionPath, 'migrated-configs');
-            const configFiles = ['enterprise-migrated.json', 'simplified-migrated.json', 'hybrid-migrated.json'];
+            const configFiles = ['enterprise-migrated.json', 'simplified-migrated.json'];
             
             for (const configFile of configFiles) {
                 const configPath = path.join(migratedConfigsPath, configFile);
@@ -154,8 +154,7 @@ export class ModeGenerationIntegrationTest {
             // Test loading each migrated configuration
             const configFiles = [
                 'enterprise-migrated.json',
-                'simplified-migrated.json', 
-                'hybrid-migrated.json'
+                'simplified-migrated.json'
             ];
 
             for (const configFile of configFiles) {
@@ -213,7 +212,7 @@ export class ModeGenerationIntegrationTest {
             const generationResults = [];
 
             // Test generation for each mode
-            const modes = ['enterprise', 'simplified', 'hybrid'];
+            const modes = ['enterprise', 'simplified'];
 
             for (const mode of modes) {
                 const configPath = path.join(this.extensionPath, 'migrated-configs', `${mode}-migrated.json`);

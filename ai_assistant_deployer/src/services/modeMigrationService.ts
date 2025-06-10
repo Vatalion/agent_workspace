@@ -63,7 +63,7 @@ export class ModeMigrationService {
      */
     async migrateAllModes(): Promise<MigrationResult[]> {
         const results: MigrationResult[] = [];
-        const modeTypes: ModeType[] = ['enterprise', 'simplified', 'hybrid'];
+        const modeTypes: ModeType[] = ['enterprise', 'simplified'];
 
         for (const modeType of modeTypes) {
             try {

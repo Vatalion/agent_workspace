@@ -476,7 +476,6 @@ export class RuleExtractionService {
     if (header.toLowerCase().includes('typescript')) tags.push('typescript');
     if (header.toLowerCase().includes('enterprise')) tags.push('enterprise');
     if (header.toLowerCase().includes('simplified')) tags.push('simplified');
-    if (header.toLowerCase().includes('hybrid')) tags.push('hybrid');
     
     // Extract tags from content patterns
     if (content.includes('lib/')) tags.push('flutter');

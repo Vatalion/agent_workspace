@@ -176,7 +176,7 @@ export class ModeDeploymentService {
             return exactMatch;
         }
 
-        // Check for partial matches (enterprise, simplified, hybrid)
+        // Check for partial matches (enterprise, simplified)
         const partialMatches = [
             `${modeId}-migrated.json`,
             `${modeId.toLowerCase()}-migrated.json`,

@@ -39,29 +39,50 @@ class CustomModeBuilderValidator {
     async validateUIComponents() {
         console.log('📋 1. Validating UI Components...');
         
+        // Check WebviewHtmlRenderer for modal HTML
+        const rendererPath = path.join(this.workspaceRoot, 'src/ui/rendering/WebviewHtmlRenderer.ts');
         const webviewProviderPath = path.join(this.workspaceRoot, 'src/ui/aiAssistantWebviewProvider.ts');
         
+        if (!fs.existsSync(rendererPath)) {
+            throw new Error('WebviewHtmlRenderer file not found');
+        }
         if (!fs.existsSync(webviewProviderPath)) {
             throw new Error('WebviewProvider file not found');
         }
 
-        const content = fs.readFileSync(webviewProviderPath, 'utf8');
+        const rendererContent = fs.readFileSync(rendererPath, 'utf8');
+        const providerContent = fs.readFileSync(webviewProviderPath, 'utf8');
         
-        // Check for required UI components
-        const requiredComponents = [
+        // Check for required UI components in renderer
+        const requiredUIComponents = [
             'customModeBuilderModal',
             'Custom Mode Builder Modal',
-            'openCustomModeBuilder',
-            'deployCustomMode',
             'modal-content',
             'mode-name-input',
-            'mode-description-input'
+            'mode-description-input',
+            'generateCustomModeBuilderModal'
+        ];
+
+        // Check for required methods in provider
+        const requiredProviderMethods = [
+            'openCustomModeBuilder',
+            'handleCreateCustomMode',
+            'handleLoadAvailableRules'
         ];
 
         let missingComponents = [];
-        for (const component of requiredComponents) {
-            if (!content.includes(component)) {
+        
+        // Check renderer components
+        for (const component of requiredUIComponents) {
+            if (!rendererContent.includes(component)) {
                 missingComponents.push(component);
+            }
+        }
+        
+        // Check provider methods
+        for (const method of requiredProviderMethods) {
+            if (!providerContent.includes(method)) {
+                missingComponents.push(method);
             }
         }
 
@@ -77,23 +98,69 @@ class CustomModeBuilderValidator {
     async validateMessageHandling() {
         console.log('📡 2. Validating Message Handling...');
         
+        // Check WebviewMessageHandler for message routing
+        const messageHandlerPath = path.join(this.workspaceRoot, 'src/ui/messaging/WebviewMessageHandler.ts');
+        const rendererPath = path.join(this.workspaceRoot, 'src/ui/rendering/WebviewHtmlRenderer.ts');
         const webviewProviderPath = path.join(this.workspaceRoot, 'src/ui/aiAssistantWebviewProvider.ts');
-        const content = fs.readFileSync(webviewProviderPath, 'utf8');
         
-        // Check for required message handlers
-        const requiredHandlers = [
+        if (!fs.existsSync(messageHandlerPath)) {
+            throw new Error('WebviewMessageHandler file not found');
+        }
+        if (!fs.existsSync(rendererPath)) {
+            throw new Error('WebviewHtmlRenderer file not found');
+        }
+        if (!fs.existsSync(webviewProviderPath)) {
+            throw new Error('WebviewProvider file not found');
+        }
+
+        const handlerContent = fs.readFileSync(messageHandlerPath, 'utf8');
+        const rendererContent = fs.readFileSync(rendererPath, 'utf8');
+        const providerContent = fs.readFileSync(webviewProviderPath, 'utf8');
+        
+        // Check for required message handling components
+        const requiredInHandler = [
             "case 'openCustomModeBuilder':",
-            "case 'deployCustomMode':",
-            'handleDeployCustomMode',
-            'openCustomModeBuilder():',
+            "case 'loadAvailableRules':",
+            "case 'createCustomMode':",
+            'handleOpenCustomModeBuilder',
+            'handleLoadAvailableRules',
+            'handleCreateCustomMode'
+        ];
+
+        const requiredInRenderer = [
             'addEventListener(\'message\'',
-            'vscode.postMessage'
+            'vscode.postMessage',
+            'openCustomModeBuilder()',
+            'loadAvailableRules()',
+            'closeCustomModeBuilder()'
+        ];
+
+        const requiredInProvider = [
+            'openCustomModeBuilder():',
+            'handleCreateCustomMode',
+            'handleLoadAvailableRules'
         ];
 
         let missingHandlers = [];
-        for (const handler of requiredHandlers) {
-            if (!content.includes(handler)) {
-                missingHandlers.push(handler);
+        
+        // Check message handler file
+        for (const handler of requiredInHandler) {
+            if (!handlerContent.includes(handler)) {
+                missingHandlers.push(`Handler: ${handler}`);
+            }
+        }
+        
+        // Check renderer file
+        for (const handler of requiredInRenderer) {
+            if (!rendererContent.includes(handler)) {
+                missingHandlers.push(`Renderer: ${handler}`);
+            }
+        }
+        
+        // Check provider file
+        for (const handler of requiredInProvider) {
+            if (!providerContent.includes(handler)) {
+                missingHandlers.push(`Provider: ${handler}`);
             }
         }
 
@@ -162,8 +229,9 @@ class CustomModeBuilderValidator {
             return;
         }
 
-        // Check for template files
-        const templateFiles = fs.readdirSync(modesTemplateDir);
+        // Check for template files (excluding hybrid which was removed)
+        const templateFiles = fs.readdirSync(modesTemplateDir)
+            .filter(file => !file.includes('hybrid'));
         if (templateFiles.length === 0) {
             console.log('⚠️  No template files found');
             this.testResults.fileGeneration = false;

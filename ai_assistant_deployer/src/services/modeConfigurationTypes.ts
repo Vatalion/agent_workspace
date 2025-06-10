@@ -19,7 +19,7 @@ export interface ModeConfiguration {
   description: string;
   
   /** Mode type */
-  type?: 'enterprise' | 'simplified' | 'hybrid' | 'custom';
+  type?: 'enterprise' | 'simplified' | 'custom';
   
   /** Mode metadata */
   metadata: ModeMetadata;
@@ -540,7 +540,7 @@ export interface TaskSystemConfiguration {
   initialFiles?: string[];
   
   /** Task system type */
-  type: 'simple' | 'enterprise' | 'hybrid';
+  type: 'simple' | 'enterprise';
 }
 
 /**
@@ -690,7 +690,7 @@ export interface ModeConfigurationExportOptions {
 /**
  * Predefined mode types
  */
-export type PredefinedModeType = 'enterprise' | 'simplified' | 'hybrid' | 'custom';
+export type PredefinedModeType = 'enterprise' | 'simplified' | 'custom';
 export type ModeType = PredefinedModeType;
 
 /**

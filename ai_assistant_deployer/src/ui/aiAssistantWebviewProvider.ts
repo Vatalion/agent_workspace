@@ -6,6 +6,7 @@ import { ModeDeploymentService, DeploymentResult } from '../services/modeDeploym
 import { RuleDiscoveryService } from '../services/ruleDiscovery';
 import { RuleManagementService } from '../services/ruleManagement';
 import { Rule, RuleSet, RuleFilter, RuleCategory, RuleUrgency } from '../services/ruleTypes';
+import { RulePoolService } from '../services/rulePoolService';
 import { WebviewMessageHandler, IWebviewProvider } from './messaging/WebviewMessageHandler';
 import { WebviewHtmlRenderer } from './rendering/WebviewHtmlRenderer';
 
@@ -28,6 +29,7 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
     private modeDeployment: ModeDeploymentService;
     private ruleDiscovery: RuleDiscoveryService;
     private ruleManagement: RuleManagementService;
+    private rulePoolService: RulePoolService;
     private fileWatcher?: vscode.Disposable;
     private currentState: UIState;
     
@@ -45,6 +47,7 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
             this.modeDeployment = new ModeDeploymentService(workspaceRoot, context.extensionPath);
             this.ruleDiscovery = new RuleDiscoveryService(workspaceRoot);
             this.ruleManagement = new RuleManagementService(workspaceRoot);
+            this.rulePoolService = new RulePoolService(context.extensionPath);
         } catch (error) {
             console.error('Failed to initialize services:', error);
             // Initialize with fallback - use extension path as workspace root
@@ -53,6 +56,7 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
             this.modeDeployment = new ModeDeploymentService(fallbackWorkspaceRoot, context.extensionPath);
             this.ruleDiscovery = new RuleDiscoveryService(fallbackWorkspaceRoot);
             this.ruleManagement = new RuleManagementService(fallbackWorkspaceRoot);
+            this.rulePoolService = new RulePoolService(context.extensionPath);
         }
         
         this.currentState = {
@@ -646,29 +650,21 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
         try {
             console.log('📋 [Extension] Loading available rules for Custom Mode Builder');
             
-            // Get all available rules from the rule pool
-            const workspaceRoot = this.getCurrentWorkspaceRoot();
-            const rulePoolPath = path.join(this.context.extensionPath, 'data', 'rule-pool.json');
+            // Initialize rule pool service if needed
+            await this.rulePoolService.initialize();
             
-            if (!fs.existsSync(rulePoolPath)) {
-                console.error('❌ Rule pool not found at:', rulePoolPath);
-                this.sendMessageToWebview({
-                    type: 'showError',
-                    error: 'Rule pool not found. Please ensure the extension is properly installed.'
-                });
-                return;
-            }
+            // Get all available rules from the rule pool service
+            const availableRules = this.rulePoolService.getAllRules();
             
-            const rulePoolContent = fs.readFileSync(rulePoolPath, 'utf8');
-            const rulePool = JSON.parse(rulePoolContent);
-            
-            // Convert rule pool to array format suitable for UI
-            const rules = Object.values(rulePool).map((rule: any) => ({
+            // Convert rules to format suitable for UI
+            const rules = availableRules.map((rule: any) => ({
                 id: rule.id,
                 title: rule.title,
                 description: rule.description,
                 category: rule.category,
-                urgency: rule.urgency
+                urgency: rule.urgency,
+                isActive: rule.isActive,
+                tags: rule.tags || []
             }));
             
             console.log(`✅ [Extension] Loaded ${rules.length} rules for Custom Mode Builder`);
@@ -702,23 +698,91 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
                 });
                 return;
             }
+
+            if (!customModeData.selectedRules || customModeData.selectedRules.length === 0) {
+                this.sendMessageToWebview({
+                    type: 'showError',
+                    error: 'At least one rule must be selected'
+                });
+                return;
+            }
             
-            // Create custom mode configuration
-            const modeConfig = {
+            // Initialize rule pool service
+            await this.rulePoolService.initialize();
+            
+            // Validate selected rules exist
+            const selectedRules = customModeData.selectedRules
+                .map((ruleId: string) => this.rulePoolService.getRule(ruleId))
+                .filter((rule: any) => rule !== undefined);
+            
+            if (selectedRules.length === 0) {
+                this.sendMessageToWebview({
+                    type: 'showError',
+                    error: 'No valid rules selected for custom mode'
+                });
+                return;
+            }
+            
+            // Create temporary config for rendering
+            const tempModeConfig = {
                 id: `custom-${Date.now()}`,
                 name: customModeData.name,
                 description: customModeData.description,
-                version: '1.0.0',
+                version: '1.0.0'
+            };
+            
+            // Generate custom mode content using rule pool service
+            const modeContent = await this.rulePoolService.renderRules(
+                selectedRules.map((rule: any) => rule.id),
+                {
+                    mode: {
+                        id: tempModeConfig.id,
+                        name: tempModeConfig.name,
+                        description: tempModeConfig.description,
+                        version: tempModeConfig.version,
+                        ruleIds: selectedRules.map((rule: any) => rule.id),
+                        ruleOverrides: new Map(),
+                        excludedRuleIds: [],
+                        projectTypes: ['ALL' as any],
+                        isDefault: false,
+                        isCustom: true,
+                        generateInstructions: true,
+                        generateProjectRules: false,
+                        generateAutomation: false,
+                        createdAt: new Date(),
+                        updatedAt: new Date(),
+                        author: 'Custom Mode Builder'
+                    },
+                    projectType: 'ALL' as any,
+                    outputFormat: 'markdown' as const,
+                    includeMetadata: true,
+                    groupByCategory: true,
+                    sortByUrgency: true
+                }
+            );
+            
+            // Create custom mode configuration
+            const modeConfig = {
+                id: tempModeConfig.id,
+                name: tempModeConfig.name,
+                description: tempModeConfig.description,
+                version: tempModeConfig.version,
                 targetProject: customModeData.targetProject || 'general',
                 features: ['Custom Mode', 'Rule-based'],
                 estimatedHours: '1-3 hours',
                 rules: customModeData.selectedRules || [],
                 created: new Date().toISOString(),
-                isCustom: true
+                isCustom: true,
+                generatedContent: modeContent
             };
             
-            // Save custom mode to workspace
+            // Deploy the custom mode directly to the workspace
             const workspaceRoot = this.getCurrentWorkspaceRoot();
+            const instructionsPath = path.join(workspaceRoot, 'GitHub Copilot Instructions.md');
+            
+            await fs.promises.writeFile(instructionsPath, modeContent, 'utf8');
+            
+            // Save custom mode configuration for reference
             const customModesDir = path.join(workspaceRoot, '.vscode', 'custom-modes');
             
             if (!fs.existsSync(customModesDir)) {
@@ -728,22 +792,8 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
             const modeFilePath = path.join(customModesDir, `${modeConfig.id}.json`);
             fs.writeFileSync(modeFilePath, JSON.stringify(modeConfig, null, 2));
             
-            console.log(`✅ [Extension] Custom mode saved to: ${modeFilePath}`);
-            
-            // Deploy the custom mode immediately
-            const modeInfo: ModeInfo = {
-                id: modeConfig.id,
-                name: modeConfig.name,
-                description: modeConfig.description,
-                targetProject: modeConfig.targetProject,
-                features: modeConfig.features,
-                estimatedHours: modeConfig.estimatedHours,
-                isActive: false,
-                hasConflicts: false,
-                path: modeFilePath
-            };
-            
-            await this.modeDeployment.deployMode(modeInfo);
+            console.log(`✅ [Extension] Custom mode deployed to: ${instructionsPath}`);
+            console.log(`✅ [Extension] Custom mode config saved to: ${modeFilePath}`);
             
             // Update state and UI
             await this.refreshState();

@@ -402,8 +402,6 @@ export class ModeGenerationPipeline {
             content += this.generateEnterpriseContent(config, rules);
         } else if (config.type === 'simplified') {
             content += this.generateSimplifiedContent(config, rules);
-        } else if (config.type === 'hybrid') {
-            content += this.generateHybridContent(config, rules);
         }
 
         return content;
@@ -464,28 +462,6 @@ This mode provides essential development guidelines with minimal complexity:
 - Simple project organization
 - Basic documentation
 - Essential testing practices
-`;
-    }
-
-    /**
-     * Generate hybrid-specific content
-     */
-    private generateHybridContent(config: ModeConfiguration, rules: Rule[]): string {
-        return `
-## Hybrid Mode Features
-
-This mode balances comprehensive features with practical simplicity:
-
-- **Selective Enterprise Features**: Choose advanced capabilities as needed
-- **Flexible Task Management**: Adaptable workflow systems
-- **Scalable Architecture**: Grow complexity as projects expand
-- **Balanced Testing**: Comprehensive where critical, simplified elsewhere
-
-### Scalability Approach
-- Start simple, add complexity as needed
-- Enterprise features available on-demand
-- Flexible rule application
-- Project-appropriate tooling
 `;
     }
 
