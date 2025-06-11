@@ -1,0 +1,94 @@
+# 🎛️ MODULAR RULES SYSTEM CONFIGURATION
+# Version: 3.2.0
+# Last Modified: 2025-06-10 12:15:00
+# Purpose: Control which rule modules are active
+
+version: "3.2.0"
+system_mode: "simple"  # simple | standard | enterprise - DEFAULT: simple for memory optimization
+
+# Active modules configuration
+active_modules:
+  
+  # CORE MODULES (Cannot be disabled - Required for basic functionality)
+  core_workflow: true          # Essential workflow management
+  folder_structure: true       # Mandatory folder structure
+  rule_enforcement: true       # Rule validation and enforcement
+  
+  # DEVELOPMENT MODULES (Toggle individually)
+  clean_architecture: false    # Clean Architecture principles - DISABLED for UI refactoring
+  solid_principles: false      # SOLID development principles - DISABLED  
+  file_practices: true         # File organization and practices
+  testing_standards: false     # Testing standards and coverage - DISABLED
+  
+  # ENTERPRISE MODULES (Toggle as group or individually)
+  enterprise_mode: false       # Master toggle for all enterprise features - DISABLED
+  enterprise_standards: false  # Enterprise-grade code standards - DISABLED
+  security_compliance: false   # Security rules and compliance validation - DISABLED
+  performance_monitoring: false # Performance guidelines and monitoring - DISABLED
+  
+  # OPERATIONS MODULES (Toggle individually)
+  task_management: false        # Task management and epic orchestration - DISABLED
+  backup_strategy: true        # Three-tier backup and recovery system
+  git_workflow: true          # Git workflow and commit standards
+  
+  # ADVANCED MODULES (Resource intensive - disable for better performance)
+  auto_save: false            # Automatic state preservation - DISABLED
+  cross_machine_sync: false   # Cross-machine state synchronization - DISABLED
+  interruption_handling: false # Priority interrupt management - DISABLED
+
+# Predefined complexity levels
+complexity_levels:
+  simple:
+    description: "Minimal overhead for basic development"
+    modules: ["core_workflow", "folder_structure", "rule_enforcement"]
+    estimated_startup: "0.5s"
+    estimated_memory: "8MB"
+    validation_steps: 6
+    
+  standard:
+    description: "Balanced features for regular development"
+    modules: ["core_workflow", "folder_structure", "rule_enforcement", "clean_architecture", "solid_principles", "file_practices", "testing_standards", "backup_strategy", "git_workflow"]
+    estimated_startup: "1.8s"
+    estimated_memory: "26MB"
+    validation_steps: 12
+    
+  enterprise:
+    description: "Full enterprise capabilities with security and monitoring"
+    modules: "all"  # Enables all available modules
+    estimated_startup: "4.2s"
+    estimated_memory: "63MB"
+    validation_steps: 18
+
+# Performance settings
+performance:
+  mode: "minimal"  # minimal | balanced | full_features
+  resource_limits:
+    max_memory: "10MB"
+    max_startup_time: "1s"
+    max_validation_steps: 6
+    
+# Module dependencies (automatically resolved)
+dependencies:
+  git_workflow: ["backup_strategy"]
+  testing_standards: ["file_practices", "clean_architecture"]
+  enterprise_standards: ["clean_architecture", "solid_principles"]
+  security_compliance: ["core_workflow"]
+  performance_monitoring: ["core_workflow"]
+
+# Compatibility settings
+compatibility:
+  minimum_version: "3.0.0"
+  backward_compatibility: true
+  migration_required: false
+
+# Logging and monitoring
+logging:
+  level: "INFO"  # DEBUG | INFO | WARN | ERROR
+  module_loading: true
+  performance_metrics: false
+  
+# Feature flags for experimental features
+experimental:
+  dynamic_rule_loading: false
+  ai_rule_optimization: false
+  cross_project_rules: false 

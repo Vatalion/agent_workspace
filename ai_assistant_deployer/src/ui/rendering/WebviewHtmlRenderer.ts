@@ -1,41 +1,18 @@
-import { Rule, RuleSet, RuleFilter, RuleCategory, RuleUrgency } from '../../services/ruleTypes';
-import { ModeInfo } from '../../services/modeDiscovery';
-
-export interface UIState {
-    isLoading: boolean;
-    availableModes: ModeInfo[];
-    currentMode: string | null;
-    isDeployed: boolean;
-    lastUpdated: Date;
-    error?: string;
-    currentRuleSet?: RuleSet;
-    ruleFilter?: RuleFilter;
-    activeTab: 'modes' | 'rules';
-}
-
 /**
- * WebviewHtmlRenderer - Responsible for generating all HTML content for the webview
- * 
- * This service follows the Single Responsibility Principle by focusing solely on
- * HTML generation and rendering logic, extracted from the monolithic webview provider.
- * 
- * Responsibilities:
- * - Generate main webview HTML structure
- * - Generate rules HTML content
- * - Generate individual rule cards
- * - Format category names and provide category icons
- * - Handle CSS styling and JavaScript injection
+ * Modern WebView HTML Renderer for Modular UI System
+ * Generates responsive, accessible HTML with modern CSS and reactive JavaScript
  */
+
+import * as vscode from 'vscode';
+import { UIState } from '../state/UIState';
+import { RuleCategory, RuleUrgency, Rule } from '../../services/ruleTypes';
+
 export class WebviewHtmlRenderer {
     
     /**
-     * Generates the complete HTML content for the webview
-     * @param state Current UI state containing all necessary data
-     * @returns Complete HTML string for the webview
+     * Render the complete HTML page with modern styling and reactive features
      */
-    generateWebviewHTML(state: UIState): string {
-        const { isLoading, availableModes, currentMode, isDeployed, error } = state;
-
+    renderFullPage(componentHtml: string, extensionUri: vscode.Uri): string {
         return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,842 +20,702 @@ export class WebviewHtmlRenderer {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Assistant Deployer</title>
     <style>
-        ${this.generateCSS()}
+        ${this.generateModernCSS()}
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="title">
-            🚀 AI Assistant Deployer
-        </div>
-        <button class="refresh-btn" onclick="refreshState()" ${isLoading ? 'disabled' : ''}>
-            ${isLoading ? '<span class="spinner"></span>' : '🔄'} Refresh
-        </button>
-    </div>
-
-    ${error ? `<div class="error">⚠️ ${error}</div>` : ''}
-
-    ${isLoading ? `
-        <div class="loading">
-            <span class="spinner"></span>
-            <p>Loading modes...</p>
-        </div>
-    ` : ''}
-
-    ${!isLoading ? `
-        <div class="status-card">
-            <div class="status-badge ${isDeployed ? 'status-deployed' : 'status-not-deployed'}">
-                ${isDeployed ? '✅' : '❌'} 
-                ${isDeployed ? 'Deployed' : 'Not Deployed'}
-            </div>
-            ${isDeployed && currentMode ? `
-                <div><strong>Active Mode:</strong> ${availableModes.find(m => m.id === currentMode)?.name || currentMode}</div>
-            ` : ''}
-        </div>
-
-        <!-- Tab Navigation -->
-        <div class="tab-navigation">
-            <button class="tab-btn ${state.activeTab === 'modes' ? 'active' : ''}" 
-                    onclick="switchTab('modes')">
-                📋 Modes
-            </button>
-            <button class="tab-btn ${state.activeTab === 'rules' ? 'active' : ''}" 
-                    onclick="switchTab('rules')" 
-                    ${!isDeployed ? 'disabled' : ''}>
-                ⚙️ Rules ${!isDeployed ? '(Deploy a mode first)' : ''}
-            </button>
-        </div>
-
-        <!-- Modes Tab Content -->
-        <div class="tab-content ${state.activeTab !== 'modes' ? 'hidden' : ''}">
-            ${this.generateModesContent(state)}
-        </div>
-
-        <!-- Rules Tab Content -->
-        <div class="tab-content ${state.activeTab !== 'rules' ? 'hidden' : ''}">
-            ${this.generateRulesHTML(state)}
-        </div>
-    ` : ''}
-
-    <!-- Custom Mode Builder Modal -->
-    ${this.generateCustomModeBuilderModal()}
-
+    ${componentHtml}
     <script>
-        ${this.generateJavaScript()}
+        ${this.generateReactiveJavaScript()}
     </script>
 </body>
 </html>`;
     }
 
     /**
-     * Generates the CSS styles for the webview
-     * @returns CSS string
+     * Render error page
      */
-    private generateCSS(): string {
+    renderErrorPage(error: any): string {
+        const errorMessage = error?.message || error || 'Unknown error occurred';
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - AI Assistant Deployer</title>
+    <style>
+        ${this.generateErrorPageCSS()}
+    </style>
+</head>
+<body>
+    <div class="error-page">
+        <div class="error-icon">⚠️</div>
+        <h1>Something went wrong</h1>
+        <p class="error-message">${errorMessage}</p>
+        <button onclick="sendMessage('refreshAll')" class="retry-btn">
+            🔄 Try Again
+        </button>
+    </div>
+    <script>
+        ${this.generateBasicJavaScript()}
+    </script>
+</body>
+</html>`;
+    }
+
+    /**
+     * Render application UI based on current state
+     */
+    renderApplicationUI(state: UIState): string {
+        const { isLoading, error, availableModes, isDeployed, currentMode } = state;
+        
+        return `<div class="application-container">
+        <div class="app-header">
+            <div class="header-content">
+                <div class="app-title">
+                    <h1>🚀 AI Assistant Deployer</h1>
+                    <p class="app-subtitle">Deploy and manage AI assistant configurations</p>
+                </div>
+                <div class="header-controls">
+                    <button class="refresh-btn" onclick="refreshState()" ${isLoading ? 'disabled' : ''}>
+                        ${isLoading ? '<span class="spinner"></span>' : '🔄'} Refresh
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        ${error ? `<div class="error">⚠️ ${error}</div>` : ''}
+        
+        ${isLoading ? `
+            <div class="loading-overlay">
+                <div class="loading-spinner"></div>
+                <p>Loading assistant configurations...</p>
+            </div>
+        ` : ''}
+        
+        ${!isLoading ? `
+            <div class="status-section">
+                <div class="status-badge ${isDeployed ? 'status-deployed' : 'status-not-deployed'}">
+                    ${isDeployed ? '✅' : '❌'}
+                    ${isDeployed ? 'Deployed' : 'Not Deployed'}
+                </div>
+                ${isDeployed && currentMode ? `
+                    <div><strong>Active Mode:</strong> ${availableModes.find(m => m.id === currentMode)?.name || currentMode}</div>
+                ` : ''}
+            </div>
+            
+            <div class="tab-navigation">
+                <button class="tab-btn ${state.activeTab === 'modes' ? 'active' : ''}"
+                        onclick="switchTab('modes')">
+                    🎯 Modes
+                </button>
+                <button class="tab-btn ${state.activeTab === 'rules' ? 'active' : ''}"
+                        onclick="switchTab('rules')"
+                        ${!isDeployed ? 'disabled' : ''}>
+                    ⚙️ Rules ${!isDeployed ? '(Deploy a mode first)' : ''}
+                </button>
+            </div>
+            
+            <div class="tab-content ${state.activeTab !== 'modes' ? 'hidden' : ''}">
+                ${this.generateModesContent(state)}
+            </div>
+            
+            <div class="tab-content ${state.activeTab !== 'rules' ? 'hidden' : ''}">
+                ${this.generateRulesHTML(state)}
+            </div>
+        ` : ''}
+    </div>
+    
+    ${this.generateCustomModeBuilderModal()}`;
+    }
+
+    /**
+     * Generate modern CSS with VS Code theme integration
+     */
+    private generateModernCSS(): string {
         return `
-        html, body {
+        /* VS Code Theme Variables */
+        :root {
+            --vscode-font-family: var(--vscode-font-family);
+            --vscode-font-size: var(--vscode-font-size);
+            --vscode-editor-background: var(--vscode-editor-background);
+            --vscode-editor-foreground: var(--vscode-editor-foreground);
+            --vscode-button-background: var(--vscode-button-background);
+            --vscode-button-foreground: var(--vscode-button-foreground);
+            --vscode-button-hoverBackground: var(--vscode-button-hoverBackground);
+            --vscode-input-background: var(--vscode-input-background);
+            --vscode-input-foreground: var(--vscode-input-foreground);
+            --vscode-input-border: var(--vscode-input-border);
+            --vscode-list-activeSelectionBackground: var(--vscode-list-activeSelectionBackground);
+            --vscode-list-hoverBackground: var(--vscode-list-hoverBackground);
+            --vscode-badge-background: var(--vscode-badge-background);
+            --vscode-badge-foreground: var(--vscode-badge-foreground);
+            --vscode-notificationsErrorIcon-foreground: var(--vscode-notificationsErrorIcon-foreground);
+            --vscode-notificationsWarningIcon-foreground: var(--vscode-notificationsWarningIcon-foreground);
+            --vscode-notificationsInfoIcon-foreground: var(--vscode-notificationsInfoIcon-foreground);
+            
+            /* Custom properties */
+            --border-radius: 6px;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --transition: all 0.2s ease;
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: var(--vscode-font-family);
-            color: var(--vscode-foreground);
-            background: var(--vscode-editor-background);
+            font-size: var(--vscode-font-size);
+            color: var(--vscode-editor-foreground);
+            background-color: var(--vscode-editor-background);
             margin: 0;
             padding: 0;
-            height: 100%;
-            overflow-y: auto;
+            line-height: 1.5;
         }
-        body {
-            padding: 16px;
-        }
-        .header {
+
+        /* Application Container */
+        .application-container {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--vscode-widget-border);
+            flex-direction: column;
+            min-height: 100vh;
+            max-width: 100%;
+            overflow-x: hidden;
         }
-        .title {
-            font-size: 16px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .refresh-btn {
-            background: transparent;
-            border: 1px solid var(--vscode-widget-border);
-            color: var(--vscode-foreground);
-            border-radius: 4px;
-            padding: 4px 8px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        .refresh-btn:hover {
-            background: var(--vscode-list-hoverBackground);
-        }
-        .status-card {
+
+        /* Header Styles */
+        .app-header {
             background: var(--vscode-editor-background);
-            border: 1px solid var(--vscode-widget-border);
-            border-radius: 6px;
-            padding: 16px;
-            margin-bottom: 16px;
+            border-bottom: 1px solid var(--vscode-input-border);
+            padding: var(--spacing-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-        .status-deployed {
-            background: var(--vscode-inputValidation-infoBackground);
-            color: var(--vscode-inputValidation-infoForeground);
-        }
-        .status-not-deployed {
-            background: var(--vscode-inputValidation-warningBackground);
-            color: var(--vscode-inputValidation-warningForeground);
-        }
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: var(--vscode-descriptionForeground);
-        }
-        .error {
-            background: var(--vscode-inputValidation-errorBackground);
-            color: var(--vscode-inputValidation-errorForeground);
-            padding: 12px;
-            border-radius: 4px;
-            margin-bottom: 16px;
-            font-size: 13px;
-        }
-        .modes-section {
-            margin: 16px 0;
-        }
-        .section-title {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .mode-card {
-            background: var(--vscode-editor-background);
-            border: 1px solid var(--vscode-widget-border);
-            border-radius: 6px;
-            padding: 12px;
-            margin-bottom: 8px;
-            transition: all 0.2s;
-        }
-        .mode-card:hover {
-            background: var(--vscode-list-hoverBackground);
-            border-color: var(--vscode-focusBorder);
-        }
-        .mode-card.active {
-            border-color: var(--vscode-focusBorder);
-            background: var(--vscode-list-activeSelectionBackground);
-        }
-        .mode-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-        .mode-name {
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .mode-badge {
-            font-size: 11px;
-            padding: 2px 6px;
-            border-radius: 3px;
-            background: var(--vscode-badge-background);
-            color: var(--vscode-badge-foreground);
-        }
-        .mode-description {
-            font-size: 12px;
-            color: var(--vscode-descriptionForeground);
-            margin-bottom: 8px;
-        }
-        .mode-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin-bottom: 8px;
-        }
-        .feature-tag {
-            font-size: 10px;
-            padding: 2px 4px;
-            background: var(--vscode-textBlockQuote-background);
-            border-radius: 2px;
-            color: var(--vscode-descriptionForeground);
-        }
-        .mode-meta {
+
+        .header-content {
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
-            color: var(--vscode-descriptionForeground);
-            margin-bottom: 8px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .deploy-btn {
+
+        .app-title h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .app-subtitle {
+            margin: 0;
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Button Styles */
+        .refresh-btn, .deploy-btn, .stop-btn, .retry-btn {
             background: var(--vscode-button-background);
             color: var(--vscode-button-foreground);
             border: none;
-            border-radius: 4px;
-            padding: 6px 12px;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius);
             cursor: pointer;
-            font-size: 12px;
-            width: 100%;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
         }
-        .deploy-btn:hover {
+
+        .refresh-btn:hover, .deploy-btn:hover, .stop-btn:hover, .retry-btn:hover {
             background: var(--vscode-button-hoverBackground);
         }
-        .deploy-btn:disabled {
+
+        .refresh-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
-        .current-mode-section {
-            margin-bottom: 16px;
+
+        /* Status and Error Styles */
+        .status-section {
+            padding: var(--spacing-md);
+            text-align: center;
         }
-        .reset-btn {
-            background: var(--vscode-inputValidation-warningBackground);
-            color: var(--vscode-inputValidation-warningForeground);
-            border: none;
-            border-radius: 4px;
-            padding: 8px 16px;
-            cursor: pointer;
-            font-size: 13px;
-            width: 100%;
-            margin-top: 12px;
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
         }
-        .reset-btn:hover {
-            opacity: 0.8;
+
+        .status-deployed {
+            background: rgba(0, 128, 0, 0.1);
+            color: #00b300;
         }
-        .spinner {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border: 2px solid var(--vscode-descriptionForeground);
-            border-radius: 50%;
-            border-top-color: var(--vscode-focusBorder);
-            animation: spin 1s ease-in-out infinite;
+
+        .status-not-deployed {
+            background: rgba(128, 128, 128, 0.1);
+            opacity: 0.7;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+
+        .error {
+            background: rgba(255, 0, 0, 0.1);
+            color: var(--vscode-notificationsErrorIcon-foreground);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius);
+            margin: var(--spacing-md);
+            text-align: center;
         }
-        
-        /* Tab Navigation Styles */
+
+        /* Tab Navigation */
         .tab-navigation {
             display: flex;
-            border-bottom: 1px solid var(--vscode-widget-border);
-            margin-bottom: 16px;
+            background: var(--vscode-editor-background);
+            border-bottom: 1px solid var(--vscode-input-border);
+            padding: 0 var(--spacing-md);
         }
+
         .tab-btn {
             background: transparent;
             border: none;
-            color: var(--vscode-foreground);
-            padding: 8px 16px;
+            color: var(--vscode-editor-foreground);
+            padding: var(--spacing-md) var(--spacing-lg);
             cursor: pointer;
             border-bottom: 2px solid transparent;
-            font-size: 13px;
+            transition: var(--transition);
+            font-size: 0.9rem;
         }
+
         .tab-btn:hover {
             background: var(--vscode-list-hoverBackground);
         }
+
         .tab-btn.active {
-            border-bottom-color: var(--vscode-focusBorder);
+            border-bottom-color: var(--vscode-button-background);
             background: var(--vscode-list-activeSelectionBackground);
         }
+
         .tab-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
-        
+
+        /* Tab Content */
         .tab-content {
-            display: block;
+            padding: var(--spacing-lg);
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
+
         .tab-content.hidden {
             display: none;
         }
-        
-        /* Rules Styles */
-        .rules-container {
-            padding: 0;
-            width: 100%;
-            height: auto;
-            min-height: 0;
-        }
-        .rules-content {
-            height: auto;
-            min-height: 0;
-        }
-        .rules-header {
-            background: var(--vscode-editor-background);
-            border: 1px solid var(--vscode-widget-border);
-            border-radius: 6px;
-            padding: 16px;
-            margin-bottom: 16px;
-        }
-        .rules-stats {
+
+        /* Loading States */
+        .loading-overlay {
             display: flex;
-            gap: 16px;
-            margin-bottom: 12px;
-        }
-        .stat {
-            font-size: 12px;
-            color: var(--vscode-descriptionForeground);
-        }
-        .rules-filters {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-        }
-        .search-input, .filter-select {
-            background: var(--vscode-input-background);
-            border: 1px solid var(--vscode-input-border);
-            color: var(--vscode-input-foreground);
-            border-radius: 4px;
-            padding: 4px 8px;
-            font-size: 12px;
-        }
-        .rules-actions {
-            display: flex;
-            gap: 8px;
-        }
-        .btn {
-            background: var(--vscode-button-background);
-            color: var(--vscode-button-foreground);
-            border: none;
-            border-radius: 4px;
-            padding: 6px 12px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        .btn:hover {
-            background: var(--vscode-button-hoverBackground);
-        }
-        .btn-secondary {
-            background: var(--vscode-button-secondaryBackground);
-            color: var(--vscode-button-secondaryForeground);
-        }
-        .btn-secondary:hover {
-            background: var(--vscode-button-secondaryHoverBackground);
-        }
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: var(--vscode-descriptionForeground);
-        }
-        .rule-category {
-            margin-bottom: 24px;
-        }
-        .category-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--vscode-widget-border);
-        }
-        .category-title {
-            font-size: 14px;
-            font-weight: bold;
-            margin: 0;
-        }
-        .category-count {
-            font-size: 12px;
-            color: var(--vscode-descriptionForeground);
-        }
-        .rules-grid {
-            display: grid;
-            gap: 12px;
-        }
-        .rule-card {
-            background: var(--vscode-editor-background);
-            border: 1px solid var(--vscode-widget-border);
-            border-radius: 6px;
-            padding: 12px;
-            transition: all 0.2s;
-        }
-        .rule-card:hover {
-            border-color: var(--vscode-focusBorder);
-        }
-        .rule-card.enabled {
-            border-left: 3px solid var(--vscode-inputValidation-infoBackground);
-        }
-        .rule-card.disabled {
-            opacity: 0.7;
-            border-left: 3px solid var(--vscode-inputValidation-warningBackground);
-        }
-        .rule-header {
-            margin-bottom: 8px;
-        }
-        .rule-title-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
-        }
-        .rule-icon {
-            font-size: 14px;
-        }
-        .rule-title {
-            font-size: 13px;
-            font-weight: bold;
-            margin: 0;
-            flex: 1;
-        }
-        .rule-toggle {
-            margin-left: auto;
-        }
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 40px;
-            height: 20px;
-        }
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--vscode-inputValidation-warningBackground);
-            transition: .4s;
-            border-radius: 20px;
-        }
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 16px;
-            width: 16px;
-            left: 2px;
-            bottom: 2px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .toggle-slider {
-            background-color: var(--vscode-inputValidation-infoBackground);
-        }
-        input:checked + .toggle-slider:before {
-            transform: translateX(20px);
-        }
-        .rule-meta {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 11px;
-        }
-        .rule-urgency {
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-weight: bold;
-        }
-        .urgency-critical {
-            background: var(--vscode-inputValidation-errorBackground);
-            color: var(--vscode-inputValidation-errorForeground);
-        }
-        .urgency-high {
-            background: var(--vscode-inputValidation-warningBackground);
-            color: var(--vscode-inputValidation-warningForeground);
-        }
-        .urgency-medium {
-            background: var(--vscode-inputValidation-infoBackground);
-            color: var(--vscode-inputValidation-infoForeground);
-        }
-        .urgency-low, .urgency-info {
-            background: var(--vscode-badge-background);
-            color: var(--vscode-badge-foreground);
-        }
-        .rule-source {
-            color: var(--vscode-descriptionForeground);
-        }
-        .rule-content {
-            margin-bottom: 12px;
-        }
-        .rule-description {
-            font-size: 12px;
-            margin: 0 0 8px 0;
-            color: var(--vscode-descriptionForeground);
-        }
-        .rule-code {
-            margin: 8px 0;
-        }
-        .rule-code pre {
-            background: var(--vscode-textBlockQuote-background);
-            border: 1px solid var(--vscode-widget-border);
-            border-radius: 4px;
-            padding: 8px;
-            margin: 4px 0;
-            font-size: 11px;
-            overflow-x: auto;
-        }
-        .rule-tags {
-            display: flex;
-            gap: 4px;
-            margin-top: 8px;
-        }
-        .tag {
-            font-size: 10px;
-            padding: 2px 6px;
-            background: var(--vscode-badge-background);
-            color: var(--vscode-badge-foreground);
-            border-radius: 3px;
-        }
-        .rule-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-        .urgency-select {
-            background: var(--vscode-input-background);
-            border: 1px solid var(--vscode-input-border);
-            color: var(--vscode-input-foreground);
-            border-radius: 4px;
-            padding: 2px 6px;
-            font-size: 11px;
-        }
-        
-        /* Custom Mode Builder Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        .modal.show {
-            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding: var(--spacing-xl);
+            text-align: center;
         }
-        .modal-content {
-            background: var(--vscode-editor-background);
-            border: 1px solid var(--vscode-widget-border);
-            border-radius: 8px;
-            padding: 24px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
+
+        .loading-spinner, .spinner {
+            width: 24px;
+            height: 24px;
+            border: 2px solid transparent;
+            border-top: 2px solid var(--vscode-button-background);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--vscode-widget-border);
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-        .modal-title {
-            font-size: 18px;
-            font-weight: bold;
+
+        /* Mode Cards */
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
         }
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            color: var(--vscode-foreground);
-            padding: 4px;
-        }
-        .close-btn:hover {
-            background: var(--vscode-list-hoverBackground);
-            border-radius: 4px;
-        }
-        .form-group {
-            margin-bottom: 16px;
-        }
-        .form-label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-            font-size: 13px;
-        }
-        .form-input, .form-textarea, .form-select {
-            width: 100%;
+
+        .mode-card {
             background: var(--vscode-input-background);
             border: 1px solid var(--vscode-input-border);
-            color: var(--vscode-input-foreground);
-            border-radius: 4px;
-            padding: 8px;
-            font-size: 13px;
-            box-sizing: border-box;
+            border-radius: var(--border-radius);
+            padding: var(--spacing-md);
+            cursor: pointer;
+            transition: var(--transition);
         }
-        .form-textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-        .rule-checkbox-list {
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid var(--vscode-widget-border);
-            border-radius: 4px;
-            padding: 8px;
-        }
-        .rule-checkbox-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            padding: 4px;
-        }
-        .rule-checkbox-item:hover {
+
+        .mode-card:hover {
             background: var(--vscode-list-hoverBackground);
-            border-radius: 4px;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
-        .rule-checkbox {
-            margin-right: 8px;
+
+        .mode-card.selected {
+            border-color: var(--vscode-button-background);
+            background: var(--vscode-list-activeSelectionBackground);
         }
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-            margin-top: 20px;
+
+        .mode-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
         }
-        .btn-sm {
-            padding: 4px 8px;
-            font-size: 11px;
-        }
-        .btn-danger {
-            background: var(--vscode-inputValidation-errorBackground);
-            color: var(--vscode-inputValidation-errorForeground);
-        }
-        .btn-danger:hover {
+
+        .mode-description {
             opacity: 0.8;
+            margin-bottom: var(--spacing-md);
         }
-        .rule-footer {
-            border-top: 1px solid var(--vscode-widget-border);
-            padding-top: 8px;
+
+        /* Error Page Styles */
+        .error-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: var(--spacing-xl);
+            text-align: center;
         }
-        .rule-timestamp {
-            font-size: 10px;
-            color: var(--vscode-descriptionForeground);
+
+        .error-icon {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .error-message {
+            margin: var(--spacing-lg) 0;
+            opacity: 0.8;
         }
         `;
     }
 
     /**
-     * Generates the modes tab content
-     * @param state Current UI state
-     * @returns HTML string for modes content
+     * Generate reactive JavaScript for state management
+     */
+    private generateReactiveJavaScript(): string {
+        return `
+        const vscode = acquireVsCodeApi();
+        
+        // State management
+        let currentState = null;
+        
+        function sendMessage(type, payload = {}) {
+            vscode.postMessage({ type, payload });
+        }
+        
+        function refreshState() {
+            sendMessage('refreshAll');
+        }
+        
+        function switchTab(tab) {
+            sendMessage('switchTab', { tab });
+        }
+        
+        function deployMode(modeId) {
+            sendMessage('deployMode', { modeId });
+        }
+        
+        function stopDeployment() {
+            sendMessage('stopDeployment');
+        }
+        
+        function toggleRule(ruleId, enabled) {
+            sendMessage('toggleRule', { ruleId, enabled });
+        }
+        
+        function updateRuleFilter(filter) {
+            sendMessage('updateRuleFilter', { filter });
+        }
+        
+        function selectMode(modeId) {
+            const card = document.querySelector(\`[data-mode-id="\${modeId}"]\`);
+            if (card) {
+                // Toggle selection
+                card.classList.toggle('selected');
+                
+                // Get all selected modes
+                const selectedCards = document.querySelectorAll('.mode-card.selected');
+                const selectedModeIds = Array.from(selectedCards).map(card => card.dataset.modeId);
+                
+                sendMessage('selectModes', { modeIds: selectedModeIds });
+            }
+        }
+        
+        // Handle messages from extension
+        window.addEventListener('message', event => {
+            const message = event.data;
+            
+            switch (message.type) {
+                case 'updateState':
+                    currentState = message.payload;
+                    updateUI(currentState);
+                    break;
+                case 'showError':
+                    showError(message.payload.error);
+                    break;
+                case 'showSuccess':
+                    showSuccess(message.payload.message);
+                    break;
+            }
+        });
+        
+        function updateUI(state) {
+            // Update loading states
+            const loadingElements = document.querySelectorAll('.loading-spinner');
+            loadingElements.forEach(el => {
+                el.style.display = state.isLoading ? 'block' : 'none';
+            });
+            
+            // Update button states
+            const refreshBtn = document.querySelector('.refresh-btn');
+            if (refreshBtn) {
+                refreshBtn.disabled = state.isLoading;
+            }
+        }
+        
+        function showError(error) {
+            // Create or update error display
+            let errorEl = document.querySelector('.error');
+            if (!errorEl) {
+                errorEl = document.createElement('div');
+                errorEl.className = 'error';
+                document.querySelector('.application-container').prepend(errorEl);
+            }
+            errorEl.innerHTML = \`⚠️ \${error}\`;
+            errorEl.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                if (errorEl) {
+                    errorEl.style.display = 'none';
+                }
+            }, 5000);
+        }
+        
+        function showSuccess(message) {
+            // Simple success notification
+            console.log('Success:', message);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            refreshState();
+        });
+        `;
+    }
+
+    /**
+     * Generate error page CSS
+     */
+    private generateErrorPageCSS(): string {
+        return `
+        :root {
+            --vscode-font-family: var(--vscode-font-family);
+            --vscode-font-size: var(--vscode-font-size);
+            --vscode-editor-background: var(--vscode-editor-background);
+            --vscode-editor-foreground: var(--vscode-editor-foreground);
+            --vscode-button-background: var(--vscode-button-background);
+            --vscode-button-foreground: var(--vscode-button-foreground);
+            --vscode-button-hoverBackground: var(--vscode-button-hoverBackground);
+            --border-radius: 6px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+        }
+        
+        body {
+            font-family: var(--vscode-font-family);
+            font-size: var(--vscode-font-size);
+            color: var(--vscode-editor-foreground);
+            background-color: var(--vscode-editor-background);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .error-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: var(--spacing-xl);
+            text-align: center;
+        }
+        
+        .error-icon {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .error-message {
+            margin: var(--spacing-lg) 0;
+            opacity: 0.8;
+        }
+        
+        .retry-btn {
+            background: var(--vscode-button-background);
+            color: var(--vscode-button-foreground);
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .retry-btn:hover {
+            background: var(--vscode-button-hoverBackground);
+        }
+        `;
+    }
+
+    /**
+     * Generate basic JavaScript for error page
+     */
+    private generateBasicJavaScript(): string {
+        return `
+        const vscode = acquireVsCodeApi();
+        
+        function sendMessage(type, payload = {}) {
+            vscode.postMessage({ type, payload });
+        }
+        `;
+    }
+
+    /**
+     * Generate modes content section
      */
     private generateModesContent(state: UIState): string {
         const { availableModes, isDeployed } = state;
-
-        if (isDeployed) {
+        
+        if (availableModes.length === 0) {
             return `
-                <div class="current-mode-section">
-                    <div class="section-title">🎯 Current Deployment</div>
-                    ${availableModes.filter(mode => mode.isActive).map(mode => `
-                        <div class="mode-card active">
-                            <div class="mode-header">
-                                <div class="mode-name">
-                                    ${mode.name}
-                                    <span class="mode-badge">ACTIVE</span>
-                                </div>
-                            </div>
-                            <div class="mode-description">${mode.description}</div>
-                            <div class="mode-meta">
-                                <span>Target: ${mode.targetProject}</span>
-                                <span>Estimated: ${mode.estimatedHours}</span>
-                            </div>
-                        </div>
-                    `).join('')}
-                    <button class="reset-btn" onclick="resetDeployment()">
-                        🔄 Reset & Choose Different Mode
-                    </button>
+                <div class="no-modes">
+                    <h3>No modes available</h3>
+                    <p>No assistant modes found. Please check your configuration.</p>
                 </div>
             `;
         }
-
+        
+        const modesHTML = availableModes.map(mode => `
+            <div class="mode-card" data-mode-id="${mode.id}" onclick="selectMode('${mode.id}')">
+                <div class="mode-title">${mode.name}</div>
+                <div class="mode-description">${mode.description || 'No description available'}</div>
+                <div class="mode-actions">
+                    <button onclick="event.stopPropagation(); deployMode('${mode.id}')" 
+                            class="deploy-btn" ${isDeployed ? 'disabled' : ''}>
+                        🚀 Deploy
+                    </button>
+                </div>
+            </div>
+        `).join('');
+        
         return `
             <div class="modes-section">
-                <div class="section-title">📋 Available Modes</div>
-                ${availableModes.length === 0 ? `
-                    <div style="text-align: center; padding: 20px; color: var(--vscode-descriptionForeground);">
-                        No modes found. Please check your configuration.
-                    </div>
-                ` : availableModes.map(mode => `
-                    <div class="mode-card">
-                        <div class="mode-header">
-                            <div class="mode-name">
-                                ${mode.name}
-                                ${mode.hasConflicts ? '<span class="mode-badge" style="background: var(--vscode-inputValidation-warningBackground);">CONFLICTS</span>' : ''}
-                            </div>
-                        </div>
-                        <div class="mode-description">${mode.description}</div>
-                        <div class="mode-features">
-                            ${mode.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
-                        </div>
-                        <div class="mode-meta">
-                            <span>Target: ${mode.targetProject}</span>
-                            <span>Estimated: ${mode.estimatedHours}</span>
-                        </div>
-                        <button class="deploy-btn" onclick="deployMode('${mode.id}')" ${mode.hasConflicts ? '' : ''}>
-                            Deploy ${mode.name} Mode
-                        </button>
-                    </div>
-                `).join('')}
-                <div style="margin-top: 20px; padding: 16px; border: 1px solid var(--vscode-widget-border); border-radius: 4px; background: var(--vscode-textBlockQuote-background);">
-                    <div style="margin-bottom: 12px;">
-                        <strong>🛠️ Create Custom Mode</strong>
-                    </div>
-                    <div style="font-size: 12px; color: var(--vscode-descriptionForeground); margin-bottom: 12px;">
-                        Build a custom mode with your own rules and settings.
-                    </div>
-                    <button class="deploy-btn" onclick="openCustomModeBuilder()" style="background: var(--vscode-button-secondaryBackground); color: var(--vscode-button-secondaryForeground);">
-                        🚀 Open Custom Mode Builder
-                    </button>
+                <h2>Available Assistant Modes</h2>
+                <p>Select and deploy an AI assistant configuration:</p>
+                <div class="modes-grid">
+                    ${modesHTML}
                 </div>
             </div>
         `;
     }
 
     /**
-     * Generates the rules HTML content
-     * @param state Current UI state containing rule data
-     * @returns HTML string for rules content
+     * Generate rules HTML content
      */
     generateRulesHTML(state: UIState): string {
-        console.log('🏗️ generateRulesHTML: Starting HTML generation...');
         const { currentRuleSet, ruleFilter } = state;
         
-        console.log('📊 generateRulesHTML: Input data:', {
-            hasCurrentRuleSet: !!currentRuleSet,
-            ruleCount: currentRuleSet?.rules?.length || 0,
-            ruleSetDetails: currentRuleSet ? {
-                mode: currentRuleSet.mode,
-                totalRules: currentRuleSet.totalRules,
-                enabledRules: currentRuleSet.enabledRules,
-                rulesArrayLength: currentRuleSet.rules.length
-            } : null,
-            hasRuleFilter: !!ruleFilter
-        });
-        
         if (!currentRuleSet) {
-            console.log('❌ generateRulesHTML: No currentRuleSet, returning empty state');
             return `
-                <div class="rules-container">
-                    <div class="empty-state">
-                        <h3>No Rules Loaded</h3>
-                        <p>Deploy a mode first to see available rules</p>
-                        <p style="font-size: 11px; color: var(--vscode-descriptionForeground);">Debug: currentRuleSet is null</p>
-                    </div>
+                <div class="no-rules">
+                    <h3>No rules available</h3>
+                    <p>Deploy a mode first to manage its rules.</p>
                 </div>
             `;
         }
-
-        console.log('✅ generateRulesHTML: currentRuleSet exists, processing rules...');
-
-        // Apply filters
-        let filteredRules = currentRuleSet.rules;
-        console.log('🔍 generateRulesHTML: Initial rules count:', filteredRules.length);
         
+        let filteredRules = currentRuleSet.rules;
+        
+        // Apply filters
         if (ruleFilter) {
-            console.log('🔍 generateRulesHTML: Applying filters:', ruleFilter);
             filteredRules = filteredRules.filter(rule => {
-                if (ruleFilter.categories && ruleFilter.categories.length > 0 && !ruleFilter.categories.includes(rule.category)) return false;
-                if (ruleFilter.urgencies && ruleFilter.urgencies.length > 0 && !ruleFilter.urgencies.includes(rule.urgency)) return false;
-                if (ruleFilter.enabled !== undefined && rule.isEnabled !== ruleFilter.enabled) return false;
+                if (ruleFilter.categories && ruleFilter.categories.length > 0) {
+                    if (!ruleFilter.categories.includes(rule.category)) return false;
+                }
+                if (ruleFilter.urgencies && ruleFilter.urgencies.length > 0) {
+                    if (!ruleFilter.urgencies.includes(rule.urgency)) return false;
+                }
                 if (ruleFilter.searchText) {
                     const searchLower = ruleFilter.searchText.toLowerCase();
-                    return rule.title.toLowerCase().includes(searchLower) || 
-                           rule.description.toLowerCase().includes(searchLower);
+                    if (!rule.title.toLowerCase().includes(searchLower) && 
+                        !rule.description.toLowerCase().includes(searchLower)) {
+                        return false;
+                    }
                 }
                 return true;
             });
-            console.log('🔍 generateRulesHTML: Filtered rules count:', filteredRules.length);
         }
-
-        // Group rules by category
+        
         const rulesByCategory = filteredRules.reduce((acc, rule) => {
-            if (!acc[rule.category]) acc[rule.category] = [];
+            if (!acc[rule.category]) {
+                acc[rule.category] = [];
+            }
             acc[rule.category].push(rule);
             return acc;
-        }, {} as Record<string, typeof filteredRules>);
-
-        console.log('📂 generateRulesHTML: Rules grouped by category:', Object.keys(rulesByCategory).map(cat => ({
-            category: cat,
-            count: rulesByCategory[cat].length
-        })));
-
-        const html = `
-            <div class="rules-container">
+        }, {} as Record<string, Rule[]>);
+        
+        const categoriesHTML = Object.entries(rulesByCategory).map(([category, rules]) => `
+            <div class="rule-category">
+                <div class="category-header">
+                    <h3 class="category-title">${this.formatCategoryName(category as RuleCategory)}</h3>
+                    <span class="category-count">${rules.length} rules</span>
+                </div>
+                <div class="rules-list">
+                    ${rules.map(rule => this.generateRuleCard(rule)).join('')}
+                </div>
+            </div>
+        `).join('');
+        
+        return `
+            <div class="rules-section">
                 <div class="rules-header">
+                    <h2>Rule Management</h2>
                     <div class="rules-stats">
-                        <span class="stat">
-                            <strong>${currentRuleSet.rules.length}</strong> Total Rules
-                        </span>
                         <span class="stat">
                             <strong>${currentRuleSet.rules.filter(r => r.isEnabled).length}</strong> Active
                         </span>
                         <span class="stat">
-                            <strong>${Object.keys(rulesByCategory).length}</strong> Categories
+                            <strong>${currentRuleSet.rules.length}</strong> Total
                         </span>
                     </div>
-                    
-                    <div class="rules-filters">
-                        <input type="text" placeholder="Search rules..." class="search-input" 
-                               value="${ruleFilter?.searchText || ''}" 
-                               onchange="filterRules({ searchText: this.value })">
-                        
-                        <select class="filter-select" onchange="filterRules({ categories: this.value ? [this.value] : undefined })">
+                </div>
+                
+                <div class="rules-filters">
+                    <div class="filter-group">
+                        <label>Category:</label>
+                        <select onchange="updateRuleFilter({categories: this.value ? [this.value] : []})">
                             <option value="">All Categories</option>
                             <option value="${RuleCategory.CODING_STANDARDS}" ${ruleFilter?.categories?.includes(RuleCategory.CODING_STANDARDS) ? 'selected' : ''}>Coding Standards</option>
                             <option value="${RuleCategory.WORKFLOW}" ${ruleFilter?.categories?.includes(RuleCategory.WORKFLOW) ? 'selected' : ''}>Workflow</option>
@@ -889,365 +726,99 @@ export class WebviewHtmlRenderer {
                             <option value="${RuleCategory.PERFORMANCE}" ${ruleFilter?.categories?.includes(RuleCategory.PERFORMANCE) ? 'selected' : ''}>Performance</option>
                             <option value="${RuleCategory.CUSTOM}" ${ruleFilter?.categories?.includes(RuleCategory.CUSTOM) ? 'selected' : ''}>Custom</option>
                         </select>
-                        
-                        <select class="filter-select" onchange="filterRules({ urgencies: this.value ? [this.value] : undefined })">
-                            <option value="">All Urgency</option>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label>Urgency:</label>
+                        <select onchange="updateRuleFilter({urgencies: this.value ? [this.value] : []})">
+                            <option value="">All Urgencies</option>
                             <option value="${RuleUrgency.CRITICAL}" ${ruleFilter?.urgencies?.includes(RuleUrgency.CRITICAL) ? 'selected' : ''}>Critical</option>
                             <option value="${RuleUrgency.HIGH}" ${ruleFilter?.urgencies?.includes(RuleUrgency.HIGH) ? 'selected' : ''}>High</option>
                             <option value="${RuleUrgency.MEDIUM}" ${ruleFilter?.urgencies?.includes(RuleUrgency.MEDIUM) ? 'selected' : ''}>Medium</option>
                             <option value="${RuleUrgency.LOW}" ${ruleFilter?.urgencies?.includes(RuleUrgency.LOW) ? 'selected' : ''}>Low</option>
                             <option value="${RuleUrgency.INFO}" ${ruleFilter?.urgencies?.includes(RuleUrgency.INFO) ? 'selected' : ''}>Info</option>
                         </select>
-                        
-                        <select class="filter-select" onchange="filterRules({ enabled: this.value === '' ? undefined : this.value === 'true' })">
-                            <option value="">All Status</option>
-                            <option value="true" ${ruleFilter?.enabled === true ? 'selected' : ''}>Enabled</option>
-                            <option value="false" ${ruleFilter?.enabled === false ? 'selected' : ''}>Disabled</option>
-                        </select>
-                    </div>
-                    
-                    <div class="rules-actions">
-                        <button class="btn btn-primary" onclick="showAddRuleModal()">
-                            <span class="icon">➕</span> Add Rule
-                        </button>
-                        <button class="btn btn-secondary" onclick="exportRules()">
-                            <span class="icon">📤</span> Export
-                        </button>
-                        <button class="btn btn-secondary" onclick="importRules()">
-                            <span class="icon">📥</span> Import
-                        </button>
                     </div>
                 </div>
-
+                
                 <div class="rules-content">
-                    ${Object.entries(rulesByCategory).map(([category, rules]) => `
-                        <div class="rule-category">
-                            <div class="category-header">
-                                <h3 class="category-title">${this.formatCategoryName(category as RuleCategory)}</h3>
-                                <span class="category-count">${rules.length} rules</span>
-                            </div>
-                            
-                            <div class="rules-grid">
-                                ${rules.map(rule => this.generateRuleCard(rule)).join('')}
-                            </div>
-                        </div>
-                    `).join('')}
+                    ${categoriesHTML}
                 </div>
             </div>
         `;
-        
-        console.log('✅ generateRulesHTML: HTML generation completed, length:', html.length);
-        return html;
     }
 
     /**
-     * Generates HTML for an individual rule card
-     * @param rule Rule data
-     * @returns HTML string for the rule card
+     * Generate individual rule card
      */
     private generateRuleCard(rule: Rule): string {
         const urgencyClass = `urgency-${rule.urgency}`;
         const categoryIcon = this.getCategoryIcon(rule.category);
         
         return `
-            <div class="rule-card ${rule.isEnabled ? 'enabled' : 'disabled'}">
+            <div class="rule-card ${urgencyClass}">
                 <div class="rule-header">
-                    <div class="rule-title-row">
+                    <div class="rule-info">
                         <span class="rule-icon">${categoryIcon}</span>
-                        <h4 class="rule-title">${rule.title}</h4>
-                        <div class="rule-toggle">
-                            <label class="toggle-switch">
-                                <input type="checkbox" ${rule.isEnabled ? 'checked' : ''} 
-                                       onchange="toggleRule('${rule.id}')">
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </div>
+                        <h4 class="rule-name">${rule.title}</h4>
+                        <span class="rule-urgency ${urgencyClass}">${rule.urgency}</span>
                     </div>
-                    
-                    <div class="rule-meta">
-                        <span class="rule-urgency ${urgencyClass}">${rule.urgency.toUpperCase()}</span>
-                        <span class="rule-source">${rule.source.file}</span>
-                    </div>
+                    <label class="rule-toggle">
+                        <input type="checkbox" ${rule.isEnabled ? 'checked' : ''} 
+                               onchange="toggleRule('${rule.id}', this.checked)">
+                        <span class="toggle-slider"></span>
+                    </label>
                 </div>
-                
-                <div class="rule-content">
-                    <p class="rule-description">${rule.description}</p>
-                    
-                    <div class="rule-code">
-                        <strong>Content:</strong>
-                        <pre><code>${rule.content}</code></pre>
-                    </div>
-                    
-                    ${rule.tags && rule.tags.length > 0 ? `
-                        <div class="rule-tags">
-                            ${rule.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                        </div>
-                    ` : ''}
-                </div>
-                
-                <div class="rule-actions">
-                    <select class="urgency-select" onchange="updateRuleUrgency('${rule.id}', this.value)">
-                        <option value="${RuleUrgency.CRITICAL}" ${rule.urgency === RuleUrgency.CRITICAL ? 'selected' : ''}>Critical</option>
-                        <option value="${RuleUrgency.HIGH}" ${rule.urgency === RuleUrgency.HIGH ? 'selected' : ''}>High</option>
-                        <option value="${RuleUrgency.MEDIUM}" ${rule.urgency === RuleUrgency.MEDIUM ? 'selected' : ''}>Medium</option>
-                        <option value="${RuleUrgency.LOW}" ${rule.urgency === RuleUrgency.LOW ? 'selected' : ''}>Low</option>
-                        <option value="${RuleUrgency.INFO}" ${rule.urgency === RuleUrgency.INFO ? 'selected' : ''}>Info</option>
-                    </select>
-                    
-                    <button class="btn btn-sm btn-secondary" onclick="editRule('${rule.id}')">
-                        <span class="icon">✏️</span> Edit
-                    </button>
-                    
-                    <button class="btn btn-sm btn-danger" onclick="removeRule('${rule.id}')">
-                        <span class="icon">🗑️</span> Remove
-                    </button>
-                </div>
-                
-                <div class="rule-footer">
-                    <span class="rule-timestamp">
-                        Created: ${new Date(rule.createdAt).toLocaleDateString()}
-                        ${rule.modifiedAt !== rule.createdAt ? `| Modified: ${new Date(rule.modifiedAt).toLocaleDateString()}` : ''}
-                    </span>
-                </div>
+                <p class="rule-description">${rule.description}</p>
             </div>
         `;
     }
 
     /**
-     * Generates the custom mode builder modal HTML
-     * @returns HTML string for the modal
+     * Generate custom mode builder modal
      */
     private generateCustomModeBuilderModal(): string {
         return `
-            <div id="customModeBuilderModal" class="modal">
+            <div id="customModeModal" class="modal hidden">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title">Custom Mode Builder</h2>
-                        <button class="close-btn" onclick="closeCustomModeBuilder()">&times;</button>
+                        <h3>Create Custom Mode</h3>
+                        <button onclick="closeCustomModeBuilder()" class="close-btn">×</button>
                     </div>
-                    <form id="customModeForm">
+                    <div class="modal-body">
                         <div class="form-group">
-                            <label class="form-label" for="mode-name-input">Mode Name *</label>
-                            <input type="text" id="mode-name-input" class="form-input" placeholder="Enter mode name" required>
+                            <label>Mode Name:</label>
+                            <input type="text" id="customModeName" placeholder="Enter mode name">
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="mode-description-input">Description *</label>
-                            <textarea id="mode-description-input" class="form-textarea" placeholder="Describe your custom mode" required></textarea>
+                            <label>Description:</label>
+                            <textarea id="customModeDescription" placeholder="Describe your custom mode"></textarea>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="target-project-input">Target Project Type</label>
-                            <select id="target-project-input" class="form-select">
-                                <option value="general">General</option>
-                                <option value="web">Web Development</option>
-                                <option value="mobile">Mobile Development</option>
-                                <option value="backend">Backend Development</option>
-                                <option value="data">Data Science</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Select Rules</label>
-                            <div id="rulesCheckboxList" class="rule-checkbox-list">
-                                <!-- Rules will be populated here dynamically -->
+                            <label>Select Rules:</label>
+                            <div id="customModeRules" class="rules-selector">
+                                <!-- Rules will be populated dynamically -->
                             </div>
                         </div>
-                        <div class="modal-actions">
-                            <button type="button" class="btn btn-secondary" onclick="closeCustomModeBuilder()">Cancel</button>
-                            <button type="submit" class="btn">Create Custom Mode</button>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="closeCustomModeBuilder()" class="cancel-btn">Cancel</button>
+                        <button onclick="saveCustomMode()" class="save-btn">Create Mode</button>
+                    </div>
                 </div>
             </div>
         `;
     }
 
     /**
-     * Generates the JavaScript code for the webview
-     * @returns JavaScript string
-     */
-    private generateJavaScript(): string {
-        return `
-        const vscode = acquireVsCodeApi();
-
-        function deployMode(modeId) {
-            vscode.postMessage({ type: 'deployMode', modeId: modeId });
-        }
-
-        function resetDeployment() {
-            vscode.postMessage({ type: 'resetDeployment' });
-        }
-
-        function refreshState() {
-            vscode.postMessage({ type: 'refreshState' });
-        }
-
-        function switchTab(tab) {
-            console.log('🎯 [Webview] switchTab called with:', tab);
-            vscode.postMessage({ type: 'switchTab', tab: tab });
-        }
-
-        // Rule management functions
-        function loadRules() {
-            console.log('🎯 [Webview] loadRules called');
-            vscode.postMessage({ type: 'loadRules' });
-        }
-
-        function toggleRule(ruleId) {
-            vscode.postMessage({ type: 'toggleRule', ruleId: ruleId });
-        }
-
-        function updateRuleUrgency(ruleId, urgency) {
-            vscode.postMessage({ type: 'updateRuleUrgency', ruleId: ruleId, urgency: urgency });
-        }
-
-        function filterRules(filter) {
-            vscode.postMessage({ type: 'filterRules', filter: filter });
-        }
-
-        function showAddRuleModal() {
-            // TODO: Implement add rule modal
-            vscode.postMessage({ type: 'addRule', rule: {} });
-        }
-
-        function removeRule(ruleId) {
-            if (confirm('Are you sure you want to remove this rule?')) {
-                vscode.postMessage({ type: 'removeRule', ruleId: ruleId });
-            }
-        }
-
-        function exportRules(ruleIds) {
-            vscode.postMessage({ type: 'exportRules', ruleIds: ruleIds });
-        }
-
-        function importRules() {
-            vscode.postMessage({ type: 'importRules' });
-        }
-
-        function bulkEnable() {
-            vscode.postMessage({ type: 'bulkOperation', operation: { type: 'enable', ruleIds: [] } });
-        }
-
-        function bulkDisable() {
-            vscode.postMessage({ type: 'bulkOperation', operation: { type: 'disable', ruleIds: [] } });
-        }
-
-        // Custom Mode Builder functions
-        function openCustomModeBuilder() {
-            console.log('🎯 [Webview] Opening Custom Mode Builder modal');
-            const modal = document.getElementById('customModeBuilderModal');
-            if (modal) {
-                modal.classList.add('show');
-                loadAvailableRules();
-            }
-        }
-
-        function closeCustomModeBuilder() {
-            console.log('🎯 [Webview] Closing Custom Mode Builder modal');
-            const modal = document.getElementById('customModeBuilderModal');
-            if (modal) {
-                modal.classList.remove('show');
-                // Clear form
-                document.getElementById('customModeForm').reset();
-            }
-        }
-
-        function loadAvailableRules() {
-            console.log('📋 [Webview] Loading available rules for Custom Mode Builder');
-            vscode.postMessage({ type: 'loadAvailableRules' });
-        }
-
-        function populateRulesCheckboxList(rules) {
-            const container = document.getElementById('rulesCheckboxList');
-            if (!container || !rules) return;
-            
-            container.innerHTML = '';
-            rules.forEach(rule => {
-                const item = document.createElement('div');
-                item.className = 'rule-checkbox-item';
-                item.innerHTML = \`
-                    <input type="checkbox" id="rule-\${rule.id}" class="rule-checkbox" value="\${rule.id}">
-                    <label for="rule-\${rule.id}">
-                        <strong>\${rule.title}</strong>
-                        <br><small>\${rule.description || 'No description'}</small>
-                    </label>
-                \`;
-                container.appendChild(item);
-            });
-        }
-
-        // Handle custom mode form submission
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('customModeForm');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const formData = new FormData(form);
-                    const selectedRules = Array.from(document.querySelectorAll('.rule-checkbox:checked'))
-                        .map(checkbox => checkbox.value);
-                    
-                    const customModeData = {
-                        name: document.getElementById('mode-name-input').value,
-                        description: document.getElementById('mode-description-input').value,
-                        targetProject: document.getElementById('target-project-input').value,
-                        selectedRules: selectedRules
-                    };
-                    
-                    console.log('🚀 [Webview] Submitting custom mode:', customModeData);
-                    vscode.postMessage({ 
-                        type: 'createCustomMode', 
-                        customModeData: customModeData 
-                    });
-                    
-                    closeCustomModeBuilder();
-                });
-            }
-        });
-
-        // Listen for messages from extension
-        window.addEventListener('message', event => {
-            const message = event.data;
-            console.log('📨 [Webview] Received message:', message);
-            
-            switch (message.type) {
-                case 'openCustomModeBuilder':
-                    openCustomModeBuilder();
-                    break;
-                case 'populateAvailableRules':
-                    populateRulesCheckboxList(message.rules);
-                    break;
-                case 'closeCustomModeBuilder':
-                    closeCustomModeBuilder();
-                    break;
-                case 'showError':
-                    alert('Error: ' + message.error);
-                    break;
-                case 'showSuccess':
-                    alert('Success: ' + message.message);
-                    break;
-            }
-        });
-
-        // Auto-refresh every 10 seconds
-        setInterval(refreshState, 10000);
-        `;
-    }
-
-    /**
-     * Formats a category name for display
-     * @param category Rule category enum value
-     * @returns Formatted category name
+     * Format category name for display
      */
     private formatCategoryName(category: RuleCategory): string {
-        return category.split('-').map(word => 
-            word.charAt(0).toUpperCase() + word.slice(1)
-        ).join(' ');
+        return category.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
     }
 
     /**
-     * Gets the icon for a rule category
-     * @param category Rule category
-     * @returns Icon string for the category
+     * Get icon for rule category
      */
     private getCategoryIcon(category: RuleCategory): string {
         const icons = {
@@ -1262,6 +833,6 @@ export class WebviewHtmlRenderer {
             [RuleCategory.UI_UX]: '🎨',
             [RuleCategory.CUSTOM]: '🔧'
         };
-        return icons[category] || '🔧';
+        return icons[category] || '📋';
     }
 }

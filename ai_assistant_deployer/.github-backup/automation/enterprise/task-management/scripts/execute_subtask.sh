@@ -3,7 +3,7 @@
 # Enhanced Task Management - Subtask Execution Script
 # Manages individual subtask execution with real-time monitoring
 
-TASK_DIR="$(pwd)/.tasks/3_execution/active/fix_compilation_errors"
+TASK_DIR="/Users/vitalijsimko/workspace/projects/flutter/m5/.tasks/3_execution/active/fix_compilation_errors"
 SUBTASKS_DIR="$TASK_DIR/subtasks"
 
 function update_subtask_status() {

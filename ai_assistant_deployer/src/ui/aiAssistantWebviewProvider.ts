@@ -8,7 +8,6 @@ import { RuleManagementService } from '../services/ruleManagement';
 import { Rule, RuleSet, RuleFilter, RuleCategory, RuleUrgency } from '../services/ruleTypes';
 import { RulePoolService } from '../services/rulePoolService';
 import { WebviewMessageHandler, IWebviewProvider } from './messaging/WebviewMessageHandler';
-import { WebviewHtmlRenderer } from './rendering/WebviewHtmlRenderer';
 
 interface UIState {
     isLoading: boolean;
@@ -35,7 +34,6 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
     
     // Extracted services
     private messageHandler: WebviewMessageHandler;
-    private htmlRenderer: WebviewHtmlRenderer;
 
     constructor(
         private readonly _extensionUri: vscode.Uri,
@@ -70,7 +68,6 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
 
         // Initialize extracted services
         this.messageHandler = new WebviewMessageHandler(this);
-        this.htmlRenderer = new WebviewHtmlRenderer();
 
         // Set up file watcher for reactive updates
         this.setupFileWatcher();
@@ -458,8 +455,208 @@ export class AIAssistantWebviewProvider implements vscode.WebviewViewProvider, I
             error: this.currentState.error
         });
 
-        this._view.webview.html = this.htmlRenderer.generateWebviewHTML(this.currentState);
+        this._view.webview.html = this.generateWebviewHTML();
         console.log('✅ updateUI: HTML generated and assigned to webview');
+    }
+
+    /**
+     * Generate HTML for the webview
+     */
+    private generateWebviewHTML(): string {
+        const { isLoading, availableModes, currentMode, isDeployed, error, activeTab, currentRuleSet, ruleFilter } = this.currentState;
+
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant Deployer</title>
+    <style>
+        body {
+            font-family: var(--vscode-font-family);
+            padding: 16px;
+            color: var(--vscode-foreground);
+            background: var(--vscode-editor-background);
+            margin: 0;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--vscode-widget-border);
+        }
+        .title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .refresh-btn {
+            background: transparent;
+            border: 1px solid var(--vscode-widget-border);
+            color: var(--vscode-foreground);
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .refresh-btn:hover {
+            background: var(--vscode-list-hoverBackground);
+        }
+        .error {
+            background: var(--vscode-inputValidation-errorBackground);
+            color: var(--vscode-inputValidation-errorForeground);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--vscode-descriptionForeground);
+        }
+        .tab-navigation {
+            display: flex;
+            border-bottom: 1px solid var(--vscode-input-border);
+            margin-bottom: 16px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--vscode-editor-foreground);
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-btn:hover {
+            background: var(--vscode-list-hoverBackground);
+        }
+        .tab-btn.active {
+            border-bottom-color: var(--vscode-button-background);
+            background: var(--vscode-list-activeSelectionBackground);
+        }
+        .tab-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .modes-section, .rules-section {
+            margin-top: 16px;
+        }
+        .mode-card {
+            background: var(--vscode-editor-background);
+            border: 1px solid var(--vscode-widget-border);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        .mode-card:hover {
+            background: var(--vscode-list-hoverBackground);
+            border-color: var(--vscode-focusBorder);
+        }
+        .deploy-btn {
+            background: var(--vscode-button-background);
+            color: var(--vscode-button-foreground);
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            width: 100%;
+            margin-top: 8px;
+        }
+        .deploy-btn:hover {
+            background: var(--vscode-button-hoverBackground);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">🚀 AI Assistant Deployer</div>
+        <button class="refresh-btn" onclick="refreshState()" ${isLoading ? 'disabled' : ''}>
+            ${isLoading ? '🔄' : '🔄'} Refresh
+        </button>
+    </div>
+
+    ${error ? `<div class="error">⚠️ ${error}</div>` : ''}
+
+    ${isLoading ? `
+        <div class="loading">
+            <p>Loading...</p>
+        </div>
+    ` : ''}
+
+    ${!isLoading ? `
+        <div class="tab-navigation">
+            <button class="tab-btn ${activeTab === 'modes' ? 'active' : ''}" onclick="switchTab('modes')">
+                🎯 Modes
+            </button>
+            <button class="tab-btn ${activeTab === 'rules' ? 'active' : ''}" onclick="switchTab('rules')" ${!isDeployed ? 'disabled' : ''}>
+                ⚙️ Rules ${!isDeployed ? '(Deploy a mode first)' : ''}
+            </button>
+        </div>
+
+        ${activeTab === 'modes' ? `
+            <div class="modes-section">
+                <h3>Available Modes</h3>
+                ${availableModes.length === 0 ? `
+                    <p>No modes found. Please check your configuration.</p>
+                ` : availableModes.map(mode => `
+                    <div class="mode-card">
+                        <h4>${mode.name}</h4>
+                        <p>${mode.description || 'No description available'}</p>
+                        <button class="deploy-btn" onclick="deployMode('${mode.id}')">
+                            Deploy ${mode.name}
+                        </button>
+                    </div>
+                `).join('')}
+            </div>
+        ` : ''}
+
+        ${activeTab === 'rules' && currentRuleSet ? `
+            <div class="rules-section">
+                <h3>Rule Management</h3>
+                <p>Total Rules: ${currentRuleSet.rules.length}</p>
+                <p>Active Rules: ${currentRuleSet.rules.filter(r => r.isEnabled).length}</p>
+                ${currentRuleSet.rules.map(rule => `
+                    <div class="mode-card">
+                        <h4>${rule.title}</h4>
+                        <p>${rule.description}</p>
+                        <label>
+                            <input type="checkbox" ${rule.isEnabled ? 'checked' : ''} onchange="toggleRule('${rule.id}', this.checked)">
+                            Enabled
+                        </label>
+                    </div>
+                `).join('')}
+            </div>
+        ` : ''}
+    ` : ''}
+
+    <script>
+        const vscode = acquireVsCodeApi();
+
+        function refreshState() {
+            vscode.postMessage({ type: 'refreshState' });
+        }
+
+        function switchTab(tab) {
+            vscode.postMessage({ type: 'switchTab', tab: tab });
+        }
+
+        function deployMode(modeId) {
+            vscode.postMessage({ type: 'deployMode', modeId: modeId });
+        }
+
+        function toggleRule(ruleId, enabled) {
+            vscode.postMessage({ type: 'toggleRule', ruleId: ruleId, enabled: enabled });
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(refreshState, 30000);
+    </script>
+</body>
+</html>`;
     }
 
     private getCurrentWorkspaceRoot(): string {
